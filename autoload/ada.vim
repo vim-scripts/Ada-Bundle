@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"          $Id: ada.vim 306 2006-07-16 15:06:00Z krischik $
+"          $Id: ada.vim 321 2006-07-19 18:03:56Z krischik $
 "   Maintainer:	Martin Krischik
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"        $Date: 2006-07-16 17:06:00 +0200 (So, 16 Jul 2006) $
-"      Version: 2.1 
-"    $Revision: 306 $
+"        $Date: 2006-07-19 20:03:56 +0200 (Mi, 19 Jul 2006) $
+"      Version: 3.2 
+"    $Revision: 321 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -20,8 +20,16 @@ if exists ('g:loaded_ada_autoload') || version < 700
 else
    " Extract current Ada word across multiple lines
    " AdaWord ([line, column])\
+   "
+   " 1 alphabetic, many word chars, 
+   " many of (many spaces/nl dot many spaces/nl 1 alphabetic, many word chars)
+   " 
    let g:loaded_ada_autoload  = 1
-   let g:AdaWordRegex         = '\a\w*\(\_s*\.\_s*\a\w*\)*'
+   let g:ada#DotWordRegex     = '\a\w*\(\_s*\.\_s*\a\w*\)*'
+   "
+   " 1 alphabetic, many word char
+   " 
+   let g:ada#WordRegex        = '\a\w*'
    let g:ada#Comment          = "\\v^(\"[^\"]*\"|'.'|[^\"']){-}\\zs\\s*--.*"
    let g:ada#Keywords         = []
 
@@ -140,28 +148,55 @@ else
        endfor
    endif
 
+  let g:ada#Ctags_Kinds = {
+      \ 'P': ["packspec",    "package specifications"],
+      \ 'p': ["package",     "packages"],
+      \ 'T': ["typespec",    "type specifications"],
+      \ 't': ["type",        "types"],
+      \ 'U': ["subspec",     "subtype specifications"],
+      \ 'u': ["subtype",     "subtypes"],
+      \ 'c': ["component",   "record type components"],
+      \ 'l': ["literal",     "enum type literals"],
+      \ 'V': ["varspec",     "variable specifications"],
+      \ 'v': ["variable",    "variables"],
+      \ 'f': ["formal",      "generic formal parameters"],
+      \ 'n': ["constant",    "constants"],
+      \ 'x': ["exception",   "user defined exceptions"],
+      \ 'R': ["subprogspec", "subprogram specifications"],
+      \ 'r': ["subprogram",  "subprograms"],
+      \ 'K': ["taskspec",    "task specifications"],
+      \ 'k': ["task",        "tasks"],
+      \ 'O': ["protectspec", "protected data specifications"],
+      \ 'o': ["protected",   "protected data"],
+      \ 'E': ["entryspec",   "task/protected data entry specifications"],
+      \ 'e': ["entry",       "task/protected data entries"],
+      \ 'b': ["label",       "labels"],
+      \ 'i': ["identifier",  "loop/declare identifiers"],
+      \ 'a': ["autovar",     "automatic variables"],
+      \ 'y': ["annon",       "loops and blocks with no identifier"]}
+
    "--------------------------------------------------------------------------
    "
    "
    function ada#Word (...)
       if a:0 > 1
-         let linenr = a:1
-         let colnr  = a:2 - 1
+         let l:Line_Nr    = a:1
+         let l:Column_Nr  = a:2 - 1
       else
-         let linenr = line('.')
-         let colnr  = col('.') - 1
+         let l:Line_Nr    = line('.')
+         let l:Column_Nr  = col('.') - 1
       endif
 
-      let line = substitute( getline(linenr), s:AdaComment, '', '' )
+      let l:Line = substitute (getline (l:Line_Nr), g:ada#Comment, '', '' )
 
       " Cope with tag searching for items in comments; if we are, don't loop
       " backards looking for previous lines
-      if colnr > strlen(line)
+      if l:Column_Nr > strlen(l:Line)
          " We were in a comment
-         let line = getline(linenr)
-         let search_prev_lines = 0
+         let l:Line = getline(l:Line_Nr)
+         let l:Search_Prev_Lines = 0
       else
-         let search_prev_lines = 1
+         let l:Search_Prev_Lines = 1
       endif
 
       " Go backwards until we find a match (Ada ID) that *doesn't* include our
@@ -169,58 +204,62 @@ else
       " match will toggle matching/not matching as we traverse characters
       " backwards. Thus, we have to find the previous unrelated match, exclude
       " it, then use the next full match (ours).
-      " Remember to convert vim column 'colnr' [1..n] to string offset [0..(n-1)]
+      " Remember to convert vim column 'l:Column_Nr' [1..n] to string offset [0..(n-1)]
       " ... but start, here, one after the required char.
-      let newcol = colnr + 1
+      let l:New_Column = l:Column_Nr + 1
       while 1
-         let newcol = newcol - 1
-         if newcol < 0
-            " Have to include previous line from file
-            let linenr = linenr - 1
-            if linenr < 1  ||  !search_prev_lines
+         let l:New_Column = l:New_Column - 1
+         if l:New_Column < 0
+            " Have to include previous l:Line from file
+            let l:Line_Nr = l:Line_Nr - 1
+            if l:Line_Nr < 1  ||  !l:Search_Prev_Lines
                " Start of file or matching in a comment
-               let linenr = 1
-               let newcol = 0
-               let ourmatch = match( line, s:AdaWordRegex )
+               let l:Line_Nr     = 1
+               let l:New_Column  = 0
+               let l:Our_Match   = match (l:Line, g:ada#WordRegex )
                break
             endif
-            " Get previous line, and prepend it to our search string
-            let newline = substitute( getline(linenr), s:AdaComment, '', '' )
-            let newcol  = strlen(newline) - 1
-            let colnr   = colnr + newcol
-            let line    = newline . line
+            " Get previous l:Line, and prepend it to our search string
+            let l:New_Line    = substitute (getline (l:Line_Nr), g:ada#Comment, '', '' )
+            let l:New_Column  = strlen (l:New_Line) - 1
+            let l:Column_Nr   = l:Column_Nr + l:New_Column
+            let l:Line        = l:New_Line . l:Line
          endif
          " Check to see if this is a match excluding 'us'
-         let mend = newcol + matchend( strpart(line,newcol), s:AdaWordRegex ) - 1
-         if mend >= newcol  &&  mend < colnr
+         let l:Match_End = l:New_Column + 
+                         \ matchend (strpart (l:Line,l:New_Column), g:ada#WordRegex ) - 1
+         if l:Match_End >= l:New_Column  &&  
+          \ l:Match_End < l:Column_Nr
             " Yes
-            let ourmatch = mend+1 + match( strpart(line,mend+1), s:AdaWordRegex )
+            let l:Our_Match = l:Match_End+1 + 
+                            \ match (strpart (l:Line,l:Match_End+1), g:ada#WordRegex )
             break
          endif
       endwhile
 
       " Got anything?
-      if ourmatch < 0
+      if l:Our_Match < 0
          return ''
       else
-         let line = strpart( line, ourmatch)
+         let l:Line = strpart (l:Line, l:Our_Match)
       endif
 
       " Now simply add further lines until the match gets no bigger
-      let matchstr = matchstr (line, s:AdaWordRegex)
-      let lastline  = line('$')
-      let linenr    = line('.') + 1
-      while linenr <= lastline
-         let lastmatch = matchstr
-         let line = line . substitute (getline (linenr), s:AdaComment, '', '')
-         let matchstr = matchstr (line, s:AdaWordRegex)
-         if matchstr == lastmatch
+      let l:Match_String = matchstr (l:Line, g:ada#WordRegex)
+      let l:Last_Line    = line ('$')
+      let l:Line_Nr      = line ('.') + 1
+      while l:Line_Nr <= l:Last_Line
+         let l:Last_Match = l:Match_String
+         let l:Line = l:Line . 
+                    \ substitute (getline (l:Line_Nr), g:ada#Comment, '', '')
+         let l:Match_String = matchstr (l:Line, g:ada#WordRegex)
+         if l:Match_String == l:Last_Match
             break
          endif
       endwhile
 
       " Strip whitespace & return
-      return substitute (matchstr, '\s\+', '', 'g')
+      return substitute (l:Match_String, '\s\+', '', 'g')
    endfunction ada#Word
 
    "--------------------------------------------------------------------------
@@ -236,7 +275,7 @@ else
          let l:Tag_Word = ada#Word ()
       endif
 
-      echo "Searching for " . l:Tag_Word
+      echo "Searching for" l:Tag_Word
 
       let l:Tag_List = taglist (l:Tag_Word)
       let l:Error_List = []
@@ -293,9 +332,9 @@ else
    " Backspace at end of line after auto-inserted commentstring '-- ' wipes it
    "
    function ada#Insert_Backspace ()
-      let line = getline ('.')
-      if col ('.') > strlen (line) &&
-       \ match (line, '-- $') != -1 && 
+      let l:Line = getline ('.')
+      if col ('.') > strlen (l:Line) &&
+       \ match (l:Line, '-- $') != -1 && 
        \ match (&comments,'--') != -1
          return "\<bs>\<bs>\<bs>"
       else
@@ -318,9 +357,37 @@ else
       return ''
    endfunction ada#Completion_End
 
-   lockvar  g:AdaWordRegex
+   function ada#Switch_Syntax_Option (option)
+      syntax off
+      if exists ('g:ada_' . a:option)
+         unlet g:ada_{a:option}
+         echo  a:option . 'now off'
+      else
+         let g:ada_{a:option}=1
+         echo  a:option . 'now on'
+      endif
+      syntax on
+   endfunction ada#Switch_Syntax_Option
+
+   function ada#Create_Tags (option)
+      if a:option == 'file'
+         let l:Filename = fnamemodify (bufname ('%'), ':p')
+      elseif a:option == 'dir'
+         let l:Filename = 
+            \ fnamemodify (bufname ('%'), ':p:h') . "*.ada " .
+            \ fnamemodify (bufname ('%'), ':p:h') . "*.adb " .
+            \ fnamemodify (bufname ('%'), ':p:h') . "*.ads"
+      else
+         let l:Filename = a:option
+      endif
+      execute '!ctags --excmd=number ' . l:Filename
+   endfunction
+
+   lockvar  g:ada#WordRegex
+   lockvar  g:ada#DotWordRegex
    lockvar  g:ada#Comment
    lockvar! g:ada#Keywords
+   lockvar! g:ada#Ctags_Kinds
 
    finish
 endif

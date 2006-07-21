@@ -1,6 +1,6 @@
 "------------------------------------------------------------------------------
-"  Description: Vim Ada/GNAT compiler file
-"     Language: Ada (GNAT)
+"  Description: Vim Ada/Dec Ada compiler file
+"     Language: Ada (Dec Ada)
 "          $Id: gnat.vim 314 2006-07-18 17:11:31Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik
@@ -9,27 +9,26 @@
 "      Version: 3.2
 "    $Revision: 314 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/compiler/gnat.vim $
-"      History: 24.05.2006 MK Unified Headers
-"		16.07.2006 MK Ada-Mode as vim-ball
-"    Help Page: compiler-gnat
+"      History: 21.07.2006 MK New Dec Ada
+"    Help Page: compiler-decada
 "------------------------------------------------------------------------------
 
 if version < 700
     finish
 else
-    if !exists("g:gnat")
-	let g:gnat = gnat#New ()
+    if !exists("g:decada")
+	let g:decada = decada#New ()
     endif
 
-    let current_compiler = "gnat"
-    execute "CompilerSet makeprg="     . escape (eval (g:gnat.Make_Command), ' ')
-    execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
+    let current_compiler = "decada"
 
-    command! -buffer Build	:call g:gnat.Make ()
-    command! -buffer BuildTags  :call s:gnat.Tags ()
+    execute "CompilerSet makeprg="     . escape (g:decada.Make_Command, ' ')
+    execute "CompilerSet errorformat=" . escape (g:decada.Error_Format, ' ')
 
-    nnoremap <buffer> <F7>      :call g:gnat.Make ()<CR>
-    inoremap <buffer> <F7> <C-O>:call g:gnat.Make ()<CR>
+    command! -buffer Build      :call g:decada.Build ()
+
+    nnoremap <buffer> <F7>      :call g:decada.Build ()<CR>
+    inoremap <buffer> <F7> <C-O>:call g:decada.Build ()<CR>
 
     finish
 endif

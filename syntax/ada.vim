@@ -1,16 +1,16 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada syntax file
 "     Language:	Ada (2005)
-"          $Id: ada.vim 306 2006-07-16 15:06:00Z krischik $
+"          $Id: ada.vim 314 2006-07-18 17:11:31Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik 
 "               David A. Wheeler <dwheeler@dwheeler.com>
 "               Simon Bradley <simon.bradley@pitechnology.com>
 " Contributors: Preben Randhol.
 "      $Author: krischik $
-"        $Date: 2006-07-16 17:06:00 +0200 (So, 16 Jul 2006) $
-"      Version: 3.0 
-"    $Revision: 306 $
+"        $Date: 2006-07-18 19:11:31 +0200 (Di, 18 Jul 2006) $
+"      Version: 3.1 
+"    $Revision: 314 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/syntax/ada.vim $
 "               http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
@@ -156,7 +156,7 @@ else
     syntax keyword adaStorageClass	abstract access aliased array at constant delta
     syntax keyword adaStorageClass	digits limited of private range tagged
     syntax keyword adaStorageClass	interface synchronized
-    syntax keyword adaTypedef	subtype type
+    syntax keyword adaTypedef	        subtype type
 
     " Conditionals. "abort" after "then" is a conditional of its own.
     syntax match    adaConditional  "\<then\>"

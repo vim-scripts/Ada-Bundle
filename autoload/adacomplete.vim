@@ -1,12 +1,12 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada omnicompletion file
 "     Language:	Ada (2005)
-"          $Id: adacomplete.vim 306 2006-07-16 15:06:00Z krischik $
+"          $Id: adacomplete.vim 321 2006-07-19 18:03:56Z krischik $
 "   Maintainer:	Martin Krischik 
 "      $Author: krischik $
-"        $Date: 2006-07-16 17:06:00 +0200 (So, 16 Jul 2006) $
-"      Version: 3.0 
-"    $Revision: 306 $
+"        $Date: 2006-07-19 20:03:56 +0200 (Mi, 19 Jul 2006) $
+"      Version: 3.2 
+"    $Revision: 321 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/adacomplete.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK improved search for begin of word.
@@ -71,14 +71,46 @@ else
          "
          for Tag_Item in l:Tag_List
 	    if l:Tag_Item['kind'] == ''
-	       let l:Tag_Item['kind'] = 's'
+	       "
+	       " Tag created by gnat xref
+	       "
+	       let l:Match_Item = {
+		  \ 'word':  l:Tag_Item['name'],
+		  \ 'menu':  l:Tag_Item['filename'],
+		  \ 'info':  "Symbol from file " . l:Tag_Item['filename'] . " line " . l:Tag_Item['cmd'],
+		  \ 'kind':  's',
+		  \ 'icase': 1}
+	    else
+	       "
+	       " Tag created by ctags
+	       "
+	       let l:Info  = 'Symbol                : ' . l:Tag_Item['name']  . "\n"
+	       let l:Info .= 'Of type               : ' . g:ada#Ctags_Kinds[l:Tag_Item['kind']][1]  . "\n"
+	       let l:Info .= 'Defined in File       : ' . l:Tag_Item['filename'] . "\n"
+
+	       if has_key( l:Tag_Item, 'package')
+		  let l:Info .= 'Package               : ' . l:Tag_Item['package'] . "\n"
+		  let l:Menu  = l:Tag_Item['package']
+	       elseif has_key( l:Tag_Item, 'separate')
+		  let l:Info .= 'Separate from Package : ' . l:Tag_Item['separate'] . "\n"
+		  let l:Menu  = l:Tag_Item['separate']
+	       elseif has_key( l:Tag_Item, 'packspec')
+		  let l:Info .= 'Package Specification : ' . l:Tag_Item['packspec'] . "\n"
+		  let l:Menu  = l:Tag_Item['packspec']
+	       elseif has_key( l:Tag_Item, 'type')
+		  let l:Info .= 'Datetype              : ' . l:Tag_Item['type'] . "\n"
+		  let l:Menu  = l:Tag_Item['type']
+	       else
+		  let l:Menu  = l:Tag_Item['filename']
+	       endif
+
+	       let l:Match_Item = {
+		  \ 'word':  l:Tag_Item['name'],
+		  \ 'menu':  l:Menu,
+		  \ 'info':  l:Info,
+		  \ 'kind':  l:Tag_Item['kind'],
+		  \ 'icase': 1}
 	    endif
-	    let l:Match_Item = {
-	       \ 'word':  l:Tag_Item['name'],
-	       \ 'menu':  l:Tag_Item['filename'],
-	       \ 'info':  "Symbol from file " . l:Tag_Item['filename'] . " line " . l:Tag_Item['cmd'],
-	       \ 'kind':  l:Tag_Item['kind'],
-	       \ 'icase': 1}
 	    if complete_add (l:Match_Item) == 0
 	       return []
 	    endif

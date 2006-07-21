@@ -14,23 +14,58 @@
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------
 
-if version < 700
+if exists("g:loaded_gnat_autoload") || version < 700
     finish
 else
-    if !exists("g:gnat")
-	let g:gnat = gnat#New ()
-    endif
+    function gnat#Make () dict
+	let &l:makeprg	   = eval (self.Make_Command)
+	let &l:errorformat = self.Error_Format
+	wall
+	make
+	copen
+	set wrap
+	wincmd W
+    endfunction gnat#Make
 
-    let current_compiler = "gnat"
-    execute "CompilerSet makeprg="     . escape (eval (g:gnat.Make_Command), ' ')
-    execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
+    function gnat#Find () dict
+	execute "!" . eval (self.Find_Command)
+    endfunction gnat#Find
 
-    command! -buffer Build	:call g:gnat.Make ()
-    command! -buffer BuildTags  :call s:gnat.Tags ()
+    function gnat#Tags () dict
+	execute "!" . eval (self.Tags_Command)
+	edit tags
+	call gnat#Insert_Tags_Header ()
+	update
+	quit
+    endfunction gnat#Tags
 
-    nnoremap <buffer> <F7>      :call g:gnat.Make ()<CR>
-    inoremap <buffer> <F7> <C-O>:call g:gnat.Make ()<CR>
+    function gnat#New ()
+	return {
+	    \ 'Make'		: function ('gnat#Make'),
+	    \ 'Find'		: function ('gnat#Find'),
+	    \ 'Tags'		: function ('gnat#Tags'),
+	    \ 'Project_File'    : 'default.gpr',
+	    \ 'Make_Command'    : '"gnat make -P " . gnat.Project_File . " "',
+	    \ 'Find_Program'    : '"gnat find -P " . gnat.Project_File . " "',
+	    \ 'Tags_Command'    : '"gnat xref -P " . gnat.Project_File . " -v  *.AD*"',
+	    \ 'Error_Format'    : '%f:%l:%c: %trror: %m,'   .
+				\ '%f:%l:%c: %tarning: %m,' .
+				\ '%f:%l:%c: (%ttyle) %m'}
+    endfunction gnat#New
 
+    function gnat#Insert_Tags_Header ()
+	1insert
+!_TAG_FILE_FORMAT       1       /extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED       1       /0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR    AdaCore /info@adacore.com/
+!_TAG_PROGRAM_NAME      gnatxref        //
+!_TAG_PROGRAM_URL       http://www.adacore.com  /official site/
+!_TAG_PROGRAM_VERSION   5.05w   //
+.
+	return
+    endfunction gnat#Insert_Tags_Header
+
+    let g:loaded_gnat_autoload=1
     finish
 endif
 
