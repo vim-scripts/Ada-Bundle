@@ -6,7 +6,7 @@
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
 "        $Date: 2006-07-18 19:11:31 +0200 (Di, 18 Jul 2006) $
-"      Version: 3.2
+"      Version: 3.3
 "    $Revision: 314 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/compiler/gnat.vim $
 "      History: 21.07.2006 MK New Dec Ada
@@ -25,10 +25,10 @@ else
     execute "CompilerSet makeprg="     . escape (g:decada.Make_Command, ' ')
     execute "CompilerSet errorformat=" . escape (g:decada.Error_Format, ' ')
 
-    command! -buffer Build      :call g:decada.Build ()
-
-    nnoremap <buffer> <F7>      :call g:decada.Build ()<CR>
-    inoremap <buffer> <F7> <C-O>:call g:decada.Build ()<CR>
+   call ada#Map_Menu (
+     \'GNAT.Build',
+     \'<F7>',
+     \'call decada.Make ()')
 
     finish
 endif

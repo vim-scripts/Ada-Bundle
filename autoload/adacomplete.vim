@@ -1,12 +1,12 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada omnicompletion file
 "     Language:	Ada (2005)
-"          $Id: adacomplete.vim 321 2006-07-19 18:03:56Z krischik $
-"   Maintainer:	Martin Krischik 
+"          $Id: adacomplete.vim 333 2006-07-25 16:21:21Z krischik $
+"   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-19 20:03:56 +0200 (Mi, 19 Jul 2006) $
-"      Version: 3.2 
-"    $Revision: 321 $
+"        $Date: 2006-07-25 18:21:21 +0200 (Di, 25 Jul 2006) $
+"      Version: 3.3
+"    $Revision: 333 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/adacomplete.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK improved search for begin of word.
@@ -55,10 +55,10 @@ else
          for Tag_Item in g:ada#Keywords
 	   if l:Tag_Item['word'] =~? l:Pattern
 	       if complete_add (l:Tag_Item) == 0
-	           return []
+		   return []
 	       endif
 	       if complete_check ()
-	           return []
+		   return []
 	       endif
 	   endif
          endfor
@@ -66,7 +66,7 @@ else
          "  search tag file for matches
          "
          let l:Tag_List = taglist (l:Pattern)
-         " 
+         "
          " add symbols
          "
          for Tag_Item in l:Tag_List
@@ -132,12 +132,12 @@ endif
 "   modify it under the terms of the GNU General Public License
 "   as published by the Free Software Foundation; either version 2
 "   of the License, or (at your option) any later version.
-"   
+"
 "   This program is distributed in the hope that it will be useful,
 "   but WITHOUT ANY WARRANTY; without even the implied warranty of
 "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 "   GNU General Public License for more details.
-"   
+"
 "   You should have received a copy of the GNU General Public License
 "   along with this program; if not, write to the Free Software
 "   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.

@@ -1,17 +1,17 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"          $Id: ada.vim 321 2006-07-19 18:03:56Z krischik $
-"   Maintainer:	Martin Krischik
+"          $Id: ada.vim 333 2006-07-25 16:21:21Z krischik $
+"   Maintainer: Martin Krischik
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"        $Date: 2006-07-19 20:03:56 +0200 (Mi, 19 Jul 2006) $
-"      Version: 3.2 
-"    $Revision: 321 $
+"        $Date: 2006-07-25 18:21:21 +0200 (Di, 25 Jul 2006) $
+"      Version: 3.3
+"    $Revision: 333 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
-"		16.07.2006 MK Ada-Mode as vim-ball
+"               16.07.2006 MK Ada-Mode as vim-ball
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
 
@@ -21,14 +21,14 @@ else
    " Extract current Ada word across multiple lines
    " AdaWord ([line, column])\
    "
-   " 1 alphabetic, many word chars, 
+   " 1 alphabetic, many word chars,
    " many of (many spaces/nl dot many spaces/nl 1 alphabetic, many word chars)
-   " 
+   "
    let g:loaded_ada_autoload  = 1
    let g:ada#DotWordRegex     = '\a\w*\(\_s*\.\_s*\a\w*\)*'
    "
    " 1 alphabetic, many word char
-   " 
+   "
    let g:ada#WordRegex        = '\a\w*'
    let g:ada#Comment          = "\\v^(\"[^\"]*\"|'.'|[^\"']){-}\\zs\\s*--.*"
    let g:ada#Keywords         = []
@@ -80,7 +80,7 @@ else
    endif
 
    "--------------------------------------------------------------------------
-   "   
+   "
    "   add buildin types
    "
    for Item in ['Boolean', 'Integer', 'Natural', 'Positive', 'Float', 'Character', 'Wide_Character', 'Wide_Wide_Character', 'String', 'Wide_String', 'Wide_Wide_String', 'Duration']
@@ -226,12 +226,12 @@ else
             let l:Line        = l:New_Line . l:Line
          endif
          " Check to see if this is a match excluding 'us'
-         let l:Match_End = l:New_Column + 
+         let l:Match_End = l:New_Column +
                          \ matchend (strpart (l:Line,l:New_Column), g:ada#WordRegex ) - 1
-         if l:Match_End >= l:New_Column  &&  
+         if l:Match_End >= l:New_Column  &&
           \ l:Match_End < l:Column_Nr
             " Yes
-            let l:Our_Match = l:Match_End+1 + 
+            let l:Our_Match = l:Match_End+1 +
                             \ match (strpart (l:Line,l:Match_End+1), g:ada#WordRegex )
             break
          endif
@@ -250,7 +250,7 @@ else
       let l:Line_Nr      = line ('.') + 1
       while l:Line_Nr <= l:Last_Line
          let l:Last_Match = l:Match_String
-         let l:Line = l:Line . 
+         let l:Line = l:Line .
                     \ substitute (getline (l:Line_Nr), g:ada#Comment, '', '')
          let l:Match_String = matchstr (l:Line, g:ada#WordRegex)
          if l:Match_String == l:Last_Match
@@ -279,7 +279,7 @@ else
 
       let l:Tag_List = taglist (l:Tag_Word)
       let l:Error_List = []
-      " 
+      "
       " add symbols
       "
       for Tag_Item in l:Tag_List
@@ -287,7 +287,7 @@ else
             let l:Tag_Item['kind'] = 's'
          endif
 
-         let l:Error_List += [ 
+         let l:Error_List += [
             \ l:Tag_Item['filename'] . '|' .
             \ l:Tag_Item['cmd']      . '|' .
             \ l:Tag_Item['kind']     . "\t" .
@@ -302,7 +302,7 @@ else
    "
    " Word tag - include '.' and if Ada make uppercase
    "
-   function ada#Jump_Tag (Word, Mode)    
+   function ada#Jump_Tag (Word, Mode)
       if a:Word == ''
          " Get current word
          let l:Word = ada#Word()
@@ -323,7 +323,7 @@ else
          execute a:Mode l:Word
          let &ignorecase = ignorecase
       endtry
-      
+
       return
    endfunction ada#Jump_Tag
 
@@ -334,7 +334,7 @@ else
    function ada#Insert_Backspace ()
       let l:Line = getline ('.')
       if col ('.') > strlen (l:Line) &&
-       \ match (l:Line, '-- $') != -1 && 
+       \ match (l:Line, '-- $') != -1 &&
        \ match (&comments,'--') != -1
          return "\<bs>\<bs>\<bs>"
       else
@@ -373,7 +373,7 @@ else
       if a:option == 'file'
          let l:Filename = fnamemodify (bufname ('%'), ':p')
       elseif a:option == 'dir'
-         let l:Filename = 
+         let l:Filename =
             \ fnamemodify (bufname ('%'), ':p:h') . "*.ada " .
             \ fnamemodify (bufname ('%'), ':p:h') . "*.adb " .
             \ fnamemodify (bufname ('%'), ':p:h') . "*.ads"
@@ -381,7 +381,61 @@ else
          let l:Filename = a:option
       endif
       execute '!ctags --excmd=number ' . l:Filename
+   endfunction ada#Create_Tags
+
+   function ada#Map_Menu (Text, Keys, Command)
+      if a:Keys[0] == ':'
+         execute
+           \ "50amenu " .
+           \ "Ada."     . escape(a:Text, ' ') .
+           \ "<Tab>"    . a:Keys .
+           \ " :"       . a:Command . "<CR>"
+         execute
+           \ "command -buffer " .
+           \ a:Keys[1:] .
+           \" :" . a:Command . "<CR>"
+      elseif a:Keys[0] == '<'
+         execute
+           \ "50amenu " .
+           \ "Ada."     . escape(a:Text, ' ') .
+           \ "<Tab>"    . a:Keys .
+           \ " :"       . a:Command . "<CR>"
+         execute
+           \ "nnoremap <buffer> "   .
+           \ a:Keys                 .
+           \" :" . a:Command . "<CR>"
+         execute
+           \ "inoremap <buffer> "   .
+           \ a:Keys                 .
+           \" <C-O>:" . a:Command . "<CR>"
+      else
+         execute
+           \ "50amenu " .
+           \ "Ada."  . escape(a:Text, ' ') .
+           \ "<Tab>" . escape(g:mapleader . "a" . a:Keys , '\') .
+           \ " :"    . a:Command . "<CR>"
+         execute
+           \ "nnoremap <buffer>" .
+           \ escape(g:mapleader . "a" . a:Keys , '\') .
+           \" :" . a:Command
+         execute
+           \ "inoremap <buffer>" .
+           \ escape(g:mapleader . "a" . a:Keys , '\') .
+           \" <C-O>:" . a:Command
+      endif
+      return
    endfunction
+
+   function ada#Map_Popup (Text, Keys, Command)
+      execute
+        \ "50amenu " .
+        \ "PopUp."   . escape(a:Text, ' ') .
+        \ "<Tab>"    . escape(g:mapleader . "a" . a:Keys , '\') .
+        \ " :"       . a:Command . "<CR>"
+
+      call ada#Map_Menu (a:Text, a:Keys, a:Command)
+      return
+   endfunction ada#Map_Popup
 
    lockvar  g:ada#WordRegex
    lockvar  g:ada#DotWordRegex
@@ -399,12 +453,12 @@ endif
 "   modify it under the terms of the GNU General Public License
 "   as published by the Free Software Foundation; either version 2
 "   of the License, or (at your option) any later version.
-"   
+"
 "   This program is distributed in the hope that it will be useful,
 "   but WITHOUT ANY WARRANTY; without even the implied warranty of
 "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 "   GNU General Public License for more details.
-"   
+"
 "   You should have received a copy of the GNU General Public License
 "   along with this program; if not, write to the Free Software
 "   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.

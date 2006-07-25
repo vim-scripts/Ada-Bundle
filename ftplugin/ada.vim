@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"          $Id: ada.vim 321 2006-07-19 18:03:56Z krischik $
+"          $Id: ada.vim 333 2006-07-25 16:21:21Z krischik $
 "   Maintainer: Martin Krischik
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"        $Date: 2006-07-19 20:03:56 +0200 (Mi, 19 Jul 2006) $
-"      Version: 3.2
-"    $Revision: 321 $
+"        $Date: 2006-07-25 18:21:21 +0200 (Di, 25 Jul 2006) $
+"      Version: 3.3
+"    $Revision: 333 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftplugin/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -26,11 +26,15 @@ else
    " Don't load another plugin for this buffer
    let b:did_ftplugin = 1
 
+   "
    " Temporarily set cpoptions to ensure the script loads OK
+   "
    let s:cpoptions = &cpoptions
    set cpoptions-=C
 
+   "
    " Ada comments
+   "
    setlocal comments+=O:--
    setlocal complete=.,w,b,u,t,i
 
@@ -70,11 +74,15 @@ else
       inoremap <silent> <unique> <buffer> <bs> <C-R>=ada#Insert_Backspace ()<cr>
    endif
 
+   "
    " Only do this when not done yet for this buffer & matchit is used
+   "
    if !exists ("b:match_words")  &&
      \ exists ("loaded_matchit")
+      "
       " The following lines enable the macros/matchit.vim plugin for
       " Ada-specific extended matching with the % key.
+      "
       let s:notend      = '\%(\<end\s\+\)\@<!'
       let b:match_words =
          \ s:notend . '\<if\>:\<elsif\>:\<else\>:\<end\>\s\+\<if\>,' .
@@ -86,82 +94,39 @@ else
 
    execute "compiler " . g:ada_default_compiler
 
-   function s:Map_Menu (Text, Keys, Command)
-      if a:Keys[0] == ':'
-         execute
-           \ "50amenu " .
-           \ "Ada."     . escape(a:Text, ' ') .
-           \ "<Tab>"    . a:Keys .
-           \ " :"       . a:Command . "<CR>"
-         execute
-           \ "command -buffer " .
-           \ a:Keys[1:] .
-           \" :" . a:Command . "<CR>"
-      else
-         execute
-           \ "50amenu " .
-           \ "Ada."  . escape(a:Text, ' ') .
-           \ "<Tab>" . escape(g:mapleader . "a" . a:Keys , '\') .
-           \ " :"    . a:Command . "<CR>"
-         execute
-           \ "nnoremap " .
-           \ escape(g:mapleader . "a" . a:Keys , '\') .
-           \" :" . a:Command
-         execute
-           \ "inoremap " .
-           \ escape(g:mapleader . "a" . a:Keys , '\') .
-           \" <C-O>:" . a:Command
-      endif
-      return
-   endfunction
-
-   function s:Map_Popup (Text, Keys, Command)
-      execute
-        \ "50amenu " .
-        \ "PopUp."   . escape(a:Text, ' ') .
-        \ "<Tab>"    . escape(g:mapleader . "a" . a:Keys , '\') .
-        \ " :"       . a:Command . "<CR>"
-
-      call s:Map_Menu (a:Text, a:Keys, a:Command)
-      return
-   endfunction
-
-   call s:Map_Popup (
+   call ada#Map_Popup (
       \ 'Tag.List',
       \  'l',
       \ 'call ada#List_Tag ()')
-   call s:Map_Popup (
+   call ada#Map_Popup (
       \'Tag.Jump',
       \'j',
       \'call ada#Jump_Tag ()')
-   call s:Map_Menu (
+   call ada#Map_Menu (
       \'Tag.Create File',
       \':AdaTagFile',
       \'call ada#Create_Tags (''file'')')
-   call s:Map_Menu (
+   call ada#Map_Menu (
       \'Tag.Create Dir',
       \':AdaTagDir',
       \'call ada#Create_Tags (''dir'')')
 
-   call s:Map_Menu (
+   call ada#Map_Menu (
       \'Highlight.Toggle Space Errors',
       \ ':AdaSpaces',
       \'call ada#Switch_Syntax_Option (''space_errors'')')
-   call s:Map_Menu (
+   call ada#Map_Menu (
       \'Highlight.Toggle Lines Errors',
       \ ':AdaLines',
       \'call ada#Switch_Syntax_Option (''line_errors'')')
-   call s:Map_Menu (
+   call ada#Map_Menu (
       \'Highlight.Toggle Rainbow Color',
       \ ':AdaRainbow',
       \'call ada#Switch_Syntax_Option (''rainbow_color'')')
-   call s:Map_Menu (
+   call ada#Map_Menu (
       \'Highlight.Toggle Standard Types',
       \ ':AdaTypes',
       \'call ada#Switch_Syntax_Option (''standard_types'')')
-
-   delfunction s:Map_Menu
-   delfunction s:Map_Popup
 
    " Reset cpoptions
    let &cpoptions = s:cpoptions

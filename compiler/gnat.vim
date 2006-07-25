@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/GNAT compiler file
 "     Language: Ada (GNAT)
-"          $Id: gnat.vim 314 2006-07-18 17:11:31Z krischik $
+"          $Id: gnat.vim 333 2006-07-25 16:21:21Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-18 19:11:31 +0200 (Di, 18 Jul 2006) $
-"      Version: 3.2
-"    $Revision: 314 $
+"        $Date: 2006-07-25 18:21:21 +0200 (Di, 25 Jul 2006) $
+"      Version: 3.3
+"    $Revision: 333 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/compiler/gnat.vim $
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -25,11 +25,18 @@ else
     execute "CompilerSet makeprg="     . escape (eval (g:gnat.Make_Command), ' ')
     execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
 
-    command! -buffer Build	:call g:gnat.Make ()
-    command! -buffer BuildTags  :call s:gnat.Tags ()
-
-    nnoremap <buffer> <F7>      :call g:gnat.Make ()<CR>
-    inoremap <buffer> <F7> <C-O>:call g:gnat.Make ()<CR>
+   call ada#Map_Menu (
+     \'GNAT.Build',
+     \'<F7>',
+     \'call gnat.Make ()')
+   call ada#Map_Menu (
+     \'GNAT.Tags',
+     \'<F7>',
+     \'call gnat.Tags ()')
+   call ada#Map_Menu (
+     \'GNAT.Set Projectfile\.\.\.',
+     \'<F7>',
+     \'call gnat.Set_Project_File ()')
 
     finish
 endif
