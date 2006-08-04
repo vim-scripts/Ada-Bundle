@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"          $Id: ada.vim 333 2006-07-25 16:21:21Z krischik $
+"          $Id: ada.vim 342 2006-07-27 19:03:11Z krischik $
 "   Maintainer: Martin Krischik
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"        $Date: 2006-07-25 18:21:21 +0200 (Di, 25 Jul 2006) $
-"      Version: 3.3
-"    $Revision: 333 $
+"        $Date: 2006-07-27 21:03:11 +0200 (Do, 27 Jul 2006) $
+"      Version: 3.4
+"    $Revision: 342 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftplugin/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -32,16 +32,14 @@ else
    let s:cpoptions = &cpoptions
    set cpoptions-=C
 
+   " Section: Comments {{{1
    "
-   " Ada comments
-   "
-   setlocal comments+=O:--
+   setlocal comments=O:--,:--\ \
+   setlocal commentstring=--\ \ %s
    setlocal complete=.,w,b,u,t,i
 
-   if exists ('&omnifunc')
-       setlocal omnifunc=adacomplete#Complete
-   endif
-
+   " Section: Tagging {{{1
+   "
    if exists ("g:ada_extended_tagging")
       " Make local tag mappings for this buffer (if not already set)
       if g:ada_extended_tagging == 'jump'
@@ -61,19 +59,28 @@ else
       endif
    endif
 
-   if mapcheck ('<C-N>','i') == ''
-      inoremap <unique> <buffer> <C-N> <C-R>=ada#Completion("\<lt>C-N>")<cr>
-   endif
-   if mapcheck ('<C-P>','i') == ''
-      inoremap <unique> <buffer> <C-P> <C-R>=ada#Completion("\<lt>C-P>")<cr>
-   endif
-   if mapcheck ('<C-X><C-]>','i') == ''
-      inoremap <unique> <buffer> <C-X><C-]> <C-R>=<SID>ada#Completion("\<lt>C-X>\<lt>C-]>")<cr>
-   endif
-   if mapcheck ('<bs>','i') == ''
-      inoremap <silent> <unique> <buffer> <bs> <C-R>=ada#Insert_Backspace ()<cr>
+   " Section: Completion {{{1
+   "
+   setlocal completefunc=ada#User_Complete
+   setlocal omnifunc=adacomplete#Complete
+   
+   if exists ("g:ada_extended_completion")
+      if mapcheck ('<C-N>','i') == ''
+         inoremap <unique> <buffer> <C-N> <C-R>=ada#Completion("\<lt>C-N>")<cr>
+      endif
+      if mapcheck ('<C-P>','i') == ''
+         inoremap <unique> <buffer> <C-P> <C-R>=ada#Completion("\<lt>C-P>")<cr>
+      endif
+      if mapcheck ('<C-X><C-]>','i') == ''
+         inoremap <unique> <buffer> <C-X><C-]> <C-R>=<SID>ada#Completion("\<lt>C-X>\<lt>C-]>")<cr>
+      endif
+      if mapcheck ('<bs>','i') == ''
+         inoremap <silent> <unique> <buffer> <bs> <C-R>=ada#Insert_Backspace ()<cr>
+      endif
    endif
 
+   " Section: Matchit {{{1
+   "
    "
    " Only do this when not done yet for this buffer & matchit is used
    "
@@ -92,8 +99,31 @@ else
          \ s:notend . '\<record\>:\<end\>\s\+\<record\>'
    endif
 
+   " Section: Compiler {{{1
+   "
    execute "compiler " . g:ada_default_compiler
 
+   " Section: Folding {{{1
+   "
+   if exists("g:ada_folding")
+      setlocal foldmethod=indent
+      setlocal foldignore=--
+      setlocal tabstop=8
+      setlocal softtabstop=3
+      setlocal shiftwidth=3
+   endif
+
+   " Section: Abbrev {{{1
+   "
+   if exists("g:ada_abbrev")
+      iabbrev ret  return
+      iabbrev proc procedure
+      iabbrev pack package
+      iabbrev func function
+   endif
+
+   " Section: Commands, Mapping, Menus {{{1
+   "
    call ada#Map_Popup (
       \ 'Tag.List',
       \  'l',
@@ -127,7 +157,8 @@ else
       \'Highlight.Toggle Standard Types',
       \ ':AdaTypes',
       \'call ada#Switch_Syntax_Option (''standard_types'')')
-
+   
+   " 1}}}
    " Reset cpoptions
    let &cpoptions = s:cpoptions
    unlet s:cpoptions
@@ -153,4 +184,4 @@ endif
 "   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 "------------------------------------------------------------------------------
 " vim: textwidth=78 nowrap tabstop=8 shiftwidth=3 softtabstop=3 expandtab
-" vim: filetype=vim encoding=latin1 fileformat=unix
+" vim: filetype=vim encoding=latin1 fileformat=unix foldmethod=marker nospell

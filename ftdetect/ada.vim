@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada filetype detection file
 "     Language: Ada (2005)
-"          $Id: ada.vim 333 2006-07-25 16:21:21Z krischik $
+"          $Id: ada.vim 343 2006-07-28 17:54:11Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer: Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-25 18:21:21 +0200 (Di, 25 Jul 2006) $
-"      Version: 3.3
-"    $Revision: 333 $
+"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
+"      Version: 3.4
+"    $Revision: 343 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftdetect/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               16.07.2006 MK Ada-Mode as vim-ball
@@ -44,4 +44,4 @@ endif
 "   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 "------------------------------------------------------------------------------
 " vim: textwidth=78 nowrap tabstop=8 shiftwidth=4 softtabstop=4 expandtab
-" vim: filetype=vim encoding=utf8 fileformat=unix
+" vim: filetype=vim encoding=utf8 fileformat=unix foldmethod=marker nospell

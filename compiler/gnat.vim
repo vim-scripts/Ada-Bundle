@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/GNAT compiler file
 "     Language: Ada (GNAT)
-"          $Id: gnat.vim 333 2006-07-25 16:21:21Z krischik $
+"          $Id: gnat.vim 342 2006-07-27 19:03:11Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-25 18:21:21 +0200 (Di, 25 Jul 2006) $
-"      Version: 3.3
-"    $Revision: 333 $
+"        $Date: 2006-07-27 21:03:11 +0200 (Do, 27 Jul 2006) $
+"      Version: 3.4
+"    $Revision: 342 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/compiler/gnat.vim $
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -17,11 +17,12 @@
 if version < 700
     finish
 else
+    let current_compiler = "gnat"
+
     if !exists("g:gnat")
 	let g:gnat = gnat#New ()
     endif
 
-    let current_compiler = "gnat"
     execute "CompilerSet makeprg="     . escape (eval (g:gnat.Make_Command), ' ')
     execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
 
@@ -38,7 +39,8 @@ else
      \'<F7>',
      \'call gnat.Set_Project_File ()')
 
-    finish
+   " 1}}}
+   finish
 endif
 
 "------------------------------------------------------------------------------
@@ -58,5 +60,5 @@ endif
 "   along with this program; if not, write to the Free Software
 "   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 "------------------------------------------------------------------------------
-" vim: textwidth=78 wrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab
-" vim: filetype=vim encoding=latin1 fileformat=unix
+" vim: textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
+" vim: filetype=vim encoding=latin1 fileformat=unix foldmethod=marker

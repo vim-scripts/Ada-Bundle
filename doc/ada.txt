@@ -1,7 +1,7 @@
-*ada.txt*	  Ada Filetype Plugins		      Last change: 2006 Apr 30
+*ada.txt*	  Ada File type Plug-ins	      Last change: 2006 Apr 30
 
 
-		    ADA FILETYPE PLUGINS REFERENCE MANUAL~
+		    ADA FILE TYPE PLUG-INS REFERENCE MANUAL~
 
 ADA								      *ada.vim*
 
@@ -35,13 +35,13 @@ The Ada mode handles a number of situations cleanly.
 
 For example, it knows that the "-" in "-5" is a number, but the same character
 in "A-5" is an operator.  Normally, a "with" or "use" clause referencing
-another compilation unit is colored the same way as C's "#include" is colored.
-If you have "Conditional" or "Repeat" groups colored differently, then "end
-if" and "end loop" will be colored as part of those respective groups.
+another compilation unit is coloured the same way as C's "#include" is coloured.
+If you have "Conditional" or "Repeat" groups coloured differently, then "end
+if" and "end loop" will be coloured as part of those respective groups.
 
-You can set these to different colors using vim's "highlight" command (e.g.,
+You can set these to different colours using vim's "highlight" command (e.g.,
 to change how loops are displayed, enter the command ":hi Repeat" followed by
-the color specification; on simple terminals the color specification
+the colour specification; on simple terminals the colour specification
 ctermfg=White often shows well).
 
 There are several options you can select in this Ada mode. See|ft-ada-options|
@@ -69,38 +69,40 @@ performance unacceptable, turn on |g:ada_withuse_ordinary|.
 
 The Ada plug-in provides support for:
 
- - auto indenting      (see|indent.txt|for details)
- - insert completion   (see|complete-functions|for details)
- - tag searches        (see|tagsrch.txt|for details)
- - backspace handling
+ - auto indenting	(|indent.txt|)
+ - insert completion	(|i_CTRL-N|)
+ - user completion	(|i_CTRL-X_CTRL-U|)
+ - tag searches		(|tagsrch.txt|)
+ - Quick Fix		(|quickfix.txt|)
+ - backspace handling	(|'backspace'|)
+ - comment handling	(|'comments'|, |'commentstring'|)
+ - syntax folding	(|fold.txt|)
 
-The plug-in also activates the other features of the Ada mode whenever an Ada
+The plug-in only activates the features of the Ada mode whenever an Ada
 files is opened and add adds Ada related entries to the main and pop-up menu.
 
 ==============================================================================
 3. Omni Completion ~
 								 *ft-ada-omni*
 
-The Ada omni-completions which uses tags database created either by
-"gnat xref -v" or the "exuberant Ctags (http://ctags.sourceforge.net).
-The complete function will automatically detect which tool was used to create
-the tags file.
-
-See |complete-functions|for details of insert completions.
+The Ada omni-completions (|i_CTRL-X_CTRL-O|) uses tags database created either
+by "gnat xref -v" or the "exuberant Ctags (http://ctags.sourceforge.net).  The
+complete function will automatically detect which tool was used to create the
+tags file.
 
 ------------------------------------------------------------------------------
 3.1 Omni Completion with "gnat xref" ~
 								   *gnat-xref*
 
-gnat xref uses the compiler internal informations (ali-files) to produce a
-tags file. This has the advantage to be 100% correct and the option deep
+GNAT XREF uses the compiler internal informations (ali-files) to produce the
+tags file. This has the advantage to be 100% correct and the option of deep
 nested analysis. However the code must compile, the generator is quite
 slow and the created tags file contains only the basic Ctags informations for
-each entry - not enough for some of the more advanced vim code browser
+each entry - not enough for some of the more advanced Vim code browser
 plug-ins.
 
 NOTE: "gnat xref -v" is very tricky to use as it has almost no diagnostic
-       output - If nothing is printed then usualy the parameters are wrong.
+       output - If nothing is printed then usually the parameters are wrong.
        Here some important tips:
 
 1)  You need to compile your code first and use the "-aO" option to point to
@@ -113,7 +115,8 @@ NOTE: "gnat xref -v" is very tricky to use as it has almost no diagnostic
     -Padacl.gpr".
 5)  VIM is faster when the tags file is sorted - use "sort --unique
     --ignore-case --output=tags tags" .
-6)  Remember to insert "!_TAG_FILE_SORTED 2 %sort ui" as first line.
+6)  Remember to insert "!_TAG_FILE_SORTED 2 %sort ui" as first line to mark
+    the file assorted.
 
 ------------------------------------------------------------------------------
 3.2 Omni Completion with "ctags"~
@@ -123,7 +126,7 @@ Exuberant Ctags uses it's own multi-language code parser. The parser is quite
 fast, produces a lot of extra informations (hence the name "Exuberant Ctags")
 and can run on files which currently do not compile.
 
-There are also lots of other vim-tools which use exuberant Ctags.
+There are also lots of other Vim-tools which use exuberant Ctags.
 
 You will need to install a version of the Exuberant Ctags which has Ada
 support patched in. Such a version is available from the GNU Ada Project
@@ -167,8 +170,8 @@ Dec Ada (also known by - in chronological order - VAX Ada, Dec Ada, Compaq Ada
 and HP Ada) is a fairly dated Ada 83 compiler. Support is basic: <F7> will
 compile the current unit.
 
-The Dec Ada compiler expects the package name and not the filename to be
-passed a parameter. The compiler plug-in supports the usual filename
+The Dec Ada compiler expects the package name and not the file name to be
+passed a parameter. The compiler plug-in supports the usual file name
 convention to convert the file into a unit name. For separates both '-' and
 '__' are allowed.
 
@@ -204,8 +207,8 @@ g:ada_line_errors	  bool (true when exists)
 
 							 *g:ada_rainbow_color*
 g:ada_rainbow_color	  bool (true when exists)
-		Use rainbow color for '(' and ')'. You need the
-		rainbow_parenthsis for this to work
+		Use rainbow colour for '(' and ')'. You need the
+		rainbow_parenthesis for this to work
 
 							       *g:ada_folding*
 g:ada_folding		  bool (true when exists)
@@ -213,7 +216,8 @@ g:ada_folding		  bool (true when exists)
 
 								*g:ada_abbrev*
 g:ada_abbrev		  bool (true when exists)
-		Add some abbreviations
+		Add some abbreviations. This feature more or less superseded
+		by the various completion methods.
 
 						      *g:ada_withuse_ordinary*
 g:ada_withuse_ordinary	  bool (true when exists)
@@ -223,9 +227,14 @@ g:ada_withuse_ordinary	  bool (true when exists)
 
 							 *g:ada_begin_preproc*
 g:ada_begin_preproc	  bool (true when exists)
-		Show all begin-like keywords using the coloring of C
+		Show all begin-like keywords using the colouring of C
 		preprocessor commands.
 
+						    *g:ada_omni_with_keywords*
+g:ada_omni_with_keywords
+		Add Keywords, Pragmas, Attributes to omni-completions
+		(|compl-omni|). Note: You can always complete then with user
+		completion (|i_CTRL-X_CTRL-U|).
 
 						      *g:ada_extended_tagging*
 g:ada_extended_tagging	  enum ('jump', 'list')
@@ -233,8 +242,15 @@ g:ada_extended_tagging	  enum ('jump', 'list')
 		    'jump': use tjump to jump.
 		    'list': add tags quick fix list.
 		Normal tagging does not support function or operator
-		overloading as this is available in C and tagging was
-		originally developed for C.
+		overloading as these features are not available in C and
+		tagging was originally developed for C.
+
+						   *g:ada_extended_completion*
+g:ada_extended_completion
+		Uses extended completion for <C-N> and <C-R> completions
+		(|i_CTRL-N|). In this mode the '.' is used as part of the
+		identifier so that 'Object.Method' or 'Package.Procedure' are
+		completed together.
 
 						       *g:ada_gnat_extensions*
 g:ada_gnat_extensions	  bool (true when exists)
@@ -242,7 +258,7 @@ g:ada_gnat_extensions	  bool (true when exists)
 
 					       *g:ada_with_gnat_project_files*
 g:ada_with_gnat_project_files	 bool (true when exists)
-		 Add gnat project file keywords
+		 Add gnat project file keywords and Attributes.
 
 						      *g:ada_default_compiler*
 g:ada_default_compiler	  string
@@ -250,7 +266,7 @@ g:ada_default_compiler	  string
 		'decada'.
 
 An "exists" type is a boolean is considered true when the variable is defined
-and false when the variable is undefined. The value ti which the variable is
+and false when the variable is undefined. The value which the variable is
 set makes no difference.
 
 ------------------------------------------------------------------------------
@@ -289,7 +305,7 @@ g:gnat			    object
 					  *g:decada.Make* *g:decada.Unit_Name*
 			       *g:decada.Make_Command* *g:decada.Error_Format*
 g:decada		      object
-		Control object which manages GNAT compiles.  The object
+		Control object which manages Dec Ada compiles.	The object
 		is created when the first Ada source code is loaded provided
 		that |g:ada_default_compiler|is set to 'decada'.  It  has the
 		following members:
@@ -312,15 +328,15 @@ All constants are locked. See |lockvar| for details.
 
 							     *g:ada#WordRegex*
 g:ada#WordRegex		string
-		Regular expression to search for ada words
+		Regular expression to search for Ada words
 
 							  *g:ada#DotWordRegex*
 g:ada#DotWordRegex	string
-		Regular expression to search for ada words seperated by dots.
+		Regular expression to search for Ada words separated by dots.
 
 							       *g:ada#Comment*
 g:ada#Comment		string
-		Regular expression to search for ada comments
+		Regular expression to search for Ada comments
 
 							      *g:ada#Keywords*
 g:ada#Keywords		list of dictionaries
@@ -329,8 +345,8 @@ g:ada#Keywords		list of dictionaries
 
 							   *g:ada#Ctags_Kinds*
 g:ada#Ctags_Kinds	dictionary of lists
-		Dictionary of the various kinds which the Ada support for
-		Ctags supports.
+		Dictionary of the various kinds of items which the Ada support
+		for Ctags generates.
 
 ------------------------------------------------------------------------------
 5.2 Functions ~
@@ -338,7 +354,7 @@ g:ada#Ctags_Kinds	dictionary of lists
 
 ada#Word([{line}, {col}])					  *ada#Word()*
 		Return full name of Ada entity under the cursor (or at given
-		line/column), stripping whitespace/newlines as necessary.
+		line/column), stripping white space/newlines as necessary.
 
 ada#List_Tag([{line}, {col}])				      *ada#Listtags()*
 		List all occurrences of the Ada entity under the cursor (or at
@@ -352,7 +368,11 @@ ada#Jump_Tag ({ident}, {mode})				      *ada#Jump_Tag()*
 ada#Create_Tags ({option})				   *ada#Create_Tags()*
 		Creates tag file using Ctags. The option can either be 'file'
 		for the current file, 'dir' for the directory of the current
-		file or a filename.
+		file or a file name.
+
+gnat#Insert_Tags_Header()			   *gnat#Insert_Tags_Header()*
+		Adds the tag file header (!_TAG_) informations to the current
+		file which are missing from the GNAT XREF output.
 
 ada#Switch_Syntax_Option ({option})		  *ada#Switch_Syntax_Option()*
 		Toggles highlighting options on or off. Used for the Ada menu.
@@ -360,6 +380,7 @@ ada#Switch_Syntax_Option ({option})		  *ada#Switch_Syntax_Option()*
 								  *gnat#New()*
 gnat#New ()
 		Create a new gnat object. See |g:gnat| for details.
+
 
 ==============================================================================
 8. Extra Plugins ~
@@ -395,4 +416,4 @@ contains all of the above.
 
 ==============================================================================
 vim: textwidth=78 nowrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab
-vim: filetype=help encoding=latin1
+vim: filetype=help encoding=latin1 spelllang=en_gb spell

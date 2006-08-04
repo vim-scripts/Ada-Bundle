@@ -1,14 +1,14 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada indent file
 "     Language: Ada (2005)
-"          $Id: ada.vim 333 2006-07-25 16:21:21Z krischik $
+"          $Id: ada.vim 343 2006-07-28 17:54:11Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer: Martin Krischik
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"        $Date: 2006-07-25 18:21:21 +0200 (Di, 25 Jul 2006) $
-"      Version: 3.3
-"    $Revision: 333 $
+"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
+"      Version: 3.4
+"    $Revision: 343 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/indent/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               16.07.2006 MK Ada-Mode as vim-ball
@@ -41,6 +41,8 @@ else
       let s:AdaBlockStart = '^\s*\(if\>\|while\>\|else\>\|elsif\>\|loop\>\|for\>.*\<\(loop\|use\)\>\|declare\>\|begin\>\|type\>.*\<is\>[^;]*$\|\(type\>.*\)\=\<record\>\|procedure\>\|function\>\|accept\>\|do\>\|task\>\|package\>\|then\>\|when\>\|is\>\)'
    endif
 
+   " Section: s:MainBlockIndent {{{1
+   "
    " Try to find indent of the block we're in
    " prev_indent = the previous line's indent
    " prev_lnum   = previous line (to start looking on)
@@ -81,6 +83,8 @@ else
       return a:prev_indent - &sw
    endfunction MainBlockIndent
 
+   " Section: s:EndBlockIndent {{{1
+   "
    " Try to find indent of the block we're in (and about to complete),
    " including handling of nested blocks. Works on the 'end' of a block.
    " prev_indent = the previous line's indent
@@ -123,6 +127,8 @@ else
       return a:prev_indent - &sw
    endfunction EndBlockIndent
 
+   " Section: s:StatementIndent {{{1
+   "
    " Return indent of previous statement-start
    " (after we've indented due to multi-line statements).
    " This time, we start searching on the line *before* the one given (which is
@@ -160,7 +166,10 @@ else
    endfunction StatementIndent
 
 
+   " Section: GetAdaIndent {{{1
+   "
    " Find correct indent of a new line based upon what went before
+   "
    function GetAdaIndent()
       " Find a non-blank line above the current line.
       let lnum = prevnonblank(v:lnum - 1)
@@ -277,6 +286,7 @@ else
       return ind
    endfunction GetAdaIndent
 
+   " 1}}}
    finish
 endif
 
@@ -298,4 +308,4 @@ endif
 "   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 "------------------------------------------------------------------------------
 " vim: textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 expandtab
-" vim: filetype=vim encoding=latin1 fileformat=unix
+" vim: filetype=vim encoding=latin1 fileformat=unix foldmethod=marker nospell

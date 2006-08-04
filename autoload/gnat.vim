@@ -1,14 +1,14 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/GNAT compiler file
 "     Language: Ada (GNAT)
-"          $Id: gnat.vim 314 2006-07-18 17:11:31Z krischik $
+"          $Id: gnat.vim 343 2006-07-28 17:54:11Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-18 19:11:31 +0200 (Di, 18 Jul 2006) $
-"      Version: 3.3
-"    $Revision: 314 $
-"     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/compiler/gnat.vim $
+"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
+"      Version: 3.4
+"    $Revision: 343 $
+"     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/gnat.vim $
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "    Help Page: compiler-gnat
@@ -17,6 +17,10 @@
 if exists("g:loaded_gnat_autoload") || version < 700
     finish
 else
+   let g:loaded_gnat_autoload=34
+
+   " Section: gnat#Make () {{{1
+   "
    function gnat#Make () dict
       let &l:makeprg	   = eval (self.Make_Command)
       let &l:errorformat = self.Error_Format
@@ -27,10 +31,14 @@ else
       wincmd W
    endfunction gnat#Make
 
+   " Section: gnat#Find () {{{1
+   "
    function gnat#Find () dict
       execute "!" . eval (self.Find_Command)
    endfunction gnat#Find
 
+   " Section: gnat#Tags () {{{1
+   "
    function gnat#Tags () dict
       execute "!" . eval (self.Tags_Command)
       edit tags
@@ -39,6 +47,8 @@ else
       quit
    endfunction gnat#Tags
 
+   " Section: gnat#Set_Project_File () {{{1
+   "
    function gnat#Set_Project_File () dict
       if strlen (self.Project_File) > 0
 	 let self.Project_File = browse (0, 'GNAT Project File?', '', self.Project_File)
@@ -48,6 +58,8 @@ else
       return
    endfunction gnat#Set_Project_File
 
+   " Section: gnat#New () {{{1
+   "
    function gnat#New ()
       return {
 	 \ 'Make'	      : function ('gnat#Make'),
@@ -65,6 +77,8 @@ else
 			\ '%f:%l:%c: (%ttyle) %m'}
    endfunction gnat#New
 
+   " Section: gnat#Insert_Tags_Header () {{{1
+   "
    function gnat#Insert_Tags_Header ()
       1insert
 !_TAG_FILE_FORMAT       1       /extended format; --format=1 will not append ;" to lines/
@@ -77,7 +91,8 @@ else
       return
    endfunction gnat#Insert_Tags_Header
 
-   let g:loaded_gnat_autoload=1
+   " 1}}}
+
    finish
 endif
 
@@ -99,4 +114,4 @@ endif
 "   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 "------------------------------------------------------------------------------
 " vim: textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
-" vim: filetype=vim encoding=latin1 fileformat=unix
+" vim: filetype=vim encoding=latin1 fileformat=unix  foldmethod=marker

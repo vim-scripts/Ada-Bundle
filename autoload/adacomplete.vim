@@ -1,12 +1,12 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada omnicompletion file
 "     Language:	Ada (2005)
-"          $Id: adacomplete.vim 333 2006-07-25 16:21:21Z krischik $
+"          $Id: adacomplete.vim 343 2006-07-28 17:54:11Z krischik $
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-25 18:21:21 +0200 (Di, 25 Jul 2006) $
-"      Version: 3.3
-"    $Revision: 333 $
+"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
+"      Version: 3.4
+"    $Revision: 343 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/adacomplete.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK improved search for begin of word.
@@ -26,45 +26,26 @@ endif
 if exists ('g:loaded_syntax_completion') || version < 700
     finish
 else
-   let g:loaded_syntax_completion = 20
+   let g:loaded_syntax_completion = 34
 
-   "--------------------------------------------------------------------------
-   "
+   " Section: adacomplete#Complete () {{{1
    "
    " This function is used for the 'omnifunc' option.
    "
-   function! adacomplete#Complete(findstart, base)
+   function! adacomplete#Complete (findstart, base)
       if a:findstart == 1
-         "
-         " locate the start of the word
-         "
-         let line = getline ('.')
-         let start = col ('.') - 1
-         while start > 0 && line[start - 1] =~ '\i\|'''
-	    let start -= 1
-         endwhile
-         return start
+	 return ada#User_Complete (a:findstart, a:base)
       else
          "
          " look up matches
          "
-         let l:Pattern = '^' . a:base . '.*$'
-         "
-         " add keywords
-         "
-         for Tag_Item in g:ada#Keywords
-	   if l:Tag_Item['word'] =~? l:Pattern
-	       if complete_add (l:Tag_Item) == 0
-		   return []
-	       endif
-	       if complete_check ()
-		   return []
-	       endif
-	   endif
-         endfor
+	 if exists ("g:ada_omni_with_keywords")
+	    call ada#User_Complete (a:findstart, a:base)
+	 endif	    
          "
          "  search tag file for matches
          "
+         let l:Pattern  = '^' . a:base . '.*$'
          let l:Tag_List = taglist (l:Pattern)
          "
          " add symbols
@@ -122,6 +103,8 @@ else
       endif
    endfunction adacomplete#Complete
 
+   " }}}1
+
    finish
 endif
 
@@ -143,4 +126,4 @@ endif
 "   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 "------------------------------------------------------------------------------
 " vim: textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
-" vim: filetype=vim encoding=latin1 fileformat=unix
+" vim: filetype=vim encoding=latin1 fileformat=unix foldmethod=marker

@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"          $Id: ada.vim 333 2006-07-25 16:21:21Z krischik $
+"          $Id: ada.vim 343 2006-07-28 17:54:11Z krischik $
 "   Maintainer: Martin Krischik
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"        $Date: 2006-07-25 18:21:21 +0200 (Di, 25 Jul 2006) $
-"      Version: 3.3
-"    $Revision: 333 $
+"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
+"      Version: 3.4
+"    $Revision: 343 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -18,24 +18,18 @@
 if exists ('g:loaded_ada_autoload') || version < 700
    finish
 else
-   " Extract current Ada word across multiple lines
-   " AdaWord ([line, column])\
+   let g:loaded_ada_autoload  = 34
+
+   " Section: Constants {{{1
    "
-   " 1 alphabetic, many word chars,
-   " many of (many spaces/nl dot many spaces/nl 1 alphabetic, many word chars)
-   "
-   let g:loaded_ada_autoload  = 1
    let g:ada#DotWordRegex     = '\a\w*\(\_s*\.\_s*\a\w*\)*'
-   "
-   " 1 alphabetic, many word char
-   "
    let g:ada#WordRegex        = '\a\w*'
    let g:ada#Comment          = "\\v^(\"[^\"]*\"|'.'|[^\"']){-}\\zs\\s*--.*"
    let g:ada#Keywords         = []
 
-   "--------------------------------------------------------------------------
+   " Section: g:ada#Keywords {{{1
    "
-   "   add  Ada keywords
+   " Section: add Ada keywords {{{2
    "
    for Item in ['abort', 'else', 'new', 'return', 'abs', 'elsif', 'not', 'reverse', 'abstract', 'end', 'null', 'accept', 'entry', 'select', 'access', 'exception', 'of', 'separate', 'aliased', 'exit', 'or', 'subtype', 'all', 'others', 'synchronized', 'and', 'for', 'out', 'array', 'function', 'overriding', 'tagged', 'at', 'task', 'generic', 'package', 'terminate', 'begin', 'goto', 'pragma', 'then', 'body', 'private', 'type', 'if', 'procedure', 'case', 'in', 'protected', 'until', 'constant', 'interface', 'use', 'is', 'raise', 'declare', 'range', 'when', 'delay', 'limited', 'record', 'while', 'delta', 'loop', 'rem', 'with', 'digits', 'renames', 'do', 'mod', 'requeue', 'xor']
        let g:ada#Keywords += [{
@@ -45,6 +39,9 @@ else
                \ 'kind':  'k',
                \ 'icase': 1}]
    endfor
+
+   " Section: GNAT Project Files {{{3
+   "
    if exists ('g:ada_with_gnat_project_files')
        for Item in ['project']
           let g:ada#Keywords += [{
@@ -56,9 +53,7 @@ else
        endfor
    endif
 
-   "--------------------------------------------------------------------------
-   "
-   "   add  standart exception
+   " Section: add  standart exception {{{2
    "
    for Item in ['Constraint_Error', 'Program_Error', 'Storage_Error', 'Tasking_Error', 'Status_Error', 'Mode_Error', 'Name_Error', 'Use_Error', 'Device_Error', 'End_Error', 'Data_Error', 'Layout_Error', 'Length_Error', 'Pattern_Error', 'Index_Error', 'Translation_Error', 'Time_Error', 'Argument_Error', 'Tag_Error', 'Picture_Error', 'Terminator_Error', 'Conversion_Error', 'Pointer_Error', 'Dereference_Error', 'Update_Error']
        let g:ada#Keywords += [{
@@ -68,6 +63,9 @@ else
                \ 'kind':  'x',
                \ 'icase': 1}]
    endfor
+
+   " Section: add  GNAT exception {{{3
+   "
    if exists ('g:ada_gnat_extensions')
        for Item in ['Assert_Failure']
            let g:ada#Keywords += [{
@@ -79,9 +77,7 @@ else
        endfor
    endif
 
-   "--------------------------------------------------------------------------
-   "
-   "   add buildin types
+   " Section: add Ada buildin types {{{2
    "
    for Item in ['Boolean', 'Integer', 'Natural', 'Positive', 'Float', 'Character', 'Wide_Character', 'Wide_Wide_Character', 'String', 'Wide_String', 'Wide_Wide_String', 'Duration']
        let g:ada#Keywords += [{
@@ -91,6 +87,9 @@ else
                \ 'kind':  't',
                \ 'icase': 1}]
    endfor
+
+   " Section: add GNAT buildin types {{{3
+   "
    if exists ('g:ada_gnat_extensions')
        for Item in ['Short_Integer', 'Short_Short_Integer', 'Long_Integer', 'Long_Long_Integer', 'Short_Float', 'Short_Short_Float', 'Long_Float', 'Long_Long_Float']
            let g:ada#Keywords += [{
@@ -102,9 +101,7 @@ else
        endfor
    endif
 
-   "--------------------------------------------------------------------------
-   "
-   "   add  Ada Attributes
+   " Section: add Ada Attributes {{{2
    "
    for Item in ['''Access', '''Address', '''Adjacent', '''Aft', '''Alignment', '''Base', '''Bit_Order', '''Body_Version', '''Callable', '''Caller', '''Ceiling', '''Class', '''Component_Size', '''Compose', '''Constrained', '''Copy_Sign', '''Count', '''Definite', '''Delta', '''Denorm', '''Digits', '''Emax', '''Exponent', '''External_Tag', '''Epsilon', '''First', '''First_Bit', '''Floor', '''Fore', '''Fraction', '''Identity', '''Image', '''Input', '''Large', '''Last', '''Last_Bit', '''Leading_Part', '''Length', '''Machine', '''Machine_Emax', '''Machine_Emin', '''Machine_Mantissa', '''Machine_Overflows', '''Machine_Radix', '''Machine_Rounding', '''Machine_Rounds', '''Mantissa', '''Max', '''Max_Size_In_Storage_Elements', '''Min', '''Mod', '''Model', '''Model_Emin', '''Model_Epsilon', '''Model_Mantissa', '''Model_Small', '''Modulus', '''Output', '''Partition_ID', '''Pos', '''Position', '''Pred', '''Priority', '''Range', '''Read', '''Remainder', '''Round', '''Rounding', '''Safe_Emax', '''Safe_First', '''Safe_Large', '''Safe_Last', '''Safe_Small', '''Scale', '''Scaling', '''Signed_Zeros', '''Size', '''Small', '''Storage_Pool', '''Storage_Size', '''Stream_Size', '''Succ', '''Tag', '''Terminated', '''Truncation', '''Unbiased_Rounding', '''Unchecked_Access', '''Val', '''Valid', '''Value', '''Version', '''Wide_Image', '''Wide_Value', '''Wide_Wide_Image', '''Wide_Wide_Value', '''Wide_Wide_Width', '''Wide_Width', '''Width', '''Write']
        let g:ada#Keywords += [{
@@ -114,6 +111,9 @@ else
                \ 'kind':  'a',
                \ 'icase': 1}]
    endfor
+
+   " Section: add GNAT Attributes {{{3
+   "
    if exists ('g:ada_gnat_extensions')
        for Item in ['''Abort_Signal', '''Address_Size', '''Asm_Input', '''Asm_Output', '''AST_Entry', '''Bit', '''Bit_Position', '''Code_Address', '''Default_Bit_Order', '''Elaborated', '''Elab_Body', '''Elab_Spec', '''Emax', '''Enum_Rep', '''Epsilon', '''Fixed_Value', '''Has_Access_Values', '''Has_Discriminants', '''Img', '''Integer_Value', '''Machine_Size', '''Max_Interrupt_Priority', '''Max_Priority', '''Maximum_Alignment', '''Mechanism_Code', '''Null_Parameter', '''Object_Size', '''Passed_By_Reference', '''Range_Length', '''Storage_Unit', '''Target_Name', '''Tick', '''To_Address', '''Type_Class', '''UET_Address', '''Unconstrained_Array', '''Universal_Literal_String', '''Unrestricted_Access', '''VADS_Size', '''Value_Size', '''Wchar_T_Size', '''Word_Size']
        let g:ada#Keywords += [{
@@ -125,9 +125,7 @@ else
        endfor
    endif
 
-   "--------------------------------------------------------------------------
-   "
-   "   add  Ada Pragmas
+   " Section: add Ada Pragmas {{{2
    "
    for Item in ['All_Calls_Remote', 'Assert', 'Assertion_Policy', 'Asynchronous', 'Atomic', 'Atomic_Components', 'Attach_Handler', 'Controlled', 'Convention', 'Detect_Blocking', 'Discard_Names', 'Elaborate', 'Elaborate_All', 'Elaborate_Body', 'Export', 'Import', 'Inline', 'Inspection_Point', 'Interface (Obsolescent)', 'Interrupt_Handler', 'Interrupt_Priority', 'Linker_Options', 'List', 'Locking_Policy', 'Memory_Size (Obsolescent)', 'No_Return', 'Normalize_Scalars', 'Optimize', 'Pack', 'Page', 'Partition_Elaboration_Policy', 'Preelaborable_Initialization', 'Preelaborate', 'Priority', 'Priority_Specific_Dispatching', 'Profile', 'Pure', 'Queueing_Policy', 'Relative_Deadline', 'Remote_Call_Interface', 'Remote_Types', 'Restrictions', 'Reviewable', 'Shared (Obsolescent)', 'Shared_Passive', 'Storage_Size', 'Storage_Unit (Obsolescent)', 'Suppress', 'System_Name (Obsolescent)', 'Task_Dispatching_Policy', 'Unchecked_Union', 'Unsuppress', 'Volatile', 'Volatile_Components']
        let g:ada#Keywords += [{
@@ -137,6 +135,9 @@ else
                \ 'kind':  'p',
                \ 'icase': 1}]
    endfor
+
+   " Section: add GNAT Pragmas {{{3
+   "
    if exists ('g:ada_gnat_extensions')
        for Item in ['Abort_Defer', 'Ada_83', 'Ada_95', 'Ada_05', 'Annotate', 'Ast_Entry', 'C_Pass_By_Copy', 'Comment', 'Common_Object', 'Compile_Time_Warning', 'Complex_Representation', 'Component_Alignment', 'Convention_Identifier', 'CPP_Class', 'CPP_Constructor', 'CPP_Virtual', 'CPP_Vtable', 'Debug', 'Elaboration_Checks', 'Eliminate', 'Export_Exception', 'Export_Function', 'Export_Object', 'Export_Procedure', 'Export_Value', 'Export_Valued_Procedure', 'Extend_System', 'External', 'External_Name_Casing', 'Finalize_Storage_Only', 'Float_Representation', 'Ident', 'Import_Exception', 'Import_Function', 'Import_Object', 'Import_Procedure', 'Import_Valued_Procedure', 'Initialize_Scalars', 'Inline_Always', 'Inline_Generic', 'Interface_Name', 'Interrupt_State', 'Keep_Names', 'License', 'Link_With', 'Linker_Alias', 'Linker_Section', 'Long_Float', 'Machine_Attribute', 'Main_Storage', 'Obsolescent', 'Passive', 'Polling', 'Profile_Warnings', 'Propagate_Exceptions', 'Psect_Object', 'Pure_Function', 'Restriction_Warnings', 'Source_File_Name', 'Source_File_Name_Project', 'Source_Reference', 'Stream_Convert', 'Style_Checks', 'Subtitle', 'Suppress_All', 'Suppress_Exception_Locations', 'Suppress_Initialization', 'Task_Info', 'Task_Name', 'Task_Storage', 'Thread_Body', 'Time_Slice', 'Title', 'Unimplemented_Unit', 'Universal_Data', 'Unreferenced', 'Unreserve_All_Interrupts', 'Use_VADS_Size', 'Validity_Checks', 'Warnings', 'Weak_External']
            let g:ada#Keywords += [{
@@ -147,8 +148,11 @@ else
                    \ 'icase': 1}]
        endfor
    endif
+   " 1}}}
 
-  let g:ada#Ctags_Kinds = {
+   " Section: g:ada#Ctags_Kinds {{{1
+   "
+   let g:ada#Ctags_Kinds = {
       \ 'P': ["packspec",    "package specifications"],
       \ 'p': ["package",     "packages"],
       \ 'T': ["typespec",    "type specifications"],
@@ -175,8 +179,10 @@ else
       \ 'a': ["autovar",     "automatic variables"],
       \ 'y': ["annon",       "loops and blocks with no identifier"]}
 
-   "--------------------------------------------------------------------------
+   " Section: ada#Word (...) {{{1
    "
+   " Extract current Ada word across multiple lines
+   " AdaWord ([line, column])\
    "
    function ada#Word (...)
       if a:0 > 1
@@ -262,7 +268,7 @@ else
       return substitute (l:Match_String, '\s\+', '', 'g')
    endfunction ada#Word
 
-   "--------------------------------------------------------------------------
+   " Section: ada#List_Tag (...) {{{1
    "
    "  List tags in quickfix window
    "
@@ -277,7 +283,8 @@ else
 
       echo "Searching for" l:Tag_Word
 
-      let l:Tag_List = taglist (l:Tag_Word)
+      let l:Pattern = '^' . l:Tag_Word . '$'
+      let l:Tag_List = taglist (l:Pattern)
       let l:Error_List = []
       "
       " add symbols
@@ -298,7 +305,7 @@ else
       cwindow
    endfunction ada#List_Tag
 
-   "--------------------------------------------------------------------------
+   " Section: ada#Jump_Tag (Word, Mode) {{{1
    "
    " Word tag - include '.' and if Ada make uppercase
    "
@@ -327,7 +334,7 @@ else
       return
    endfunction ada#Jump_Tag
 
-   "--------------------------------------------------------------------------
+   " Section: ada#Insert_Backspace () {{{1
    "
    " Backspace at end of line after auto-inserted commentstring '-- ' wipes it
    "
@@ -344,7 +351,46 @@ else
       return
    endfunction ada#InsertBackspace
 
-   "--------------------------------------------------------------------------
+   " Section: Insert Completions {{{1
+   "
+   " Section: ada#User_Complete(findstart, base) {{{2
+   "
+   " This function is used for the 'complete' option.
+   "
+   function! ada#User_Complete(findstart, base)
+      if a:findstart == 1
+         "
+         " locate the start of the word
+         "
+         let line = getline ('.')
+         let start = col ('.') - 1
+         while start > 0 && line[start - 1] =~ '\i\|'''
+	    let start -= 1
+         endwhile
+         return start
+      else
+         "
+         " look up matches
+         "
+         let l:Pattern = '^' . a:base . '.*$'
+         "
+         " add keywords
+         "
+         for Tag_Item in g:ada#Keywords
+	   if l:Tag_Item['word'] =~? l:Pattern
+	       if complete_add (l:Tag_Item) == 0
+		   return []
+	       endif
+	       if complete_check ()
+		   return []
+	       endif
+	   endif
+         endfor
+	 return []
+      endif
+   endfunction ada#User_Complete
+
+   " Section: ada#Completion (cmd) {{{2
    "
    " Word completion (^N/^R/^X^]) - force '.' inclusion
    function ada#Completion (cmd)
@@ -352,23 +398,15 @@ else
       return a:cmd . "\<C-R>=ada#Completion_End ()\<CR>"
    endfunction ada#Completion
 
+   " Section: ada#Completion_End () {{{2
+   "
    function ada#Completion_End ()
       set iskeyword-=46
       return ''
    endfunction ada#Completion_End
 
-   function ada#Switch_Syntax_Option (option)
-      syntax off
-      if exists ('g:ada_' . a:option)
-         unlet g:ada_{a:option}
-         echo  a:option . 'now off'
-      else
-         let g:ada_{a:option}=1
-         echo  a:option . 'now on'
-      endif
-      syntax on
-   endfunction ada#Switch_Syntax_Option
-
+   " Section: ada#Create_Tags {{{1
+   "
    function ada#Create_Tags (option)
       if a:option == 'file'
          let l:Filename = fnamemodify (bufname ('%'), ':p')
@@ -383,6 +421,25 @@ else
       execute '!ctags --excmd=number ' . l:Filename
    endfunction ada#Create_Tags
 
+
+   " Section: Options and Menus {{{2
+   "
+   " Section: ada#Switch_Syntax_Options {{{2
+   "
+   function ada#Switch_Syntax_Option (option)
+      syntax off
+      if exists ('g:ada_' . a:option)
+         unlet g:ada_{a:option}
+         echo  a:option . 'now off'
+      else
+         let g:ada_{a:option}=1
+         echo  a:option . 'now on'
+      endif
+      syntax on
+   endfunction ada#Switch_Syntax_Option
+
+   " Section: ada#Map_Menu {{{2
+   "
    function ada#Map_Menu (Text, Keys, Command)
       if a:Keys[0] == ':'
          execute
@@ -426,6 +483,8 @@ else
       return
    endfunction
 
+   " Section: ada#Map_Popup {{{2
+   "
    function ada#Map_Popup (Text, Keys, Command)
       execute
         \ "50amenu " .
@@ -436,6 +495,8 @@ else
       call ada#Map_Menu (a:Text, a:Keys, a:Command)
       return
    endfunction ada#Map_Popup
+
+   " }}}1
 
    lockvar  g:ada#WordRegex
    lockvar  g:ada#DotWordRegex
@@ -464,4 +525,4 @@ endif
 "   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 "------------------------------------------------------------------------------
 " vim: textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 expandtab
-" vim: filetype=vim encoding=latin1 fileformat=unix
+" vim: filetype=vim encoding=latin1 fileformat=unix foldmethod=marker
