@@ -5,7 +5,7 @@
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
 "        $Date: 2006-07-27 21:03:11 +0200 (Do, 27 Jul 2006) $
-"      Version: 3.4
+"      Version: 3.5
 "    $Revision: 342 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ada_options.vim $
 "      History:	24.05.2006 MK Unified Headers

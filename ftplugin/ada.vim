@@ -6,7 +6,7 @@
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
 "        $Date: 2006-07-27 21:03:11 +0200 (Do, 27 Jul 2006) $
-"      Version: 3.4
+"      Version: 3.5
 "    $Revision: 342 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftplugin/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
@@ -63,7 +63,7 @@ else
    "
    setlocal completefunc=ada#User_Complete
    setlocal omnifunc=adacomplete#Complete
-   
+
    if exists ("g:ada_extended_completion")
       if mapcheck ('<C-N>','i') == ''
          inoremap <unique> <buffer> <C-N> <C-R>=ada#Completion("\<lt>C-N>")<cr>
@@ -157,7 +157,7 @@ else
       \'Highlight.Toggle Standard Types',
       \ ':AdaTypes',
       \'call ada#Switch_Syntax_Option (''standard_types'')')
-   
+
    " 1}}}
    " Reset cpoptions
    let &cpoptions = s:cpoptions

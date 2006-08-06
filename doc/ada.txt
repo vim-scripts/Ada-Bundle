@@ -1,4 +1,4 @@
-*ada.txt*	  Ada File type Plug-ins	      Last change: 2006 Apr 30
+*ada.txt*	  Ada File type Plug-ins	      Last change: 2006 Aug 06
 
 
 		    ADA FILE TYPE PLUG-INS REFERENCE MANUAL~
@@ -16,8 +16,9 @@ ADA								      *ada.vim*
 5.  References				    |ada-reference|
     5.1 Options					|ft-ada-options|
     5.2 Functions				|ft-ada-functions|
-    5.3 Variables				|ft-ada-variables|
-    5.4 Constants				|ft-ada-contstants|
+    5.3 Commands				|ft-ada-commands|
+    5.4 Variables				|ft-ada-variables|
+    5.5 Constants				|ft-ada-contstants|
 8.  Extra Plug-ins			    |ada-extra-plugins|
 
 ==============================================================================
@@ -155,11 +156,65 @@ several version available which differentiate in the licence terms used.
 
 The GNAT compiler plug-in will perform a compile on pressing <F7> and then
 immediately shows the result. You can set the project file to be used by
-setting
+setting:
  >
- > let g:gnat.Project_File='my_project.gpr'
->
-For more options see |g:gnat|.
+ > call g:gnat.Set_Project_File ('my_project.gpr')
+
+Setting a project file will also create a Vim session (|views-sessions|) so -
+like with the GPS - opened files, window positions etc. will remembered
+separately for all projects.
+
+								*gnat_members*
+GNAT OBJECT ~
+
+							       *g:gnat.Make()*
+g:gnat.Make()
+		Calls|g:gnat.Make_Command|and displays the result inside a
+               |quickfix| window.
+
+							     *g:gnat.Pretty()*
+g:gnat.Pretty()
+		Calls|g:gnat.Pretty_Command|
+
+							       *g:gnat.Find()*
+g:gnat.Find()
+		Calls|g:gnat.Find_Command|
+
+							       *g:gnat.Tags()*
+g:gnat.Tags()
+		Calls|g:gnat.Tags_Command|
+
+						   *g:gnat.Set_Project_File()*
+g:gnat.Set_Project_File([{file}])
+		Set gnat project file and load associated session.  An open
+		project will be closed and the session written.  If called
+		without file name the file selector opens for selection of a
+		project file. If called with an empty string then the project
+		and associated session are closed.
+
+							 *g:gnat.Project_File*
+g:gnat.Project_File	string
+		Current project file.
+
+							 *g:gnat.Make_Command*
+g:gnat.Make_Command	string
+		External command used for|g:gnat.Make()| (|'makeprg'|).
+
+						       *g:gnat.Pretty_Program*
+g:gnat.Pretty_Program	string
+		External command used for|g:gnat.Pretty()|
+
+							 *g:gnat.Find_Program*
+g:gnat.Find_Program	string
+		External command used for|g:gnat.Find()|
+
+							 *g:gnat.Tags_Command*
+g:gnat.Tags_Command	string
+		External command used for|g:gnat.Tags()|
+
+							 *g:gnat.Error_Format*
+g:gnat.Error_Format	string
+		Error format (|'errorformat'|)
 
 ------------------------------------------------------------------------------
 4.2 Dec Ada ~
@@ -174,6 +229,26 @@ The Dec Ada compiler expects the package name and not the file name to be
 passed a parameter. The compiler plug-in supports the usual file name
 convention to convert the file into a unit name. For separates both '-' and
 '__' are allowed.
+
+							      *decada_members*
+DEC ADA OBJECT ~
+
+							     *g:decada.Make()*
+g:decada.Make()		function
+		Calls|g:decada.Make_Command|and displays the result inside a
+               |quickfix| window.
+
+							*g:decada.Unit_Name()*
+g:decada.Unit_Name()	function
+		Get the Unit name for the current file.
+
+						       *g:decada.Make_Command*
+g:decada.Make_Command	string
+		External command used for|g:decadat.Make()| (|'makeprg'|).
+
+						       *g:decada.Error_Format*
+g:decada.Error_Format|	string
+		Error format (|'errorformat'|).
 
 ==============================================================================
 5. References ~
@@ -207,7 +282,7 @@ g:ada_line_errors	  bool (true when exists)
 
 							 *g:ada_rainbow_color*
 g:ada_rainbow_color	  bool (true when exists)
-		Use rainbow colour for '(' and ')'. You need the
+		Use rainbow colours for '(' and ')'. You need the
 		rainbow_parenthesis for this to work
 
 							       *g:ada_folding*
@@ -270,55 +345,54 @@ and false when the variable is undefined. The value which the variable is
 set makes no difference.
 
 ------------------------------------------------------------------------------
+5.3 Commands ~
+							     *ft-ada-commands*
+
+:AdaRainbow							 *:AdaRainbow*
+		Toggles rainbow colour (|g:ada_rainbow_color|) mode for
+		'(' and ')'
+
+:AdaLines							   *:AdaLines*
+		Toggles line error (|g:ada_line_errors|) display
+
+:AdaSpaces							  *:AdaSpaces*
+		Toggles space error (|g:ada_space_errors|) display.
+
+:AdaTagDir							  *:AdaTagDir*
+		Creates tags file for the directory of the current file.
+
+:AdaTagFile							 *:AdaTagFile*
+		Creates tags file for the current file.
+
+:AdaTypes							   *:AdaTypes*
+		Toggles standard types (|g:ada_standard_types|) colour.
+
+:GnatFind							   *:GnatFind*
+		Calls |g:gnat.Find()|
+
+:GnatPretty							 *:GnatPretty*
+		Calls |g:gnat.Pretty()|
+
+:GnatTags							   *:GnatTags*
+		Calls |g:gnat.Tags()|
+
+------------------------------------------------------------------------------
 5.3 Variables ~
 							    *ft-ada-variables*
 
 								      *g:gnat*
-			       *g:gnat.Make()* *g:gnat.Find()* *g:gnat.Tags()*
-	     *g:gnat.Make_Command* *g:gnat.Find_Command* *g:gnat.Tags_Command*
-				   *g:gnat.Project_File* *g:gnat.Error_Format*
 g:gnat			    object
 		Control object which manages GNAT compiles.  The object
 		is created when the first Ada source code is loaded provided
-		that |g:ada_default_compiler|is set to 'gnat'.	It  has the
-		following members:
-
-	       |g:gnat.Make|		function
-		    - Calls "gnat make" and displays the result
-	       |g:gnat.Find|		function
-		    - Calls "gnat find"
-	       |g:gnat.Tags|		function
-		    - Calls "gnat xref" and displays the result
-	       |g:gnat.Project_File|	string
-		    - Current project file
-	       |g:gnat.Make_Command|	string
-		    - External command used for g:gnat.Make () (see
-		     |'makeprg'|for details)
-	       |g:gnat.Find_Program|	string
-		    - External command used for g:gnat.Find ()
-	       |g:gnat.Tags_Command|	string
-		    - External command used for g:gnat.Tags ()
-	       |g:gnat.Error_Format|	string
-		    - Error format (see|'errorformat'|for details)
+		that |g:ada_default_compiler|is set to 'gnat'. See|gnat_members|
+		for details.
 
 								    *g:decada*
-					  *g:decada.Make* *g:decada.Unit_Name*
-			       *g:decada.Make_Command* *g:decada.Error_Format*
 g:decada		      object
 		Control object which manages Dec Ada compiles.	The object
 		is created when the first Ada source code is loaded provided
-		that |g:ada_default_compiler|is set to 'decada'.  It  has the
-		following members:
-
-	       |g:decada.Make|		function
-		    - Calls "ACS Compile" and displays the result.
-	       |g:decada.Unit_Name|	function
-		    - Get the Unit name for the current file.
-	       |g:decada.Make_Command|	string
-		    - External command used for g:gnat.Make () (see
-		     |'makeprg'|for details)
-	       |g:decada.Error_Format|	string
-		    - Error format (see|'errorformat'|for details)
+		that |g:ada_default_compiler|is set to 'decada'. See
+	       |decada_members|for details.
 
 ------------------------------------------------------------------------------
 5.4 Constants ~

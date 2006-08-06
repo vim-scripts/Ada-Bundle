@@ -6,7 +6,7 @@
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
 "        $Date: 2006-07-27 21:03:11 +0200 (Do, 27 Jul 2006) $
-"      Version: 3.4
+"      Version: 3.5
 "    $Revision: 342 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/compiler/gnat.vim $
 "      History: 24.05.2006 MK Unified Headers
@@ -23,7 +23,7 @@ else
 	let g:gnat = gnat#New ()
     endif
 
-    execute "CompilerSet makeprg="     . escape (eval (g:gnat.Make_Command), ' ')
+    execute "CompilerSet makeprg="     . escape (g:gnat.Get_Command('Make'), ' ')
     execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
 
    call ada#Map_Menu (
@@ -31,12 +31,20 @@ else
      \'<F7>',
      \'call gnat.Make ()')
    call ada#Map_Menu (
+     \'GNAT.Pretty Print',
+     \':GnatPretty',
+     \'call gnat.Pretty ()')
+   call ada#Map_Menu (
      \'GNAT.Tags',
-     \'<F7>',
+     \':GnatTags',
      \'call gnat.Tags ()')
    call ada#Map_Menu (
+     \'GNAT.Find',
+     \':GnatFind',
+     \'call gnat.Find ()')
+   call ada#Map_Menu (
      \'GNAT.Set Projectfile\.\.\.',
-     \'<F7>',
+     \':SetProject',
      \'call gnat.Set_Project_File ()')
 
    " 1}}}

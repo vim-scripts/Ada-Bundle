@@ -5,7 +5,7 @@
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
 "        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
-"      Version: 3.4
+"      Version: 3.5
 "    $Revision: 343 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/adacomplete.vim $
 "      History: 24.05.2006 MK Unified Headers
