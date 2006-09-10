@@ -1,51 +1,62 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/GNAT compiler file
 "     Language: Ada (GNAT)
-"          $Id: gnat.vim 342 2006-07-27 19:03:11Z krischik $
+"          $Id: gnat.vim 370 2006-08-28 15:30:18Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-27 21:03:11 +0200 (Do, 27 Jul 2006) $
-"      Version: 3.5
-"    $Revision: 342 $
+"        $Date: 2006-08-28 17:30:18 +0200 (Mo, 28 Aug 2006) $
+"      Version: 3.7
+"    $Revision: 370 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/compiler/gnat.vim $
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------
 
-if version < 700
+if (exists("current_compiler")	    &&
+   \ current_compiler == "gnat")    ||
+   \ version < 700
     finish
 else
-    let current_compiler = "gnat"
+   let current_compiler = "gnat"
 
-    if !exists("g:gnat")
-	let g:gnat = gnat#New ()
-    endif
+   if !exists("g:gnat")
+      let g:gnat = gnat#New ()
+   endif
 
-    execute "CompilerSet makeprg="     . escape (g:gnat.Get_Command('Make'), ' ')
-    execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
+   if exists(":CompilerSet") != 2
+      " 
+      " plugin loaded by other means then the "compiler" command
+      "
+      command -nargs=* CompilerSet setlocal <args>
+   endif
+
+   call g:gnat.Set_Session ()
+
+   execute "CompilerSet makeprg="     . escape (g:gnat.Get_Command('Make'), ' ')
+   execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
 
    call ada#Map_Menu (
-     \'GNAT.Build',
-     \'<F7>',
-     \'call gnat.Make ()')
+      \ 'GNAT.Build',
+      \ '<F7>',
+      \ 'call gnat.Make ()')
    call ada#Map_Menu (
-     \'GNAT.Pretty Print',
-     \':GnatPretty',
-     \'call gnat.Pretty ()')
+      \ 'GNAT.Pretty Print',
+      \ ':GnatPretty',
+      \ 'call gnat.Pretty ()')
    call ada#Map_Menu (
-     \'GNAT.Tags',
-     \':GnatTags',
-     \'call gnat.Tags ()')
+      \ 'GNAT.Tags',
+      \ ':GnatTags',
+      \ 'call gnat.Tags ()')
    call ada#Map_Menu (
-     \'GNAT.Find',
-     \':GnatFind',
-     \'call gnat.Find ()')
+      \ 'GNAT.Find',
+      \ ':GnatFind',
+      \ 'call gnat.Find ()')
    call ada#Map_Menu (
-     \'GNAT.Set Projectfile\.\.\.',
-     \':SetProject',
-     \'call gnat.Set_Project_File ()')
+      \ 'GNAT.Set Projectfile\.\.\.',
+      \ ':SetProject',
+      \ 'call gnat.Set_Project_File ()')
 
    " 1}}}
    finish

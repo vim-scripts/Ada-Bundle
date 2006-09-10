@@ -1,16 +1,16 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada syntax file
 "     Language: Ada (2005)
-"          $Id: ada.vim 343 2006-07-28 17:54:11Z krischik $
+"          $Id: ada.vim 352 2006-08-14 16:02:19Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer: Martin Krischik
 "               David A. Wheeler <dwheeler@dwheeler.com>
 "               Simon Bradley <simon.bradley@pitechnology.com>
 " Contributors: Preben Randhol.
 "      $Author: krischik $
-"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
-"      Version: 3.5
-"    $Revision: 343 $
+"        $Date: 2006-08-14 18:02:19 +0200 (Mo, 14 Aug 2006) $
+"      Version: 3.6
+"    $Revision: 352 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/syntax/ada.vim $
 "               http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers

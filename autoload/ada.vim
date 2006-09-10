@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"          $Id: ada.vim 343 2006-07-28 17:54:11Z krischik $
+"          $Id: ada.vim 370 2006-08-28 15:30:18Z krischik $
 "   Maintainer: Martin Krischik
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
-"      Version: 3.5
-"    $Revision: 343 $
+"        $Date: 2006-08-28 17:30:18 +0200 (Mo, 28 Aug 2006) $
+"      Version: 3.7
+"    $Revision: 370 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -421,6 +421,30 @@ else
       execute '!ctags --excmd=number ' . l:Filename
    endfunction ada#Create_Tags
 
+   function ada#Switch_Session (New_Session)   "{{{1
+      if a:New_Session != v:this_session
+         "
+         "  We actualy got a new session - otherwise there
+         "  is nothing to do.
+         "
+         if strlen (v:this_session) > 0
+	    execute 'mksession! ' . v:this_session
+         endif
+         
+         let v:this_session = a:New_Session
+
+         if filereadable (v:this_session)
+	    execute 'source ' . v:this_session
+         endif
+
+         augroup ada_session
+   	    autocmd!
+	    autocmd VimLeavePre * execute 'mksession! ' . v:this_session
+         augroup END          
+      endif
+
+      return
+   endfunction ada#Switch_Session   "}}}1
 
    " Section: Options and Menus {{{1
    "

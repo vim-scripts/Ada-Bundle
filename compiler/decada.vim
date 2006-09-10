@@ -1,29 +1,40 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/Dec Ada compiler file
 "     Language: Ada (Dec Ada)
-"          $Id: decada.vim 343 2006-07-28 17:54:11Z krischik $
+"          $Id: decada.vim 370 2006-08-28 15:30:18Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
-"      Version: 3.5
-"    $Revision: 343 $
+"        $Date: 2006-08-28 17:30:18 +0200 (Mo, 28 Aug 2006) $
+"      Version: 3.7
+"    $Revision: 370 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/compiler/decada.vim $
 "      History: 21.07.2006 MK New Dec Ada
 "    Help Page: compiler-decada
 "------------------------------------------------------------------------------
 
-if version < 700
-    finish
+if (exists("current_compiler")	    &&
+   \ current_compiler == "decada")  ||
+   \ version < 700
+   finish
 else
-    let current_compiler = "decada"
+   let current_compiler = "decada"
 
-    if !exists("g:decada")
-	let g:decada = decada#New ()
-    endif
+   if !exists("g:decada")
+      let g:decada = decada#New ()
+   endif
 
-    execute "CompilerSet makeprg="     . escape (g:decada.Make_Command, ' ')
-    execute "CompilerSet errorformat=" . escape (g:decada.Error_Format, ' ')
+   if exists(":CompilerSet") != 2
+      " 
+      " plugin loaded by other means then the "compiler" command
+      "
+      command -nargs=* CompilerSet setlocal <args>
+   endif
+
+   call g:decada.Set_Session ()
+
+   execute "CompilerSet makeprg="     . escape (g:decada.Make_Command, ' ')
+   execute "CompilerSet errorformat=" . escape (g:decada.Error_Format, ' ')
 
    call ada#Map_Menu (
      \'GNAT.Build',

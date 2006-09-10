@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/GNAT compiler file
 "     Language: Ada (GNAT)
-"          $Id: gnat.vim 343 2006-07-28 17:54:11Z krischik $
+"          $Id: gnat.vim 370 2006-08-28 15:30:18Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
-"      Version: 3.5
-"    $Revision: 343 $
+"        $Date: 2006-08-28 17:30:18 +0200 (Mo, 28 Aug 2006) $
+"      Version: 3.7
+"    $Revision: 370 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/gnat.vim $
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -79,40 +79,37 @@ else
       endif
 
       if strlen (self.Project_File) > 0
-	 let v:this_session =
-	    \ fnamemodify (self.Project_File, ":r") . ".vim"
-
-	 if filereadable (v:this_session)
-	    execute 'source ' . v:this_session
-	 endif
-
-	 if filewritable (v:this_session)
-	    augroup gnat_session
-	       autocmd!
-	       autocmd VimLeavePre * execute 'mksession! ' . v:this_session
-	    augroup END
-	 endif
+	 call ada#Switch_Session (
+	    \ expand('~') . "/vimfiles/session/" .
+	    \ fnamemodify (self.Project_File, ":t:r") . ".vim")
       else
-	 let v:this_session = ''
-         silent! autocmd! gnat_session
+	 ada#Switch_Session ('')
       endif
+
       return
    endfunction gnat#Set_Project_File
 
-   function gnat#Get_Command (Command) dict
+   function gnat#Get_Command (Command) dict " {{{1
       let l:Command = eval ('self.' . a:Command . '_Command')
       return eval (l:Command)
-   endfunction gnat#Get_Command
+   endfunction gnat#Get_Command " }}}1
 
-   " Section: gnat#New () {{{1
-   "
-   function gnat#New ()
-      let Retval = {
+   function gnat#Set_Session (...) dict " {{{1
+      if argc() == 1 && fnamemodify (argv(0), ':e') == 'gpr'
+	 call Retval.Set_Project_File (argv(0))
+      elseif  strlen (v:servername) > 0
+	 call Retval.Set_Project_File (v:servername . '.gpr')
+      endif
+   endfunction gnat#Set_Session " }}}1
+
+   function gnat#New () " {{{1
+      let l:Retval = {
 	 \ 'Make'	      : function ('gnat#Make'),
 	 \ 'Pretty'	      : function ('gnat#Pretty'),
 	 \ 'Find'	      : function ('gnat#Find'),
 	 \ 'Tags'	      : function ('gnat#Tags'),
 	 \ 'Set_Project_File' : function ('gnat#Set_Project_File'),
+	 \ 'Set_Session'      : function ('gnat#Set_Session'),
 	 \ 'Get_Command'      : function ('gnat#Get_Command'),
 	 \ 'Project_File'     : '',
 	 \ 'Make_Command'     : '"gnat make -P " . self.Project_File . "  -F -gnatef  "',
@@ -123,15 +120,9 @@ else
 			      \ '%f:%l:%c: %tarning: %m,' .
 			      \ '%f:%l:%c: (%ttyle) %m'}
 
-      if argc() == 1 && fnamemodify (argv(0), ':e') == 'gpr'
-	 call Retval.Set_Project_File (argv(0))
-      elseif  strlen (v:servername) > 0
-	 call Retval.Set_Project_File (v:servername . '.gpr')
-      endif
-
-      return Retval
-   endfunction gnat#New
-
+      return l:Retval
+   endfunction gnat#New " }}}1
+   
    " Section: gnat#Insert_Tags_Header () {{{1
    "
    function gnat#Insert_Tags_Header ()

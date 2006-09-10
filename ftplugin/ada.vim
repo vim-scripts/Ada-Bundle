@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"          $Id: ada.vim 342 2006-07-27 19:03:11Z krischik $
+"          $Id: ada.vim 370 2006-08-28 15:30:18Z krischik $
 "   Maintainer: Martin Krischik
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"        $Date: 2006-07-27 21:03:11 +0200 (Do, 27 Jul 2006) $
-"      Version: 3.5
-"    $Revision: 342 $
+"        $Date: 2006-08-28 17:30:18 +0200 (Mo, 28 Aug 2006) $
+"      Version: 3.7
+"    $Revision: 370 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftplugin/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -24,7 +24,7 @@ if exists ("b:did_ftplugin") || version < 700
     finish
 else
    " Don't load another plugin for this buffer
-   let b:did_ftplugin = 1
+   let b:did_ftplugin = 36
 
    "
    " Temporarily set cpoptions to ensure the script loads OK
@@ -81,7 +81,6 @@ else
 
    " Section: Matchit {{{1
    "
-   "
    " Only do this when not done yet for this buffer & matchit is used
    "
    if !exists ("b:match_words")  &&
@@ -101,7 +100,10 @@ else
 
    " Section: Compiler {{{1
    "
-   execute "compiler " . g:ada_default_compiler
+   if ! exists("current_compiler")                 ||
+      \ current_compiler != g:ada_default_compiler
+      execute "compiler " . g:ada_default_compiler
+   endif
 
    " Section: Folding {{{1
    "

@@ -1,12 +1,12 @@
 "------------------------------------------------------------------------------
 "  Description: Options setable by the Ada plugin
-"          $Id: ada_options.vim 342 2006-07-27 19:03:11Z krischik $
+"          $Id: ada_options.vim 352 2006-08-14 16:02:19Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-27 21:03:11 +0200 (Do, 27 Jul 2006) $
-"      Version: 3.5
-"    $Revision: 342 $
+"        $Date: 2006-08-14 18:02:19 +0200 (Mo, 14 Aug 2006) $
+"      Version: 3.6
+"    $Revision: 352 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ada_options.vim $
 "      History:	24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -30,7 +30,6 @@
 "   let   g:ada_line_errors             = 1
 "   let   g:ada_omni_with_keywords	= 1
 
-    let   g:Tlist_Auto_Open             = 1
     let   g:Tlist_Exit_OnlyWindow       = 1
     let   g:Tlist_File_Fold_Auto_Close  = 1
     let   g:Tlist_Sort_Type             = "name"
@@ -39,6 +38,15 @@
 
     let   g:backup_directory            = '.backups'
     let   g:backup_purge                = 10
+
+    if &diff
+        let   g:Tlist_Auto_Open		= 0
+    else
+        let   g:Tlist_Auto_Open		= 1
+    endif
+
+    filetype plugin indent on
+    syntax enable
 
    " 1}}}
 finish

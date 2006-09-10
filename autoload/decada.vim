@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/Dec Ada compiler file
 "     Language: Ada (Dec Ada)
-"          $Id: decada.vim 343 2006-07-28 17:54:11Z krischik $
+"          $Id: decada.vim 384 2006-09-10 07:34:48Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
-"      Version: 3.5
-"    $Revision: 343 $
+"        $Date: 2006-09-10 09:34:48 +0200 (So, 10 Sep 2006) $
+"      Version: 3.7
+"    $Revision: 384 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/decada.vim $
 "      History: 21.07.2006 MK New Dec Ada
 "    Help Page: compiler-decada
@@ -41,15 +41,33 @@ else
        wincmd W
    endfunction decada#Build
 
+
+   " Section: decada#Set_Session () {{{1
+   "
+   function decada#Set_Session (...) dict
+      if a:0 > 0
+	 call ada#Switch_Session (a:1)
+      elseif argc() == 0 && strlen (v:servername) > 0
+	 call ada#Switch_Session (
+	    \ expand('~')[0:-2] . ".vimfiles.session]" .
+	    \ v:servername . ".vim")
+      endif
+      return
+   endfunction decada#Set_Session
+
    " Section: decada#New () {{{1
    "
    function decada#New ()
-       return {
-           \ 'Make'	      : function ('decada#Make'),
-           \ 'Unit_Name'      : function ('decada#Unit_Name'),
-           \ 'Make_Command'   : 'ACS COMPILE /Wait /Log /NoPreLoad /Optimize=Development /Debug %<',
-           \ 'Error_Format'   : '%+A%%ADAC-%t-%m,%C  %#%m,%Zat line number %l in file %f,' .
-       		       \  '%+I%%ada-I-%m,%C  %#%m,%Zat line number %l in file %f'}
+      let Retval = {
+         \ 'Make'	   : function ('decada#Make'),
+         \ 'Unit_Name'	   : function ('decada#Unit_Name'),
+	 \ 'Set_Session'   : function ('decada#Set_Session'),
+	 \ 'Project_Dir'   : '',
+         \ 'Make_Command'  : 'ACS COMPILE /Wait /Log /NoPreLoad /Optimize=Development /Debug %<',
+         \ 'Error_Format'  : '%+A%%ADAC-%t-%m,%C  %#%m,%Zat line number %l in file %f,' .
+			   \ '%+I%%ada-I-%m,%C  %#%m,%Zat line number %l in file %f'}
+
+      return Retval
    endfunction gnat#New
 
    " }}}1

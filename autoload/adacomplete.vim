@@ -1,12 +1,12 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada omnicompletion file
 "     Language:	Ada (2005)
-"          $Id: adacomplete.vim 343 2006-07-28 17:54:11Z krischik $
+"          $Id: adacomplete.vim 352 2006-08-14 16:02:19Z krischik $
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-07-28 19:54:11 +0200 (Fr, 28 Jul 2006) $
-"      Version: 3.5
-"    $Revision: 343 $
+"        $Date: 2006-08-14 18:02:19 +0200 (Mo, 14 Aug 2006) $
+"      Version: 3.6
+"    $Revision: 352 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/adacomplete.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK improved search for begin of word.
