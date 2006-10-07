@@ -1,21 +1,22 @@
-"------------------------------------------------------------------------------
+"----------------------------------------------------------------------------
 "  Description: Vim Ada syntax file
 "     Language: Ada (2005)
-"          $Id: ada.vim 352 2006-08-14 16:02:19Z krischik $
+"          $Id: ada.vim 406 2006-10-03 17:46:19Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer: Martin Krischik
 "               David A. Wheeler <dwheeler@dwheeler.com>
 "               Simon Bradley <simon.bradley@pitechnology.com>
 " Contributors: Preben Randhol.
 "      $Author: krischik $
-"        $Date: 2006-08-14 18:02:19 +0200 (Mo, 14 Aug 2006) $
-"      Version: 3.6
-"    $Revision: 352 $
+"        $Date: 2006-10-03 19:46:19 +0200 (Di, 03 Okt 2006) $
+"      Version: 3.8
+"    $Revision: 406 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/syntax/ada.vim $
 "               http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
 "               16.07.2006 MK Ada-Mode as vim-ball
+"               02.10.2006 MK Better folding.
 "    Help Page: help ft-ada-syntax
 "------------------------------------------------------------------------------
 " The formal spec of Ada 2005 (ARM) is the "Ada 2005 Reference Manual".
@@ -179,8 +180,8 @@ else
     " We see the "end" in "end record" before the word record, so we match that
     " pattern as adaStructure (and it won't match the "record;" pattern).
     "
-    syntax match adaStructure    "\<record\>"
-    syntax match adaStructure    "\<end\s\+record\>"
+    syntax match adaStructure    "\<record\>"           contains=adaRecord
+    syntax match adaStructure    "\<end\s\+record\>"    contains=adaRecord
     syntax match adaKeyword      "\<record;"me=e-1
 
     " Section: type classes {{{1
@@ -204,7 +205,8 @@ else
     syntax keyword  adaConditional      elsif when
 
     " Section: other keywords {{{1
-    syntax keyword  adaKeyword      all do exception in is new null out
+    syntax match    adaKeyword      "\<is\>" contains=adaRecord
+    syntax keyword  adaKeyword      all do exception in new null out
     syntax keyword  adaKeyword      separate until overriding
 
     " Section: begin keywords {{{1
@@ -212,8 +214,12 @@ else
     " These keywords begin various constructs, and you _might_ want to
     " highlight them differently.
     "
-    syntax keyword  adaBegin    begin body declare entry function generic
-    syntax keyword  adaBegin    package procedure protected renames task
+    syntax keyword  adaBegin    begin body declare entry generic
+    syntax keyword  adaBegin    protected renames task
+
+    syntax match    adaBegin    "\<function\>" contains=adaFunction
+    syntax match    adaBegin    "\<procedure\>" contains=adaProcedure
+    syntax match    adaBegin    "\<package\>" contains=adaPackage
 
     if exists("ada_with_gnat_project_files")
        syntax keyword adaBegin  project
@@ -262,6 +268,36 @@ else
     "
     if exists("g:ada_line_errors")
         syntax match adaLineError "\(^.\{79}\)\@<=."  contains=ALL containedin=ALL
+    endif
+
+    " Section: syntax folding {{{1
+    "
+    "   Syntax folding is very tricky - for now I still suggest to use
+    "   indent folding
+    "
+    if exists("g:ada_folding") && g:ada_folding[0] == 's'
+        if stridx (g:ada_folding, 'p') >= 0
+            syntax region adaPackage
+                \ start="\(\<package\s\+body\>\|\<package\>\)\s*\z(\k*\)"
+                \ end="end\s\+\z1\s*;"
+                \ keepend extend transparent fold contains=ALL
+        endif
+        if stridx (g:ada_folding, 'f') >= 0
+            syntax region adaProcedure
+                \ start="\<procedure\>\s*\z(\k*\)"
+                \ end="\<end\>\s\+\z1\s*;"
+                \ keepend extend transparent fold contains=ALL
+            syntax region adaFunction
+                \ start="\<procedure\>\s*\z(\k*\)"
+                \ end="end\s\+\z1\s*;"
+                \ keepend extend transparent fold contains=ALL
+        endif
+        if stridx (g:ada_folding, 'f') >= 0
+            syntax region adaRecord
+                \ start="\<is\s\+record\>" 
+                \ end="\<end\s\+record\>" 
+                \ keepend extend transparent fold contains=ALL
+        endif
     endif
 
     " Section: The default methods for highlighting. Can be overridden later. {{{1

@@ -1,13 +1,13 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/GNAT compiler file
 "     Language: Ada (GNAT)
-"          $Id: gnat.vim 370 2006-08-28 15:30:18Z krischik $
+"          $Id: gnat.vim 395 2006-09-14 17:02:10Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer:	Martin Krischik
 "      $Author: krischik $
-"        $Date: 2006-08-28 17:30:18 +0200 (Mo, 28 Aug 2006) $
-"      Version: 3.7
-"    $Revision: 370 $
+"        $Date: 2006-09-14 19:02:10 +0200 (Do, 14 Sep 2006) $
+"      Version: 3.8
+"    $Revision: 395 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/gnat.vim $
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -18,11 +18,9 @@
 if exists("g:loaded_gnat_autoload") || version < 700
     finish
 else
-   let g:loaded_gnat_autoload=34
+   let g:loaded_gnat_autoload=38
 
-   " Section: gnat#Make () {{{1
-   "
-   function gnat#Make () dict
+   function gnat#Make () dict					     " {{{1
       let &l:makeprg	 = self.Get_Command('Make')
       let &l:errorformat = self.Error_Format
       wall
@@ -30,33 +28,25 @@ else
       copen
       set wrap
       wincmd W
-   endfunction gnat#Make
+   endfunction gnat#Make					     " }}}1
 
-   " Section: gnat#Pretty () {{{1
-   "
-   function gnat#Pretty () dict
+   function gnat#Pretty () dict					     " {{{1
       execute "!" . self.Get_Command('Pretty')
-   endfunction gnat#Make
+   endfunction gnat#Make					     " }}}1
 
-   " Section: gnat#Find () {{{1
-   "
-   function gnat#Find () dict
+   function gnat#Find () dict					     " {{{1
       execute "!" . self.Get_Command('Find')
-   endfunction gnat#Find
+   endfunction gnat#Find					     " }}}1
 
-   " Section: gnat#Tags () {{{1
-   "
-   function gnat#Tags () dict
+   function gnat#Tags () dict					     " {{{1
       execute "!" . self.Get_Command('Tags')
       edit tags
       call gnat#Insert_Tags_Header ()
       update
       quit
-   endfunction gnat#Tags
+   endfunction gnat#Tags					     " }}}1
 
-   " Section: gnat#Set_Project_File () {{{1
-   "
-   function gnat#Set_Project_File (...) dict
+   function gnat#Set_Project_File (...) dict			     " {{{1
       if a:0 > 0
 	 let self.Project_File = a:1
 
@@ -87,22 +77,22 @@ else
       endif
 
       return
-   endfunction gnat#Set_Project_File
+   endfunction gnat#Set_Project_File				     " }}}1
 
-   function gnat#Get_Command (Command) dict " {{{1
+   function gnat#Get_Command (Command) dict			     " {{{1
       let l:Command = eval ('self.' . a:Command . '_Command')
       return eval (l:Command)
-   endfunction gnat#Get_Command " }}}1
+   endfunction gnat#Get_Command					     " }}}1
 
-   function gnat#Set_Session (...) dict " {{{1
+   function gnat#Set_Session (...) dict				     " {{{1
       if argc() == 1 && fnamemodify (argv(0), ':e') == 'gpr'
-	 call Retval.Set_Project_File (argv(0))
+	 call self.Set_Project_File (argv(0))
       elseif  strlen (v:servername) > 0
-	 call Retval.Set_Project_File (v:servername . '.gpr')
+	 call self.Set_Project_File (v:servername . '.gpr')
       endif
-   endfunction gnat#Set_Session " }}}1
+   endfunction gnat#Set_Session					     " }}}1
 
-   function gnat#New () " {{{1
+   function gnat#New ()						     " {{{1
       let l:Retval = {
 	 \ 'Make'	      : function ('gnat#Make'),
 	 \ 'Pretty'	      : function ('gnat#Pretty'),
@@ -121,11 +111,9 @@ else
 			      \ '%f:%l:%c: (%ttyle) %m'}
 
       return l:Retval
-   endfunction gnat#New " }}}1
+   endfunction gnat#New						  " }}}1
    
-   " Section: gnat#Insert_Tags_Header () {{{1
-   "
-   function gnat#Insert_Tags_Header ()
+   function gnat#Insert_Tags_Header ()				  " {{{1
       1insert
 !_TAG_FILE_FORMAT       1       /extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED       1       /0=unsorted, 1=sorted, 2=foldcase/
@@ -135,9 +123,7 @@ else
 !_TAG_PROGRAM_VERSION   5.05w   //
 .
       return
-   endfunction gnat#Insert_Tags_Header
-
-   " 1}}}
+   endfunction gnat#Insert_Tags_Header				  " }}}1
 
    finish
 endif

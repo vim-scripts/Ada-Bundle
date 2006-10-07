@@ -64,6 +64,8 @@ file.
 Even on a slow (90Mhz) PC this mode works quickly, but if you find the
 performance unacceptable, turn on |g:ada_withuse_ordinary|.
 
+Syntax folding instructions (|:fold-syntax|) are added when |g:ada_folding| is
+set. 
 ==============================================================================
 2. File type Plug-in ~
 					       *ft-vim-indent* *ft-ada-plugin*
@@ -77,7 +79,6 @@ The Ada plug-in provides support for:
  - Quick Fix		(|quickfix.txt|)
  - backspace handling	(|'backspace'|)
  - comment handling	(|'comments'|, |'commentstring'|)
- - syntax folding	(|fold.txt|)
 
 The plug-in only activates the features of the Ada mode whenever an Ada
 files is opened and add adds Ada related entries to the main and pop-up menu.
@@ -286,8 +287,28 @@ g:ada_rainbow_color	  bool (true when exists)
 		rainbow_parenthesis for this to work
 
 							       *g:ada_folding*
-g:ada_folding		  bool (true when exists)
-		Use folding for Ada sources.
+g:ada_folding		  set ('sigpft')
+		Use folding for Ada sources. 
+		    's':    activate syntax folding on load
+			'p':    fold packages
+			'f':    fold fuctions and procedures
+			't':    fold types
+			'c':    fold conditionals
+		    'g':    activate gnat pretty print folding on load
+			'i':    lone 'is' folded with line above
+			'b':	lone 'begin' folded with line above
+			'p':	lone 'private' folded with line above
+			'x':	lone 'exception' folded with line above
+		    'i':    activate indent folding on load
+
+		Note: Syntax folding is in an early (unuseable) stage and
+		      indent or gnat pretty folding is suggested.
+
+		For gnat pretty folding to work the following settings are
+		suggested: -cl3 -M79 -c2 -c3 -c4 -A1 -A2 -A3 -A4 -A5
+
+		For indent folding to work the following settings are
+		suggested: shiftwidth=3 softtabstop=3
 
 								*g:ada_abbrev*
 g:ada_abbrev		  bool (true when exists)

@@ -1,17 +1,18 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"          $Id: ada.vim 370 2006-08-28 15:30:18Z krischik $
+"          $Id: ada.vim 406 2006-10-03 17:46:19Z krischik $
 "   Maintainer: Martin Krischik
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"        $Date: 2006-08-28 17:30:18 +0200 (Mo, 28 Aug 2006) $
-"      Version: 3.7
-"    $Revision: 370 $
+"        $Date: 2006-10-03 19:46:19 +0200 (Di, 03 Okt 2006) $
+"      Version: 3.8
+"    $Revision: 406 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftplugin/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
 "               16.07.2006 MK Ada-Mode as vim-ball
+"               02.10.2006 MK Better folding.
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
 " Provides mapping overrides for tag jumping that figure out the current
@@ -24,7 +25,7 @@ if exists ("b:did_ftplugin") || version < 700
     finish
 else
    " Don't load another plugin for this buffer
-   let b:did_ftplugin = 36
+   let b:did_ftplugin = 38
 
    "
    " Temporarily set cpoptions to ensure the script loads OK
@@ -108,8 +109,16 @@ else
    " Section: Folding {{{1
    "
    if exists("g:ada_folding")
-      setlocal foldmethod=indent
-      setlocal foldignore=--
+      if g:ada_folding[0] == 'i'
+         setlocal foldmethod=indent
+         setlocal foldignore=--
+         setlocal foldnestmax=5
+      elseif g:ada_folding[0] == 'g'
+         setlocal foldmethod=expr
+	 setlocal foldexpr=ada#Pretty_Print_Folding(v:lnum)
+      elseif g:ada_folding[0] == 's'
+         setlocal foldmethod=syntax
+      endif
       setlocal tabstop=8
       setlocal softtabstop=3
       setlocal shiftwidth=3

@@ -1,24 +1,25 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"          $Id: ada.vim 370 2006-08-28 15:30:18Z krischik $
+"          $Id: ada.vim 406 2006-10-03 17:46:19Z krischik $
 "   Maintainer: Martin Krischik
 "               Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"        $Date: 2006-08-28 17:30:18 +0200 (Mo, 28 Aug 2006) $
-"      Version: 3.7
-"    $Revision: 370 $
+"        $Date: 2006-10-03 19:46:19 +0200 (Di, 03 Okt 2006) $
+"      Version: 3.8
+"    $Revision: 406 $
 "     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
 "               16.07.2006 MK Ada-Mode as vim-ball
+"               02.10.2006 MK Better folding.
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
 
 if exists ('g:loaded_ada_autoload') || version < 700
    finish
 else
-   let g:loaded_ada_autoload  = 34
+   let g:loaded_ada_autoload  = 38
 
    " Section: Constants {{{1
    "
@@ -445,6 +446,57 @@ else
 
       return
    endfunction ada#Switch_Session   "}}}1
+   " Section: GNAT Pretty Printer folding {{{1
+   "
+   if g:ada_folding[0] == 'g'
+      "
+      " Lines consisting only of ')' ';' are due to a gnat pretty bug and
+      " have the same level as the line above. And yes - there is a line
+      " above it's part of the bug.
+      "
+      let s:Fold_Collate = '^\([;)]*$\|'
+
+      "
+      " some lone statements are folded with the line above
+      "
+      if stridx (g:ada_folding, 'i') >= 0
+         let s:Fold_Collate .= '\s\+\<is\>$\|'
+      endif 
+      if stridx (g:ada_folding, 'b') >= 0
+         let s:Fold_Collate .= '\s\+\<begin\>$\|'
+      endif
+      if stridx (g:ada_folding, 'p') >= 0
+         let s:Fold_Collate .= '\s\+\<private\>$\|'
+      endif
+      if stridx (g:ada_folding, 'x') >= 0
+         let s:Fold_Collate .= '\s\+\<exception\>$\|'
+      endif 
+      
+      " We also handle empty lines and
+      " comments here.
+      let s:Fold_Collate .= '--\)'
+
+      function ada#Pretty_Print_Folding (Line)                          " {{{2
+         let l:Text = getline (a:Line)
+
+         if l:Text =~ s:Fold_Collate
+            "
+            "  fold with line above
+            "
+            let l:Level = "="
+         elseif l:Text =~ '^\s\+('
+            "
+            " gnat outdents a line which stards with a ( by one characters so
+            " that parameters which follow are aligned.
+            "
+            let l:Level = (indent (a:Line) + 1) / &shiftwidth
+         else
+            let l:Level = indent (a:Line) / &shiftwidth
+         endif
+
+         return l:Level
+      endfunction ada#Pretty_Print_Folding                              " }}}2
+   endif
 
    " Section: Options and Menus {{{1
    "
