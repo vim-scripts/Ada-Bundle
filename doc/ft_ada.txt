@@ -1,4 +1,4 @@
-*ada.txt*	  Ada File type Plug-ins	      Last change: 2006 Aug 06
+*ft_ada.txt*	    Ada File type Plug-ins	      Last change: 2006 Nov 08
 
 
 		    ADA FILE TYPE PLUG-INS REFERENCE MANUAL~
@@ -64,11 +64,12 @@ file.
 Even on a slow (90Mhz) PC this mode works quickly, but if you find the
 performance unacceptable, turn on |g:ada_withuse_ordinary|.
 
-Syntax folding instructions (|:fold-syntax|) are added when |g:ada_folding| is
-set. 
+Syntax folding instructions (|fold-syntax|) are added when |g:ada_folding| is
+set.
+
 ==============================================================================
 2. File type Plug-in ~
-					       *ft-vim-indent* *ft-ada-plugin*
+					       *ft-ada-indent* *ft-ada-plugin*
 
 The Ada plug-in provides support for:
 
@@ -288,10 +289,10 @@ g:ada_rainbow_color	  bool (true when exists)
 
 							       *g:ada_folding*
 g:ada_folding		  set ('sigpft')
-		Use folding for Ada sources. 
+		Use folding for Ada sources.
 		    's':    activate syntax folding on load
 			'p':    fold packages
-			'f':    fold fuctions and procedures
+			'f':    fold functions and procedures
 			't':    fold types
 			'c':    fold conditionals
 		    'g':    activate gnat pretty print folding on load
@@ -418,8 +419,9 @@ g:decada		      object
 ------------------------------------------------------------------------------
 5.4 Constants ~
 							    *ft-ada-constants*
+                                                             ft-ada-constants
 
-All constants are locked. See |lockvar| for details.
+All constants are locked. See |:lockvar| for details.
 
 							     *g:ada#WordRegex*
 g:ada#WordRegex		string
@@ -511,4 +513,4 @@ contains all of the above.
 
 ==============================================================================
 vim: textwidth=78 nowrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab
-vim: filetype=help encoding=latin1 spelllang=en_gb spell
+vim: filetype=help
