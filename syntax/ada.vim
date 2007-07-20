@@ -1,17 +1,17 @@
 "----------------------------------------------------------------------------
 "  Description: Vim Ada syntax file
 "     Language: Ada (2005)
-"	   $Id: ada.vim 456 2006-11-17 17:17:57Z krischik $
+"	   $Id: ada.vim 745 2007-07-08 15:57:40Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer: Martin Krischik
 "		David A. Wheeler <dwheeler@dwheeler.com>
 "		Simon Bradley <simon.bradley@pitechnology.com>
 " Contributors: Preben Randhol.
 "      $Author: krischik $
-"	 $Date: 2006-11-17 18:17:57 +0100 (Fr, 17 Nov 2006) $
-"      Version: 4.3
-"    $Revision: 456 $
-"     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/syntax/ada.vim $
+"	 $Date: 2007-07-08 17:57:40 +0200 (So, 08 Jul 2007) $
+"      Version: 4.4
+"    $Revision: 745 $
+"     $HeadURL: http://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/syntax/ada.vim $
 "		http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
@@ -159,7 +159,7 @@ endif
 " Section: end {{{1
 " Unless special ("end loop", "end if", etc.), "end" marks the end of a
 " begin, package, task etc. Assiging it to adaEnd.
-syntax match    adaEnd	"\<end\>"
+syntax match    adaEnd	/\<end\>/
 
 syntax keyword  adaPreproc		 pragma
 
