@@ -1,15 +1,16 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"	   $Id: ada.vim 748 2007-07-15 18:11:29Z krischik $
+"	   $Id: ada.vim 774 2007-09-17 09:11:59Z krischik $
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
+"		Ned Okie <nokie@radford.edu>
 "      $Author: krischik $
-"	 $Date: 2007-07-15 20:11:29 +0200 (So, 15 Jul 2007) $
-"      Version: 4.4
-"    $Revision: 748 $
-"     $HeadURL: http://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/ada.vim $
+"	 $Date: 2007-09-17 11:11:59 +0200 (Mo, 17 Sep 2007) $
+"      Version: 4.5
+"    $Revision: 774 $
+"     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -21,6 +22,7 @@
 "		08.07.2007 TV fix mapleader problems.
 "	        09.05.2007 MK Session just won't work no matter how much
 "			      tweaking is done
+"		19.09.2007 NO still some mapleader problems
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
 
@@ -571,15 +573,15 @@ function ada#Map_Menu (Text, Keys, Command)
       execute
 	\ "50amenu " .
 	\ "Ada."  . escape(a:Text, ' ') .
-	\ "<Tab>" . escape(g:mapleader . "a" . a:Keys , '\') .
+	\ "<Tab>" . escape(l:leader . "a" . a:Keys , '\') .
 	\ " :"	  . a:Command . "<CR>"
       execute
 	\ "nnoremap <buffer>" .
-	\ escape(g:mapleader . "a" . a:Keys , '\') .
+	\ escape(l:leader . "a" . a:Keys , '\') .
 	\" :" . a:Command
       execute
 	\ "inoremap <buffer>" .
-	\ escape(g:mapleader . "a" . a:Keys , '\') .
+	\ escape(l:leader . "a" . a:Keys , '\') .
 	\" <C-O>:" . a:Command
    endif
    return

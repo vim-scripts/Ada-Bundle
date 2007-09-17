@@ -1,14 +1,14 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/Dec Ada compiler file
 "     Language: Ada (Dec Ada)
-"          $Id: decada.vim 745 2007-07-08 15:57:40Z krischik $
+"          $Id: decada.vim 774 2007-09-17 09:11:59Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
-"   Maintainer:	Martin Krischik
+"   Maintainer:	Martin Krischik <krischik@users.sourceforge.net>
 "      $Author: krischik $
-"        $Date: 2007-07-08 17:57:40 +0200 (So, 08 Jul 2007) $
-"      Version: 4.4
-"    $Revision: 745 $
-"     $HeadURL: http://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/decada.vim $
+"        $Date: 2007-09-17 11:11:59 +0200 (Mo, 17 Sep 2007) $
+"      Version: 4.5
+"    $Revision: 774 $
+"     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/decada.vim $
 "      History: 21.07.2006 MK New Dec Ada
 "               15.10.2006 MK Bram's suggestion for runtime integration
 "               05.11.2006 MK Bram suggested not to use include protection for

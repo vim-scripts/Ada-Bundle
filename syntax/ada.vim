@@ -1,17 +1,17 @@
 "----------------------------------------------------------------------------
 "  Description: Vim Ada syntax file
 "     Language: Ada (2005)
-"	   $Id: ada.vim 745 2007-07-08 15:57:40Z krischik $
+"	   $Id: ada.vim 774 2007-09-17 09:11:59Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer: Martin Krischik
 "		David A. Wheeler <dwheeler@dwheeler.com>
 "		Simon Bradley <simon.bradley@pitechnology.com>
 " Contributors: Preben Randhol.
 "      $Author: krischik $
-"	 $Date: 2007-07-08 17:57:40 +0200 (So, 08 Jul 2007) $
-"      Version: 4.4
-"    $Revision: 745 $
-"     $HeadURL: http://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/syntax/ada.vim $
+"	 $Date: 2007-09-17 11:11:59 +0200 (Mo, 17 Sep 2007) $
+"      Version: 4.5
+"    $Revision: 774 $
+"     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/syntax/ada.vim $
 "		http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
@@ -98,7 +98,8 @@ syntax keyword  adaSpecial	    <>
 "
 if exists("g:ada_rainbow_color")
     syntax match	adaSpecial	 "[:;.,]"
-    runtime plugin/Rainbow_Parenthsis.vim
+    call rainbow_parenthsis#LoadSyntax ()
+    call rainbow_parenthsis#Activate ()
 else
     syntax match	adaSpecial	 "[:;().,]"
 endif

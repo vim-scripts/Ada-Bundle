@@ -1,14 +1,14 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada detection file
 "     Language: Ada (2005)
-"	   $Id: ada.vim 467 2006-11-23 19:22:39Z krischik $
+"	   $Id: ada.vim 774 2007-09-17 09:11:59Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
-"   Maintainer: Martin Krischik
+"   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "      $Author: krischik $
-"	 $Date: 2006-11-23 20:22:39 +0100 (Do, 23 Nov 2006) $
-"      Version: 4.3
-"    $Revision: 467 $
-"     $HeadURL: https://svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftdetect/ada.vim $
+"	 $Date: 2007-09-17 11:11:59 +0200 (Mo, 17 Sep 2007) $
+"      Version: 4.5
+"    $Revision: 774 $
+"     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftdetect/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		15.10.2006 MK Bram's suggestion for runtime integration
@@ -20,7 +20,7 @@ if exists("s:loaded_ftdetect_ada")
     finish
 endif
 
-let s:loaded_ftdetect_ada=1
+let s:loaded_ftdetect_ada=45
 
 if has("vms")
    autocmd BufNewFile,BufRead *.gpr,*.ada_m,*.adc setfiletype ada

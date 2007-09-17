@@ -1,15 +1,15 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"	   $Id: ada.vim 748 2007-07-15 18:11:29Z krischik $
-"   Maintainer: Martin Krischik
+"	   $Id: ada.vim 774 2007-09-17 09:11:59Z krischik $
+"   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"	 $Date: 2007-07-15 20:11:29 +0200 (So, 15 Jul 2007) $
-"      Version: 4.4
-"    $Revision: 748 $
-"     $HeadURL: http://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftplugin/ada.vim $
+"	 $Date: 2007-09-17 11:11:59 +0200 (Mo, 17 Sep 2007) $
+"      Version: 4.5
+"    $Revision: 774 $
+"     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftplugin/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -32,7 +32,7 @@ if exists ("b:did_ftplugin") || version < 700
 endif
 
 " Don't load another plugin for this buffer
-let b:did_ftplugin = 44
+let b:did_ftplugin = 45
 
 "
 " Temporarily set cpoptions to ensure the script loads OK
