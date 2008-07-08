@@ -1,16 +1,16 @@
 "----------------------------------------------------------------------------
 "  Description: Vim Ada syntax file
 "     Language: Ada (2005)
-"	   $Id: ada.vim 793 2007-11-01 18:29:58Z krischik $
+"	   $Id: ada.vim 887 2008-07-08 14:29:01Z krischik $
 "    Copyright: Copyright (C) 2006 Martin Krischik
 "   Maintainer: Martin Krischik
 "		David A. Wheeler <dwheeler@dwheeler.com>
 "		Simon Bradley <simon.bradley@pitechnology.com>
 " Contributors: Preben Randhol.
 "      $Author: krischik $
-"	 $Date: 2007-11-01 19:29:58 +0100 (Do, 01 Nov 2007) $
-"      Version: 4.5
-"    $Revision: 793 $
+"	 $Date: 2008-07-08 16:29:01 +0200 (Di, 08 Jul 2008) $
+"      Version: 4.6
+"    $Revision: 887 $
 "     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/syntax/ada.vim $
 "		http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
@@ -38,8 +38,6 @@ let b:current_syntax = "ada"
 " Section: Ada is entirely case-insensitive. {{{1
 "
 syntax   case ignore
-setlocal nosmartcase
-setlocal ignorecase
 
 " Section: Highlighting commands {{{1
 "
@@ -347,9 +345,6 @@ else
 endif
 
 
-" Section: formatoptions {{{1
-"
-setlocal formatoptions+=ron
 
 " Section: sync {{{1
 "

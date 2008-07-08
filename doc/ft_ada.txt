@@ -97,10 +97,10 @@ tags file.
 3.1 Omni Completion with "gnat xref" ~
 								   *gnat-xref*
 
-GNAT XREF uses the compiler internal informations (ali-files) to produce the
+GNAT XREF uses the compiler internal information (ali-files) to produce the
 tags file. This has the advantage to be 100% correct and the option of deep
 nested analysis. However the code must compile, the generator is quite
-slow and the created tags file contains only the basic Ctags informations for
+slow and the created tags file contains only the basic Ctags information for
 each entry - not enough for some of the more advanced Vim code browser
 plug-ins.
 
@@ -125,8 +125,8 @@ NOTE: "gnat xref -v" is very tricky to use as it has almost no diagnostic
 3.2 Omni Completion with "ctags"~
 								   *ada-ctags*
 
-Exuberant Ctags uses it's own multi-language code parser. The parser is quite
-fast, produces a lot of extra informations (hence the name "Exuberant Ctags")
+Exuberant Ctags uses its own multi-language code parser. The parser is quite
+fast, produces a lot of extra information (hence the name "Exuberant Ctags")
 and can run on files which currently do not compile.
 
 There are also lots of other Vim-tools which use exuberant Ctags.
@@ -302,7 +302,7 @@ g:ada_folding		  set ('sigpft')
 			'x':	lone 'exception' folded with line above
 		    'i':    activate indent folding on load
 
-		Note: Syntax folding is in an early (unuseable) stage and
+		Note: Syntax folding is in an early (unusable) stage and
 		      indent or gnat pretty folding is suggested.
 
 		For gnat pretty folding to work the following settings are
@@ -468,7 +468,7 @@ ada#Create_Tags ({option})				   *ada#Create_Tags()*
 		file or a file name.
 
 gnat#Insert_Tags_Header()			   *gnat#Insert_Tags_Header()*
-		Adds the tag file header (!_TAG_) informations to the current
+		Adds the tag file header (!_TAG_) information to the current
 		file which are missing from the GNAT XREF output.
 
 ada#Switch_Syntax_Option ({option})		  *ada#Switch_Syntax_Option()*

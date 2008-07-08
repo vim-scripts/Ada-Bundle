@@ -1,14 +1,14 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2005)
-"	   $Id: ada.vim 774 2007-09-17 09:11:59Z krischik $
+"	   $Id: ada.vim 887 2008-07-08 14:29:01Z krischik $
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
 "      $Author: krischik $
-"	 $Date: 2007-09-17 11:11:59 +0200 (Mo, 17 Sep 2007) $
-"      Version: 4.5
-"    $Revision: 774 $
+"	 $Date: 2008-07-08 16:29:01 +0200 (Di, 08 Jul 2008) $
+"      Version: 4.6
+"    $Revision: 887 $
 "     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/ftplugin/ada.vim $
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
@@ -40,11 +40,20 @@ let b:did_ftplugin = 45
 let s:cpoptions = &cpoptions
 set cpoptions-=C
 
-" Section: Comments {{{1
+" Section: Comments  {{{1
 "
 setlocal comments=O:--,:--\ \
 setlocal commentstring=--\ \ %s
 setlocal complete=.,w,b,u,t,i
+
+" Section: case	     {{{1
+"
+setlocal nosmartcase
+setlocal ignorecase
+
+" Section: formatoptions {{{1
+"
+setlocal formatoptions+=ron
 
 " Section: Tagging {{{1
 "
