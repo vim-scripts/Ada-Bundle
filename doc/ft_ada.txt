@@ -156,7 +156,7 @@ environment.
 GNAT is the only free (beer and speech) Ada compiler available. There are
 several version available which differentiate in the licence terms used.
 
-The GNAT compiler plug-in will perform a compile on pressing <F7> and then
+The GNAT compiler plug-in will perform a compile on pressing |:GnatMake| and then
 immediately shows the result. You can set the project file to be used by
 setting:
  >
@@ -224,7 +224,7 @@ g:gnat.Error_Format	string
 					*compiler-vaxada* *compiler-compaqada*
 
 Dec Ada (also known by - in chronological order - VAX Ada, Dec Ada, Compaq Ada
-and HP Ada) is a fairly dated Ada 83 compiler. Support is basic: <F7> will
+and HP Ada) is a fairly dated Ada 83 compiler. Support is basic: |:GnatMake| will
 compile the current unit.
 
 The Dec Ada compiler expects the package name and not the file name to be
@@ -388,6 +388,9 @@ set makes no difference.
 
 :AdaTypes							   *:AdaTypes*
 		Toggles standard types (|g:ada_standard_types|) colour.
+
+:GnatMake							   *:GnatMake*
+		Calls |g:gnat.Make()|
 
 :GnatFind							   *:GnatFind*
 		Calls |g:gnat.Find()|

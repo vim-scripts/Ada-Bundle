@@ -30,7 +30,7 @@ if !exists("g:gnat")
 
    call ada#Map_Menu (
       \ 'GNAT.Build',
-      \ '<F7>',
+      \ ':GnatMake',
       \ 'call gnat.Make ()')
    call ada#Map_Menu (
       \ 'GNAT.Pretty Print',
