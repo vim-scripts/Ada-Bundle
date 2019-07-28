@@ -55,27 +55,6 @@ setlocal ignorecase
 "
 setlocal formatoptions+=ron
 
-" Section: Tagging {{{1
-"
-if exists ("g:ada_extended_tagging")
-   " Make local tag mappings for this buffer (if not already set)
-   if g:ada_extended_tagging == 'jump'
-      if mapcheck('<C-]>','n') == ''
-	 nnoremap <unique> <buffer> <C-]>    :call ada#Jump_Tag ('', 'tjump')<cr>
-      endif
-      if mapcheck('g<C-]>','n') == ''
-	 nnoremap <unique> <buffer> g<C-]>   :call ada#Jump_Tag ('','stjump')<cr>
-      endif
-   elseif g:ada_extended_tagging == 'list'
-      if mapcheck('<C-]>','n') == ''
-	 nnoremap <unique> <buffer> <C-]>    :call ada#List_Tag ()<cr>
-      endif
-      if mapcheck('g<C-]>','n') == ''
-	 nnoremap <unique> <buffer> g<C-]>   :call ada#List_Tag ()<cr>
-      endif
-   endif
-endif
-
 " Section: Completion {{{1
 "
 setlocal completefunc=ada#User_Complete
@@ -119,11 +98,7 @@ endif
 " Section: Compiler {{{1
 "
 if ! exists("g:ada_default_compiler")
-   if has("vms")
-      let g:ada_default_compiler = 'decada'
-   else
-      let g:ada_default_compiler = 'gnat'
-   endif
+   let g:ada_default_compiler = 'gnat'
 endif
 
 if ! exists("current_compiler")			||
@@ -160,39 +135,29 @@ endif
 
 " Section: Commands, Mapping, Menus {{{1
 "
-call ada#Map_Popup (
-   \ 'Tag.List',
-   \  'l',
-   \ 'call ada#List_Tag ()')
-call ada#Map_Popup (
-   \'Tag.Jump',
-   \'j',
-   \'call ada#Jump_Tag ()')
+execute "50amenu &Ada.-sep- :"
 call ada#Map_Menu (
-   \'Tag.Create File',
-   \':AdaTagFile',
-   \'call ada#Create_Tags (''file'')')
-call ada#Map_Menu (
-   \'Tag.Create Dir',
-   \':AdaTagDir',
-   \'call ada#Create_Tags (''dir'')')
-
-call ada#Map_Menu (
-   \'Highlight.Toggle Space Errors',
+   \'Toggle Space Errors',
    \ ':AdaSpaces',
-   \'call ada#Switch_Syntax_Option (''space_errors'')')
+   \'call ada#Switch_Syntax_Option',
+   \ '''space_errors''')
 call ada#Map_Menu (
-   \'Highlight.Toggle Lines Errors',
+   \'Toggle Lines Errors',
    \ ':AdaLines',
-   \'call ada#Switch_Syntax_Option (''line_errors'')')
+   \'call ada#Switch_Syntax_Option',
+   \ '''line_errors''')
 call ada#Map_Menu (
-   \'Highlight.Toggle Rainbow Color',
-   \ ':AdaRainbow',
-   \'call ada#Switch_Syntax_Option (''rainbow_color'')')
-call ada#Map_Menu (
-   \'Highlight.Toggle Standard Types',
+   \'Toggle Standard Types',
    \ ':AdaTypes',
-   \'call ada#Switch_Syntax_Option (''standard_types'')')
+   \'call ada#Switch_Syntax_Option',
+   \'''standard_types''')
+if exists("g:adaspec")
+   execute "50amenu &Ada.-sep2- :"
+   execute "50amenu &Ada.". escape('Specification Table of Contents', ' ') .
+	    \" :help ada-toc<CR>"
+   execute "50amenu &Ada.". escape('Specification Index', ' ') .
+	    \" :help ada-index<CR>"
+endif
 
 " 1}}}
 " Reset cpoptions

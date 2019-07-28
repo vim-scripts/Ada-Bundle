@@ -29,25 +29,15 @@ if !exists("g:gnat")
    let g:gnat = gnat#New ()
 
    call ada#Map_Menu (
-      \ 'GNAT.Build',
-      \ '<F7>',
-      \ 'call gnat.Make ()')
-   call ada#Map_Menu (
-      \ 'GNAT.Pretty Print',
+      \ 'Pretty Print',
       \ ':GnatPretty',
-      \ 'call gnat.Pretty ()')
+      \ 'call gnat.Pretty',
+      \ '')
    call ada#Map_Menu (
-      \ 'GNAT.Tags',
-      \ ':GnatTags',
-      \ 'call gnat.Tags ()')
-   call ada#Map_Menu (
-      \ 'GNAT.Find',
-      \ ':GnatFind',
-      \ 'call gnat.Find ()')
-   call ada#Map_Menu (
-      \ 'GNAT.Set Projectfile\.\.\.',
+      \ 'Set Project file\.\.\.',
       \ ':SetProject',
-      \ 'call gnat.Set_Project_File ()')
+      \ 'call gnat.Set_Project_File',
+      \ '')
 
    call g:gnat.Set_Session ()
 endif

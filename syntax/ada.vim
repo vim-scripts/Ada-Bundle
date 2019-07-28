@@ -35,6 +35,7 @@ endif
 
 let b:current_syntax = "ada"
 
+
 " Section: Ada is entirely case-insensitive. {{{1
 "
 syntax   case ignore
@@ -56,6 +57,9 @@ for b:Item in g:ada#Keywords
    endif
    if b:Item['kind'] == "a"
       execute 'syntax match adaAttribute "\V' . b:Item['word'] . '"'
+   endif
+   if b:Item['kind'] == "p"
+      execute "syntax keyword adaPreProc " . b:Item['word']
    endif
    " We don't normally highlight types in package Standard
    " (Integer, Character, Float, etc.).  I don't think it looks good
@@ -92,15 +96,9 @@ syntax match    adaOperator "="
 "
 syntax keyword  adaSpecial	    <>
 
-" Section: rainbow color {{{1
+" Section: parenthesis {{{1
 "
-if exists("g:ada_rainbow_color")
-    syntax match	adaSpecial	 "[:;.,]"
-    call rainbow_parenthsis#LoadRound ()
-    call rainbow_parenthsis#Activate ()
-else
-    syntax match	adaSpecial	 "[:;().,]"
-endif
+syntax match adaSpecial  "[:;().,]"
 
 " Section: := {{{1
 "
@@ -204,7 +202,7 @@ syntax keyword  adaConditional	elsif when
 
 " Section: other keywords {{{1
 syntax match    adaKeyword	    "\<is\>" contains=adaRecord
-syntax keyword  adaKeyword	    all do exception in new null out
+syntax keyword  adaKeyword	    all do exception in new null out some
 syntax keyword  adaKeyword	    separate until overriding
 
 " Section: begin keywords {{{1

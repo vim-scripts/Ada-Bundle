@@ -30,33 +30,18 @@ function gnat#Make () dict					     " {{{1
    let &l:errorformat = self.Error_Format
    wall
    make
-   copen
-   set wrap
-   wincmd W
 endfunction gnat#Make						     " }}}1
 
 function gnat#Pretty () dict					     " {{{1
    execute "!" . self.Get_Command('Pretty')
 endfunction gnat#Make						     " }}}1
 
-function gnat#Find () dict					     " {{{1
-   execute "!" . self.Get_Command('Find')
-endfunction gnat#Find						     " }}}1
-
-function gnat#Tags () dict					     " {{{1
-   execute "!" . self.Get_Command('Tags')
-   edit tags
-   call gnat#Insert_Tags_Header ()
-   update
-   quit
-endfunction gnat#Tags						     " }}}1
-
 function gnat#Set_Project_File (...) dict			     " {{{1
    if a:0 > 0
       let self.Project_File = a:1
 
       if ! filereadable (self.Project_File)
-	 let self.Project_File = findfile (
+	      let self.Project_File = findfile (
 	    \ fnamemodify (self.Project_File, ':r'),
 	    \ $ADA_PROJECT_PATH,
 	    \ 1)
@@ -69,25 +54,16 @@ function gnat#Set_Project_File (...) dict			     " {{{1
       let self.Project_File = browse (0, 'GNAT Project File?', '', 'default.gpr')
    endif
 
-   if strlen (v:this_session) > 0
-      execute 'mksession! ' . v:this_session
+   if strlen (self.Project_File) > 0
+      let g:syntastic_ada_compiler_options = "-P " . self.Project_File
+      let self.Make_Command = '"gnatmake -P " . self.Project_File . "  -F -gnatef"'
+      let self.Pretty_Command = '"gnatpp -P " . self.Project_File'
+      let &l:makeprg  = "gnatmake -P " . self.Project_File . "  -F -gnatef"
+      if exists("g:ada_create_session")
+	 call ada#Switch_Session(self.Project_File . '.vim')
+      endif
    endif
 
-   "if strlen (self.Project_File) > 0
-      "if has("vms")
-	 "call ada#Switch_Session (
-	    "\ expand('~')[0:-2] . ".vimfiles.session]gnat_" .
-	    "\ fnamemodify (self.Project_File, ":t:r") . ".vim")
-      "else
-	 "call ada#Switch_Session (
-	    "\ expand('~') . "/vimfiles/session/gnat_" .
-	    "\ fnamemodify (self.Project_File, ":t:r") . ".vim")
-      "endif
-   "else
-      "call ada#Switch_Session ('')
-   "endif
-
-   return
 endfunction gnat#Set_Project_File				     " }}}1
 
 function gnat#Get_Command (Command) dict			     " {{{1
@@ -107,34 +83,18 @@ function gnat#New ()						     " {{{1
    let l:Retval = {
       \ 'Make'	      : function ('gnat#Make'),
       \ 'Pretty'	      : function ('gnat#Pretty'),
-      \ 'Find'	      : function ('gnat#Find'),
-      \ 'Tags'	      : function ('gnat#Tags'),
       \ 'Set_Project_File' : function ('gnat#Set_Project_File'),
       \ 'Set_Session'      : function ('gnat#Set_Session'),
       \ 'Get_Command'      : function ('gnat#Get_Command'),
       \ 'Project_File'     : '',
-      \ 'Make_Command'     : '"gnat make -P " . self.Project_File . "  -F -gnatef  "',
-      \ 'Pretty_Command'   : '"gnat pretty -P " . self.Project_File . " "',
-      \ 'Find_Program'     : '"gnat find -P " . self.Project_File . " -F "',
-      \ 'Tags_Command'     : '"gnat xref -P " . self.Project_File . " -v  *.AD*"',
+      \ 'Make_Command'     : '"gnatmake -F -gnatef " . expand("%:p")',
+      \ 'Pretty_Command'   : '"gnatpp " . expand("%:p")' ,
       \ 'Error_Format'     : '%f:%l:%c: %trror: %m,'   .
 			   \ '%f:%l:%c: %tarning: %m,' .
 			   \ '%f:%l:%c: (%ttyle) %m'}
 
    return l:Retval
 endfunction gnat#New						  " }}}1
-
-function gnat#Insert_Tags_Header ()				  " {{{1
-   1insert
-!_TAG_FILE_FORMAT       1	 /extended format; --format=1 will not append ;" to lines/
-!_TAG_FILE_SORTED       1	 /0=unsorted, 1=sorted, 2=foldcase/
-!_TAG_PROGRAM_AUTHOR    AdaCore	 /info@adacore.com/
-!_TAG_PROGRAM_NAME      gnatxref //
-!_TAG_PROGRAM_URL       http://www.adacore.com  /official site/
-!_TAG_PROGRAM_VERSION   5.05w   //
-.
-   return
-endfunction gnat#Insert_Tags_Header				  " }}}1
 
 finish " 1}}}
 
