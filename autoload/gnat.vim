@@ -54,7 +54,7 @@ function gnat#Set_Project_File (...) dict			     " {{{1
       let self.Project_File = browse (0, 'GNAT Project File?', '', 'default.gpr')
    endif
 
-   if strlen (self.Project_File) > 0
+   if self.Project_File[strlen(self.Project_File) - 4:] == ".gpr"
       let g:syntastic_ada_compiler_options = "-P " . self.Project_File
       let self.Make_Command = '"gnatmake -P " . self.Project_File . "  -F -gnatef"'
       let self.Pretty_Command = '"gnatpp -P " . self.Project_File'
