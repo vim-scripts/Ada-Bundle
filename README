@@ -33,7 +33,7 @@ Changes with official version, included in Vim/Neovim:
 - Changed support from Rainbow Parenthesis to Rainbow Parentheses Improved
   plugin.
 - Removed all tags commands which are now in base Vim (like jump to tag).
-- Added support for Syntastic plugin.
+- Added support for Ale plugin.
 - Updated help file.
 - Removed support for Dec Ada compiler.
 - Fixed and extended support for Vim sessions on loading GNAT project files
