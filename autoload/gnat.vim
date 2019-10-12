@@ -55,8 +55,9 @@ function gnat#Set_Project_File (...) dict			     " {{{1
    endif
 
    if self.Project_File[strlen(self.Project_File) - 4:] == ".gpr"
-      let g:ale_ada_gcc_options = "-P " . self.Project_File . " -gnatwa -gnatq"
+      let g:ale_ada_gnatmake_options = "-P " . self.Project_File . " -gnatwa -gnatq"
       let g:ale_lsp_root = {'adalsp': fnamemodify(self.Project_File, ':p:h') }
+      let g:ale_ada_gnatpp_options = "-P " . self.Project_File
       let self.Make_Command = '"gnatmake -P " . self.Project_File . "  -F -gnatef"'
       let self.Pretty_Command = '"gnatpp -P " . self.Project_File'
       let &l:makeprg  = "gnatmake -P " . self.Project_File . "  -F -gnatef"
