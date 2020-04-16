@@ -62,7 +62,7 @@ function gnat#Set_Project_File (...) dict			     " {{{1
 	 call ale#lsp_linter#SendRequest('%',
 		  \ 'adalsp',
 		  \ ale#lsp#message#DidChangeConfiguration('%',
-			\ {'ada.projectFile' : self.Project_File}))
+			\ {'ada' : {"projectFile" : self.Project_File}}))
       endif
       let self.Make_Command = '"gnatmake -P " . self.Project_File . "  -F -gnatef"'
       let self.Pretty_Command = '"gnatpp -P " . self.Project_File'
