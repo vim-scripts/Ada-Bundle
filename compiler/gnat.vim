@@ -1,15 +1,10 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/GNAT compiler file
 "     Language: Ada (GNAT)
-"          $Id: gnat.vim 887 2008-07-08 14:29:01Z krischik $
-"    Copyright: Copyright (C) 2006 Martin Krischik
+"    Copyright: Copyright (C) 2006 … 2020 Martin Krischik
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
 "		Ned Okie <nokie@radford.edu>
-"      $Author: krischik $
-"        $Date: 2008-07-08 16:29:01 +0200 (Di, 08 Jul 2008) $
-"      Version: 4.6
-"    $Revision: 887 $
-"     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/compiler/gnat.vim $
+"      Version: 4.6.2
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "               15.10.2006 MK Bram's suggestion for runtime integration
@@ -65,7 +60,7 @@ execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
 finish " 1}}}
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006  Martin Krischik
+"   Copyright (C) 2006 … 2020 Martin Krischik
 "
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------

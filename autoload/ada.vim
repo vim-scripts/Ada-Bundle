@@ -1,16 +1,12 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
-"     Language: Ada (2005)
-"	   $Id: ada.vim 887 2008-07-08 14:29:01Z krischik $
+"     Language: Ada (2012)
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
 "		Ned Okie <nokie@radford.edu>
-"      $Author: krischik $
-"	 $Date: 2008-07-08 16:29:01 +0200 (Di, 08 Jul 2008) $
-"      Version: 4.6
-"    $Revision: 887 $
-"     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/ada.vim $
+" Contributors: Doug Kearns <dougkearns@gmail.com>
+"      Version: 4.6.2
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -20,15 +16,16 @@
 "			      autoload
 "		05.11.2006 MK Bram suggested to save on spaces
 "		08.07.2007 TV fix mapleader problems.
-"	        09.05.2007 MK Session just won't work no matter how much
+"		09.05.2007 MK Session just won't work no matter how much
 "			      tweaking is done
 "		19.09.2007 NO still some mapleader problems
+"		08.10.2020 DK Add some keyword
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
 
 if version < 700
    finish
-endif 
+endif
 
 " Section: Constants {{{1
 "
@@ -41,7 +38,7 @@ let g:ada#Keywords	   = []
 "
 " Section: add Ada keywords {{{2
 "
-for Item in ['abort', 'else', 'new', 'return', 'abs', 'elsif', 'not', 'reverse', 'abstract', 'end', 'null', 'accept', 'entry', 'select', 'access', 'exception', 'of', 'separate', 'aliased', 'exit', 'or', 'subtype', 'all', 'others', 'synchronized', 'and', 'for', 'out', 'array', 'function', 'overriding', 'tagged', 'at', 'task', 'generic', 'package', 'terminate', 'begin', 'goto', 'pragma', 'then', 'body', 'private', 'type', 'if', 'procedure', 'case', 'in', 'protected', 'until', 'constant', 'interface', 'use', 'is', 'raise', 'declare', 'range', 'when', 'delay', 'limited', 'record', 'while', 'delta', 'loop', 'rem', 'with', 'digits', 'renames', 'do', 'mod', 'requeue', 'xor']
+for Item in ['abort', 'else', 'new', 'return', 'abs', 'elsif', 'not', 'reverse', 'abstract', 'end', 'null', 'accept', 'entry', 'select', 'access', 'exception', 'of', 'separate', 'aliased', 'exit', 'or', 'subtype', 'all', 'others', 'synchronized', 'and', 'for', 'out', 'array', 'function', 'overriding', 'tagged', 'at', 'task', 'generic', 'package', 'terminate', 'begin', 'goto', 'pragma', 'then', 'body', 'private', 'type', 'if', 'procedure', 'case', 'in', 'protected', 'until', 'constant', 'interface', 'use', 'is', 'raise', 'declare', 'range', 'when', 'delay', 'limited', 'record', 'while', 'delta', 'loop', 'rem', 'with', 'digits', 'renames', 'do', 'mod', 'requeue', 'xor', 'some']
     let g:ada#Keywords += [{
 	    \ 'word':  Item,
 	    \ 'menu':  'keyword',
@@ -434,7 +431,7 @@ endfunction ada#Create_Tags
 " Section: ada#Switch_Session {{{1
 "
 function ada#Switch_Session (New_Session)
-   " 
+   "
    " you should not save to much date into the seession since they will
    " be sourced
    "
@@ -462,7 +459,7 @@ function ada#Switch_Session (New_Session)
 	    autocmd!
 	    autocmd VimLeavePre * execute 'mksession! ' . v:this_session
 	 augroup END
-	 
+
 	 "if exists ("g:Tlist_Auto_Open") && g:Tlist_Auto_Open
 	    "TlistOpen
 	 "endif
@@ -473,7 +470,7 @@ function ada#Switch_Session (New_Session)
    endtry
 
    return
-endfunction ada#Switch_Session	
+endfunction ada#Switch_Session
 
 " Section: GNAT Pretty Printer folding {{{1
 "
@@ -622,7 +619,7 @@ lockvar! g:ada#Ctags_Kinds
 finish " 1}}}
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006	Martin Krischik
+"   Copyright (C) 2006 … 2020 Martin Krischik
 "
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
