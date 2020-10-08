@@ -1,14 +1,9 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/Dec Ada compiler file
 "     Language: Ada (Dec Ada)
-"          $Id: decada.vim 887 2008-07-08 14:29:01Z krischik $
-"    Copyright: Copyright (C) 2006 Martin Krischik
+"    Copyright: Copyright (C) 2006 … 2020 Martin Krischik
 "   Maintainer:	Martin Krischik <krischik@users.sourceforge.net>
-"      $Author: krischik $
-"        $Date: 2008-07-08 16:29:01 +0200 (Di, 08 Jul 2008) $
-"      Version: 4.6      
-"    $Revision: 887 $
-"     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/decada.vim $
+"      Version: 4.6.2
 "      History: 21.07.2006 MK New Dec Ada
 "               15.10.2006 MK Bram's suggestion for runtime integration
 "               05.11.2006 MK Bram suggested not to use include protection for
@@ -61,13 +56,13 @@ function decada#New ()						     " }}}1
       \ 'Error_Format'  : '%+A%%ADAC-%t-%m,%C  %#%m,%Zat line number %l in file %f,' .
 			\ '%+I%%ada-I-%m,%C  %#%m,%Zat line number %l in file %f'}
 
-   return Retval 
+   return Retval
 endfunction decada#New						     " }}}1
 
 finish " 1}}}
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006  Martin Krischik
+"   Copyright (C) 2006 … 2020 Martin Krischik
 "
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------

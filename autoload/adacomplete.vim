@@ -1,20 +1,15 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada omnicompletion file
-"     Language:	Ada (2005)
-"	   $Id: adacomplete.vim 887 2008-07-08 14:29:01Z krischik $
+"     Language:	Ada (2012)
 "   Maintainer:	Martin Krischik
-"      $Author: krischik $
-"	 $Date: 2008-07-08 16:29:01 +0200 (Di, 08 Jul 2008) $
-"      Version: 4.6
-"    $Revision: 887 $
-"     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/autoload/adacomplete.vim $
+"      Version: 4.62
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK improved search for begin of word.
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		15.10.2006 MK Bram's suggestion for runtime integration
 "		05.11.2006 MK Bram suggested not to use include protection for
 "			      autoload
-"		05.11.2006 MK Bram suggested agaist using setlocal omnifunc 
+"		05.11.2006 MK Bram suggested agaist using setlocal omnifunc
 "		05.11.2006 MK Bram suggested to save on spaces
 "    Help Page: ft-ada-omni
 "------------------------------------------------------------------------------
@@ -101,7 +96,7 @@ endfunction adacomplete#Complete
 finish " 1}}}
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006	Martin Krischik
+"   Copyright (C) 2006 … 2020 Martin Krischik
 "
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
