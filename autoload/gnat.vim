@@ -57,10 +57,11 @@ function gnat#Set_Project_File (...) dict			     " {{{1
    if self.Project_File[strlen(self.Project_File) - 4:] == ".gpr"
       if exists('g:ale_enabled')
 	 let g:ale_ada_gnatmake_options = "-P " . self.Project_File . " -gnatwa -gnatq"
-	 let g:ale_lsp_root = {'adalsp': fnamemodify(self.Project_File, ':p:h') }
+	 let g:ale_ada_adals_project = self.Project_File
+	 let g:ale_lsp_root = {'adals': fnamemodify(self.Project_File, ':p:h') }
 	 let g:ale_ada_gnatpp_options = "-P " . self.Project_File
 	 call ale#lsp_linter#SendRequest('%',
-		  \ 'adalsp',
+		  \ 'adals',
 		  \ ale#lsp#message#DidChangeConfiguration('%',
 			\ {'ada' : {"projectFile" : self.Project_File}}))
       endif
