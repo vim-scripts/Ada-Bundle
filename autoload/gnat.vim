@@ -26,7 +26,7 @@ if version < 700
 endif
 
 function gnat#Make () dict					     " {{{1
-   let &l:makeprg	 = self.Get_Command('Make')
+   let &l:makeprg     = self.Get_Command('Make') . ' ' . self.Make_Options
    let &l:errorformat = self.Error_Format
    wall
    make
@@ -88,15 +88,22 @@ function gnat#Set_Session (...) dict				     " {{{1
    endif
 endfunction gnat#Set_Session					     " }}}1
 
+function gnat#Set_Options (Options) dict			     " {{{1
+   let self.Make_Options = a:Options
+   let &l:makeprg = self.Get_Command('Make') . ' ' . self.Make_Options
+endfunction gnat#Set_Options					     " }}}1
+
 function gnat#New ()						     " {{{1
    let l:Retval = {
-      \ 'Make'	      : function ('gnat#Make'),
-      \ 'Pretty'	      : function ('gnat#Pretty'),
+      \ 'Make'		   : function ('gnat#Make'),
+      \ 'Pretty'	   : function ('gnat#Pretty'),
       \ 'Set_Project_File' : function ('gnat#Set_Project_File'),
       \ 'Set_Session'      : function ('gnat#Set_Session'),
       \ 'Get_Command'      : function ('gnat#Get_Command'),
+      \ 'Set_Options'	   : function ('gnat#Set_Options'),
       \ 'Project_File'     : '',
       \ 'Make_Command'     : '"gnatmake -F -gnatef " . expand("%:p")',
+      \ 'Make_Options'	   : '',
       \ 'Pretty_Command'   : '"gnatpp " . expand("%:p")' ,
       \ 'Error_Format'     : '%f:%l:%c: %trror: %m,'   .
 			   \ '%f:%l:%c: %tarning: %m,' .

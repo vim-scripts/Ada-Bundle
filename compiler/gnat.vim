@@ -38,6 +38,11 @@ if !exists("g:gnat")
       \ ':SetProject',
       \ 'call gnat.Set_Project_File',
       \ '')
+   call ada#Map_Menu (
+      \ 'Set Project options\.\.\.',
+      \ ':SetOptions',
+      \ 'call gnat.Set_Options',
+      \ '')
 
    call g:gnat.Set_Session ()
 endif
