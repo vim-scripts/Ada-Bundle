@@ -101,7 +101,7 @@ version is available from (https://ctags.io).
 								*ada-compiler*
 
 The Ada mode supports more then one Ada compiler and will automatically load the
-compiler set in|g:ada_default_compiler|whenever an Ada source is opened. The
+compiler setting |g:ada_default_compiler| whenever an Ada source is opened. The
 provided compiler plug-ins are split into the actual compiler plug-in and a
 collection of support functions and variables. This allows the easy
 development of specialized compiler plug-ins fine tuned to your development
@@ -111,7 +111,7 @@ environment.
 4.1 GNAT ~
 							       *compiler-gnat*
 
-GNAT is the only free (beer and speech) Ada compiler available. There are
+GNAT is the free (beer and speech) Ada compiler available. There are
 several version available which differentiate in the licence terms used.
 
 The GNAT compiler plug-in will perform a compile on standard command *:make* and
@@ -120,9 +120,21 @@ setting:
  >
  > call g:gnat.Set_Project_File ('my_project.gpr')
 
-Setting a project file will also create a Vim session (|views-sessions|) so -
+or, by using command:
+ >
+ > SetProject my_project.gpr
+
+Setting a project file can also create a Vim session (|views-sessions|) so -
 like with the GPS - opened files, window positions etc. will remembered
 separately for all projects.
+
+Additionally, you can set compilation options for the project by setting:
+ >
+ > call g:gnat.Set_Options ('-XMode=release')
+
+or, by using command:
+ >
+ > SetOptions -XMode=release
 
 								*gnat_members*
 GNAT OBJECT ~
@@ -143,6 +155,12 @@ g:gnat.Set_Project_File([{file}])
 		without file name the file selector opens for selection of a
 		project file. If called with an empty string then the project
 		and associated session are closed.
+
+						   *g:gnat.Set_Options()*
+g:gnat.Set_Options([{Options}])
+		Set additional compilation options for the project. For
+		example, can be used to set additonal flags for gnat or
+		external references for the project file.
 
 							 *g:gnat.Project_File*
 g:gnat.Project_File	string
