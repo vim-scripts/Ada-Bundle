@@ -1,4 +1,4 @@
-*ft_ada.txt*	    Ada File type Plug-ins	      Last change: 2018 Dec 07
+*ft_ada.txt*	    Ada File type Plug-ins	      Last change: 2021 Jan 28
 
 
 		    ADA FILE TYPE PLUG-INS REFERENCE MANUAL~
@@ -141,12 +141,12 @@ GNAT OBJECT ~
 
 							       *g:gnat.Make()*
 g:gnat.Make()
-		Calls|g:gnat.Make_Command|and displays the result inside a
+		Calls |g:gnat.Make_Command| and displays the result inside a
                |quickfix| window.
 
 							     *g:gnat.Pretty()*
 g:gnat.Pretty()
-		Calls|g:gnat.Pretty_Command|
+		Calls |g:gnat.Pretty_Command|
 
 						   *g:gnat.Set_Project_File()*
 g:gnat.Set_Project_File([{file}])
@@ -168,11 +168,11 @@ g:gnat.Project_File	string
 
 							 *g:gnat.Make_Command*
 g:gnat.Make_Command	string
-		External command used for|g:gnat.Make()| (|'makeprg'|).
+		External command used for |g:gnat.Make()| (|'makeprg'|).
 
 						       *g:gnat.Pretty_Program*
 g:gnat.Pretty_Program	string
-		External command used for|g:gnat.Pretty()|
+		External command used for |g:gnat.Pretty()|
 
 							 *g:gnat.Error_Format*
 g:gnat.Error_Format	string
@@ -305,6 +305,13 @@ set makes no difference.
 
 :GnatPretty							 *:GnatPretty*
 		Calls |g:gnat.Pretty()|
+:SetProject							  *:SetProject*
+		Sets the project file for gnatmake. Also set up the Ale
+		plugin if. Calls |g:gnat.Set_Project_File()|
+:SetOptions							  *:SetOptions*
+		Sets the additional options for the gnatmake. It removes any
+		previous sets additional options when called again.
+		Calls |g:gnat.Set_Options()|
 
 ------------------------------------------------------------------------------
 5.3 Variables ~
@@ -314,7 +321,7 @@ set makes no difference.
 g:gnat			    object
 		Control object which manages GNAT compiles.  The object
 		is created when the first Ada source code is loaded provided
-		that |g:ada_default_compiler|is set to 'gnat'. See|gnat_members|
+		that |g:ada_default_compiler| is set to 'gnat'. See |gnat_members|
 		for details.
 
 ------------------------------------------------------------------------------
