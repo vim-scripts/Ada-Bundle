@@ -100,11 +100,11 @@ version is available from (https://ctags.io).
 4.  Compiler Support ~
 								*ada-compiler*
 
-The Ada mode supports more then one Ada compiler and will automatically load the
+The Ada mode supports more than one Ada compiler and will automatically load the
 compiler setting |g:ada_default_compiler| whenever an Ada source is opened. The
 provided compiler plug-ins are split into the actual compiler plug-in and a
 collection of support functions and variables. This allows the easy
-development of specialized compiler plug-ins fine tuned to your development
+development of specialized compiler plug-ins fine-tuned to your development
 environment.
 
 ------------------------------------------------------------------------------
@@ -112,9 +112,9 @@ environment.
 							       *compiler-gnat*
 
 GNAT is the free (beer and speech) Ada compiler available. There are
-several version available which differentiate in the licence terms used.
+several versions available which differentiate in the licence terms used.
 
-The GNAT compiler plug-in will perform a compile on standard command *:make* and
+The GNAT compiler plug-in will perform compile on standard command *:make* and
 then immediately shows the result. You can set the project file to be used by
 setting:
  >
@@ -125,7 +125,7 @@ or, by using command:
  > SetProject my_project.gpr
 
 Setting a project file can also create a Vim session (|views-sessions|) so -
-like with the GPS - opened files, window positions etc. will remembered
+like with the GPS - opened files, window positions etc. will remember
 separately for all projects.
 
 Additionally, you can set compilation options for the project by setting:
@@ -205,7 +205,7 @@ g:ada_space_errors	 bool (true when exists)
 
 							   *g:ada_line_errors*
 g:ada_line_errors	  bool (true when exists)
-		Highlight lines which are to long. Note: This highlighting
+		Highlight lines which are too long. Note: This highlighting
 		option is quite CPU intensive.
 
 							       *g:ada_folding*
@@ -280,7 +280,7 @@ g:ada_with_gnat_project_files	 bool (true when exists)
 
 						      *g:ada_default_compiler*
 g:ada_default_compiler	  string
-		Set default compiler. Currently supported is 'gnat'.
+		Set default compiler. Currently, supported is 'gnat'.
 
 							*g:ada_create_session*
 g:ada_create_session    bool (true when exists)
