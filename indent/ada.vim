@@ -30,6 +30,8 @@ setlocal indentexpr=GetAdaIndent()
 setlocal indentkeys-=0{,0}
 setlocal indentkeys+=0=~then,0=~end,0=~elsif,0=~when,0=~exception,0=~begin,0=~is,0=~record
 
+let b:undo_indent = "setl inde< indk<"
+
 " Only define the functions once.
 if exists("*GetAdaIndent")
    finish
