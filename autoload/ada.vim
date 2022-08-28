@@ -1,10 +1,12 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2012)
+"    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
 "		Ned Okie <nokie@radford.edu>
+"               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Doug Kearns <dougkearns@gmail.com>
 "      Version: 4.6.2
 "      History: 24.05.2006 MK Unified Headers
@@ -20,6 +22,7 @@
 "			      tweaking is done
 "		19.09.2007 NO still some mapleader problems
 "		08.10.2020 DK Add some keyword
+"		28.08.2022 MK Merge Ada 2012 changes from thindil
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
 
@@ -62,7 +65,7 @@ endif
 
 " Section: add	standart exception {{{2
 "
-for Item in ['Constraint_Error', 'Program_Error', 'Storage_Error', 'Tasking_Error', 'Status_Error', 'Mode_Error', 'Name_Error', 'Use_Error', 'Device_Error', 'End_Error', 'Data_Error', 'Layout_Error', 'Length_Error', 'Pattern_Error', 'Index_Error', 'Translation_Error', 'Time_Error', 'Argument_Error', 'Tag_Error', 'Picture_Error', 'Terminator_Error', 'Conversion_Error', 'Pointer_Error', 'Dereference_Error', 'Update_Error']
+for Item in ['Constraint_Error', 'Program_Error', 'Storage_Error', 'Tasking_Error', 'Status_Error', 'Mode_Error', 'Name_Error', 'Use_Error', 'Device_Error', 'End_Error', 'Data_Error', 'Layout_Error', 'Length_Error', 'Pattern_Error', 'Index_Error', 'Translation_Error', 'Time_Error', 'Argument_Error', 'Tag_Error', 'Picture_Error', 'Terminator_Error', 'Conversion_Error', 'Pointer_Error', 'Dereference_Error', 'Update_Error', 'Assertion_Error', 'Capacity_Error', 'Dispatching_Domain_Error', 'Dispatching_Policy_Error', 'Encoding_Error', 'Group_Budget_Error', 'Unknown_Zone_Error']
     let g:ada#Keywords += [{
 	    \ 'word':  Item,
 	    \ 'menu':  'exception',
@@ -110,7 +113,7 @@ endif
 
 " Section: add Ada Attributes {{{2
 "
-for Item in ['''Access', '''Address', '''Adjacent', '''Aft', '''Alignment', '''Base', '''Bit_Order', '''Body_Version', '''Callable', '''Caller', '''Ceiling', '''Class', '''Component_Size', '''Compose', '''Constrained', '''Copy_Sign', '''Count', '''Definite', '''Delta', '''Denorm', '''Digits', '''Emax', '''Exponent', '''External_Tag', '''Epsilon', '''First', '''First_Bit', '''Floor', '''Fore', '''Fraction', '''Identity', '''Image', '''Input', '''Large', '''Last', '''Last_Bit', '''Leading_Part', '''Length', '''Machine', '''Machine_Emax', '''Machine_Emin', '''Machine_Mantissa', '''Machine_Overflows', '''Machine_Radix', '''Machine_Rounding', '''Machine_Rounds', '''Mantissa', '''Max', '''Max_Size_In_Storage_Elements', '''Min', '''Mod', '''Model', '''Model_Emin', '''Model_Epsilon', '''Model_Mantissa', '''Model_Small', '''Modulus', '''Output', '''Partition_ID', '''Pos', '''Position', '''Pred', '''Priority', '''Range', '''Read', '''Remainder', '''Round', '''Rounding', '''Safe_Emax', '''Safe_First', '''Safe_Large', '''Safe_Last', '''Safe_Small', '''Scale', '''Scaling', '''Signed_Zeros', '''Size', '''Small', '''Storage_Pool', '''Storage_Size', '''Stream_Size', '''Succ', '''Tag', '''Terminated', '''Truncation', '''Unbiased_Rounding', '''Unchecked_Access', '''Val', '''Valid', '''Value', '''Version', '''Wide_Image', '''Wide_Value', '''Wide_Wide_Image', '''Wide_Wide_Value', '''Wide_Wide_Width', '''Wide_Width', '''Width', '''Write']
+for Item in ['''Access', '''Address', '''Adjacent', '''Aft', '''Alignment', '''Base', '''Bit_Order', '''Body_Version', '''Callable', '''Caller', '''Ceiling', '''Class', '''Component_Size', '''Compose', '''Constrained', '''Copy_Sign', '''Count', '''Definite', '''Delta', '''Denorm', '''Digits', '''Emax', '''Exponent', '''External_Tag', '''Epsilon', '''First', '''First_Bit', '''First_Valid', '''Floor', '''Fore', '''Fraction', '''Has_Some_Storage', '''Identity', '''Image', '''Input', '''Large', '''Last', '''Last_Bit', '''Last_Valid', '''Leading_Part', '''Length', '''Machine', '''Machine_Emax', '''Machine_Emin', '''Machine_Mantissa', '''Machine_Overflows', '''Machine_Radix', '''Machine_Rounding', '''Machine_Rounds', '''Mantissa', '''Max', '''Max_Size_Alignment_For_Allocation', '''Max_Size_In_Storage_Elements', '''Min', '''Mod', '''Model', '''Model_Emin', '''Model_Epsilon', '''Model_Mantissa', '''Model_Small', '''Modulus', '''Old', '''Output', '''Overlaps_Storage', '''Partition_ID', '''Pos', '''Position', '''Pred', '''Priority', '''Range', '''Read', '''Remainder', '''Result', '''Round', '''Rounding', '''Safe_Emax', '''Safe_First', '''Safe_Large', '''Safe_Last', '''Safe_Small', '''Scale', '''Scaling', '''Signed_Zeros', '''Size', '''Small', '''Storage_Pool', '''Storage_Size', '''Stream_Size', '''Succ', '''Tag', '''Terminated', '''Truncation', '''Unbiased_Rounding', '''Unchecked_Access', '''Val', '''Valid', '''Value', '''Version', '''Wide_Image', '''Wide_Value', '''Wide_Wide_Image', '''Wide_Wide_Value', '''Wide_Wide_Width', '''Wide_Width', '''Width', '''Write']
     let g:ada#Keywords += [{
 	    \ 'word':  Item,
 	    \ 'menu':  'attribute',
@@ -134,7 +137,8 @@ endif
 
 " Section: add Ada Pragmas {{{2
 "
-for Item in ['All_Calls_Remote', 'Assert', 'Assertion_Policy', 'Asynchronous', 'Atomic', 'Atomic_Components', 'Attach_Handler', 'Controlled', 'Convention', 'Detect_Blocking', 'Discard_Names', 'Elaborate', 'Elaborate_All', 'Elaborate_Body', 'Export', 'Import', 'Inline', 'Inspection_Point', 'Interface (Obsolescent)', 'Interrupt_Handler', 'Interrupt_Priority', 'Linker_Options', 'List', 'Locking_Policy', 'Memory_Size (Obsolescent)', 'No_Return', 'Normalize_Scalars', 'Optimize', 'Pack', 'Page', 'Partition_Elaboration_Policy', 'Preelaborable_Initialization', 'Preelaborate', 'Priority', 'Priority_Specific_Dispatching', 'Profile', 'Pure', 'Queueing_Policy', 'Relative_Deadline', 'Remote_Call_Interface', 'Remote_Types', 'Restrictions', 'Reviewable', 'Shared (Obsolescent)', 'Shared_Passive', 'Storage_Size', 'Storage_Unit (Obsolescent)', 'Suppress', 'System_Name (Obsolescent)', 'Task_Dispatching_Policy', 'Unchecked_Union', 'Unsuppress', 'Volatile', 'Volatile_Components']
+for Item in ['All_Calls_Remote', 'Assert', 'Assertion_Policy', 'Asynchronous', 'Atomic', 'Atomic_Components', 'Attach_Handler', 'Controlled (Obsolescent)', 'Convention', 'CPU', 'Default_Storage_Pool', 'Detect_Blocking', 'Discard_Names', 'Dispatching_Domain', 'Elaborate', 'Elaborate_All', 'Elaborate_Body', 'Export', 'Import', 'Independent', 'Independent_Components', 'Inline', 'Inspection_Point', 'Interface (Obsolescent)', 'Interrupt_Handler', 'Interrupt_Priority', 'Linker_Options', 'List', 'Locking_Policy', 'Memory_Size (Obsolescent)', 'No_Return', 'Normalize_Scalars', 'Optimize', 'Pack', 'Page', 'Partition_Elaboration_Policy', 'Preelaborable_Initialization', 'Preelaborate', 'Priority', 'Priority_Specific_Dispatching', 'Profile', 'Pure', 'Queueing_Policy', 'Relative_Deadline', 'Remote_Call_Interface', 'Remote_Types', 'Restrictions', 'Reviewable', 'Shared (Obsolescent)', 'Shared_Passive', 'Storage_Size', 'Storage_Unit (Obsolescent)', 'Suppress', 'System_Name (Obsolescent)', 'Task_Dispatching_Policy', 'Unchecked_Union', 'Unsuppress', 'Volatile', 'Volatile_Components']
+
     let g:ada#Keywords += [{
 	    \ 'word':  Item,
 	    \ 'menu':  'pragma',
@@ -275,72 +279,6 @@ function ada#Word (...)
    return substitute (l:Match_String, '\s\+', '', 'g')
 endfunction ada#Word
 
-" Section: ada#List_Tag (...) {{{1
-"
-"  List tags in quickfix window
-"
-function ada#List_Tag (...)
-   if a:0 > 1
-      let l:Tag_Word = ada#Word (a:1, a:2)
-   elseif a:0 > 0
-      let l:Tag_Word = a:1
-   else
-      let l:Tag_Word = ada#Word ()
-   endif
-
-   echo "Searching for" l:Tag_Word
-
-   let l:Pattern = '^' . l:Tag_Word . '$'
-   let l:Tag_List = taglist (l:Pattern)
-   let l:Error_List = []
-   "
-   " add symbols
-   "
-   for Tag_Item in l:Tag_List
-      if l:Tag_Item['kind'] == ''
-	 let l:Tag_Item['kind'] = 's'
-      endif
-
-      let l:Error_List += [
-	 \ l:Tag_Item['filename'] . '|' .
-	 \ l:Tag_Item['cmd']	  . '|' .
-	 \ l:Tag_Item['kind']	  . "\t" .
-	 \ l:Tag_Item['name'] ]
-   endfor
-   set errorformat=%f\|%l\|%m
-   cexpr l:Error_List
-   cwindow
-endfunction ada#List_Tag
-
-" Section: ada#Jump_Tag (Word, Mode) {{{1
-"
-" Word tag - include '.' and if Ada make uppercase
-"
-function ada#Jump_Tag (Word, Mode)
-   if a:Word == ''
-      " Get current word
-      let l:Word = ada#Word()
-      if l:Word == ''
-	 throw "NOT_FOUND: no identifier found."
-      endif
-   else
-      let l:Word = a:Word
-   endif
-
-   echo "Searching for " . l:Word
-
-   try
-      execute a:Mode l:Word
-   catch /.*:E426:.*/
-      let ignorecase = &ignorecase
-      set ignorecase
-      execute a:Mode l:Word
-      let &ignorecase = ignorecase
-   endtry
-
-   return
-endfunction ada#Jump_Tag
-
 " Section: ada#Insert_Backspace () {{{1
 "
 " Backspace at end of line after auto-inserted commentstring '-- ' wipes it
@@ -412,22 +350,6 @@ function ada#Completion_End ()
    return ''
 endfunction ada#Completion_End
 
-" Section: ada#Create_Tags {{{1
-"
-function ada#Create_Tags (option)
-   if a:option == 'file'
-      let l:Filename = fnamemodify (bufname ('%'), ':p')
-   elseif a:option == 'dir'
-      let l:Filename =
-	 \ fnamemodify (bufname ('%'), ':p:h') . "*.ada " .
-	 \ fnamemodify (bufname ('%'), ':p:h') . "*.adb " .
-	 \ fnamemodify (bufname ('%'), ':p:h') . "*.ads"
-   else
-      let l:Filename = a:option
-   endif
-   execute '!ctags --excmd=number ' . l:Filename
-endfunction ada#Create_Tags
-
 " Section: ada#Switch_Session {{{1
 "
 function ada#Switch_Session (New_Session)
@@ -451,19 +373,23 @@ function ada#Switch_Session (New_Session)
 
 	 let v:this_session = a:New_Session
 
-	 "if filereadable (v:this_session)
-	    "execute 'source ' . v:this_session
-	 "endif
+	 if filereadable (v:this_session)
+	    execute 'source ' . v:this_session
+	 endif
 
 	 augroup ada_session
 	    autocmd!
 	    autocmd VimLeavePre * execute 'mksession! ' . v:this_session
 	 augroup END
+<<<<<<< HEAD
 
 	 "if exists ("g:Tlist_Auto_Open") && g:Tlist_Auto_Open
 	    "TlistOpen
 	 "endif
 
+=======
+	 
+>>>>>>> cf179da72b94d613b49fa46216dda2a148b647f4
       endif
    finally
       let &sessionoptions=l:sessionoptions
@@ -538,75 +464,36 @@ function ada#Switch_Syntax_Option (option)
       echo  a:option . 'now on'
    endif
    syntax on
+   if (exists('g:rainbow_active') && g:rainbow_active)
+      call rainbow_main#load()
+   endif
 endfunction ada#Switch_Syntax_Option
 
 " Section: ada#Map_Menu {{{2
 "
-function ada#Map_Menu (Text, Keys, Command)
-   if a:Keys[0] == ':'
+function ada#Map_Menu (Text, Keys, Command, Args)
+   if a:Args == ''
       execute
 	\ "50amenu " .
-	\ "Ada."     . escape(a:Text, ' ') .
+	\ "&Ada."     . escape(a:Text, ' ') .
 	\ "<Tab>"    . a:Keys .
-	\ " :"	     . a:Command . "<CR>"
+	\ " :"	     . a:Command . "()<CR>"
       execute
-	\ "command -buffer " .
+	\ "command! -nargs=* " .
 	\ a:Keys[1:] .
-	\" :" . a:Command . "<CR>"
-   elseif a:Keys[0] == '<'
+	\" :" . a:Command . "(<f-args>)"
+   else
       execute
 	\ "50amenu " .
-	\ "Ada."     . escape(a:Text, ' ') .
+	\ "&Ada."     . escape(a:Text, ' ') .
 	\ "<Tab>"    . a:Keys .
-	\ " :"	     . a:Command . "<CR>"
+	\ " :"	     . a:Command . "(" . a:Args . ")<CR>"
       execute
-	\ "nnoremap <buffer> "	 .
-	\ a:Keys		 .
-	\" :" . a:Command . "<CR>"
-      execute
-	\ "inoremap <buffer> "	 .
-	\ a:Keys		 .
-	\" <C-O>:" . a:Command . "<CR>"
-   else
-      if exists("g:mapleader")
-         let l:leader = g:mapleader
-      else
-         let l:leader = '\'
-      endif
-      execute
-	\ "50amenu " .
-	\ "Ada."  . escape(a:Text, ' ') .
-	\ "<Tab>" . escape(l:leader . "a" . a:Keys , '\') .
-	\ " :"	  . a:Command . "<CR>"
-      execute
-	\ "nnoremap <buffer>" .
-	\ escape(l:leader . "a" . a:Keys , '\') .
-	\" :" . a:Command
-      execute
-	\ "inoremap <buffer>" .
-	\ escape(l:leader . "a" . a:Keys , '\') .
-	\" <C-O>:" . a:Command
+	\ "command! " .
+	\ a:Keys[1:] .
+	\" :" . a:Command . "(" . a:Args . ")"
    endif
-   return
 endfunction
-
-" Section: ada#Map_Popup {{{2
-"
-function ada#Map_Popup (Text, Keys, Command)
-   if exists("g:mapleader")
-      let l:leader = g:mapleader
-   else
-      let l:leader = '\'
-   endif
-   execute
-     \ "50amenu " .
-     \ "PopUp."   . escape(a:Text, ' ') .
-     \ "<Tab>"	  . escape(l:leader . "a" . a:Keys , '\') .
-     \ " :"	  . a:Command . "<CR>"
-
-   call ada#Map_Menu (a:Text, a:Keys, a:Command)
-   return
-endfunction ada#Map_Popup
 
 " }}}1
 
