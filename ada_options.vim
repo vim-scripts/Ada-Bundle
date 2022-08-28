@@ -1,6 +1,6 @@
 "------------------------------------------------------------------------------
 "  Description: Options setable by the Ada plugin
-"    Copyright: Copyright (C) 2006 … 2020 Martin Krischik
+"    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischik
 "      Version: 4.6.2
 "      History:	24.05.2006 MK Unified Headers
@@ -92,8 +92,6 @@ tar --create --bzip2	      \
 " }}}1
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006 … 2020	Martin Krischik
-"
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
 " vim: nowrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
