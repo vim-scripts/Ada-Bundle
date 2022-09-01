@@ -5,12 +5,13 @@
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "		Neil Bird <neil@fnxweb.com>
 "		Ned Okie <nokie@radford.edu>
-"      Version: 4.6.2
+"      Version: 5.0.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		15.10.2006 MK Bram's suggestion for runtime integration
 "		05.11.2006 MK Bram suggested to save on spaces
 "		19.09.2007 NO g: missing before ada#Comment
+"		01.09.2022 MK Use GitHub und dein to publish new versions
 "    Help Page: ft-vim-indent
 "------------------------------------------------------------------------------
 " ToDo:

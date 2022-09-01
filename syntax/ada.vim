@@ -8,7 +8,7 @@
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Preben Randhol.
 "               Doug Kearns <dougkearns@gmail.com>
-"      Version: 4.6.2
+"      Version: 5.0.0
 "               http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -19,6 +19,7 @@
 "               05.11.2006 MK Bram suggested to save on spaces
 "               08.10.2020 DK Add some keyword
 "               28.08.2022 MK Merge Ada 2012 changes from thindil
+"      Version: 5.0.0
 "    Help Page: help ft-ada-syntax
 "------------------------------------------------------------------------------
 " The formal spec of Ada 2005 (ARM) is the "Ada 2005 Reference Manual".
@@ -200,15 +201,9 @@ syntax keyword  adaConditional  if case select
 syntax keyword  adaConditional  elsif when
 
 " Section: other keywords {{{1
-<<<<<<< HEAD
-syntax match    adaKeyword          "\<is\>" contains=adaRecord
-syntax keyword  adaKeyword          all do exception in new null out
-syntax keyword  adaKeyword          some separate until overriding
-=======
 syntax match    adaKeyword          "\<is\>" contains=adaRecord
 syntax keyword  adaKeyword          all do exception in new null out some
 syntax keyword  adaKeyword          separate until overriding
->>>>>>> cf179da72b94d613b49fa46216dda2a148b647f4
 
 " Section: begin keywords {{{1
 "

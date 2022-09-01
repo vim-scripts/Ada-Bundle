@@ -8,7 +8,7 @@
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Doug Kearns <dougkearns@gmail.com>
-"      Version: 4.6.2
+"      Version: 5.0.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -23,6 +23,7 @@
 "		19.09.2007 NO still some mapleader problems
 "		08.10.2020 DK Add some keyword
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
+"		01.09.2022 MK Use GitHub und dein to publish new versions
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
 
@@ -381,15 +382,6 @@ function ada#Switch_Session (New_Session)
 	    autocmd!
 	    autocmd VimLeavePre * execute 'mksession! ' . v:this_session
 	 augroup END
-<<<<<<< HEAD
-
-	 "if exists ("g:Tlist_Auto_Open") && g:Tlist_Auto_Open
-	    "TlistOpen
-	 "endif
-
-=======
-	 
->>>>>>> cf179da72b94d613b49fa46216dda2a148b647f4
       endif
    finally
       let &sessionoptions=l:sessionoptions
