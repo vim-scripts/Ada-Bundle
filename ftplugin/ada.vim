@@ -1,10 +1,12 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
 "     Language: Ada (2012)
+"    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
-"      Version: 4.6.2
+"               Bartek Jasicki <thindil@laeran.pl>
+"      Version: 5.0.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -14,6 +16,8 @@
 "                             autoload
 "		05.11.2006 MK Bram suggested to save on spaces
 "		08.07.2007 TV fix default compiler problems.
+"		28.08.2022 MK Merge Ada 2012 changes from thindil
+"		01.09.2022 MK Use GitHub und dein to publish new versions
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
 " Provides mapping overrides for tag jumping that figure out the current
@@ -49,27 +53,6 @@ setlocal ignorecase
 " Section: formatoptions {{{1
 "
 setlocal formatoptions+=ron
-
-" Section: Tagging {{{1
-"
-if exists ("g:ada_extended_tagging")
-   " Make local tag mappings for this buffer (if not already set)
-   if g:ada_extended_tagging == 'jump'
-      if mapcheck('<C-]>','n') == ''
-	 nnoremap <unique> <buffer> <C-]>    :call ada#Jump_Tag ('', 'tjump')<cr>
-      endif
-      if mapcheck('g<C-]>','n') == ''
-	 nnoremap <unique> <buffer> g<C-]>   :call ada#Jump_Tag ('','stjump')<cr>
-      endif
-   elseif g:ada_extended_tagging == 'list'
-      if mapcheck('<C-]>','n') == ''
-	 nnoremap <unique> <buffer> <C-]>    :call ada#List_Tag ()<cr>
-      endif
-      if mapcheck('g<C-]>','n') == ''
-	 nnoremap <unique> <buffer> g<C-]>   :call ada#List_Tag ()<cr>
-      endif
-   endif
-endif
 
 " Section: Completion {{{1
 "
@@ -114,11 +97,7 @@ endif
 " Section: Compiler {{{1
 "
 if ! exists("g:ada_default_compiler")
-   if has("vms")
-      let g:ada_default_compiler = 'decada'
-   else
-      let g:ada_default_compiler = 'gnat'
-   endif
+   let g:ada_default_compiler = 'gnat'
 endif
 
 if ! exists("current_compiler")			||
@@ -155,39 +134,22 @@ endif
 
 " Section: Commands, Mapping, Menus {{{1
 "
-call ada#Map_Popup (
-   \ 'Tag.List',
-   \  'l',
-   \ 'call ada#List_Tag ()')
-call ada#Map_Popup (
-   \'Tag.Jump',
-   \'j',
-   \'call ada#Jump_Tag ()')
+execute "50amenu &Ada.-sep- :"
 call ada#Map_Menu (
-   \'Tag.Create File',
-   \':AdaTagFile',
-   \'call ada#Create_Tags (''file'')')
-call ada#Map_Menu (
-   \'Tag.Create Dir',
-   \':AdaTagDir',
-   \'call ada#Create_Tags (''dir'')')
-
-call ada#Map_Menu (
-   \'Highlight.Toggle Space Errors',
+   \'Toggle Space Errors',
    \ ':AdaSpaces',
-   \'call ada#Switch_Syntax_Option (''space_errors'')')
+   \'call ada#Switch_Syntax_Option',
+   \ '''space_errors''')
 call ada#Map_Menu (
-   \'Highlight.Toggle Lines Errors',
+   \'Toggle Lines Errors',
    \ ':AdaLines',
-   \'call ada#Switch_Syntax_Option (''line_errors'')')
+   \'call ada#Switch_Syntax_Option',
+   \ '''line_errors''')
 call ada#Map_Menu (
-   \'Highlight.Toggle Rainbow Color',
-   \ ':AdaRainbow',
-   \'call ada#Switch_Syntax_Option (''rainbow_color'')')
-call ada#Map_Menu (
-   \'Highlight.Toggle Standard Types',
+   \'Toggle Standard Types',
    \ ':AdaTypes',
-   \'call ada#Switch_Syntax_Option (''standard_types'')')
+   \'call ada#Switch_Syntax_Option',
+   \'''standard_types''')
 
 " 1}}}
 " Reset cpoptions

@@ -1,8 +1,10 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada omnicompletion file
 "     Language:	Ada (2012)
+"    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischik
-"      Version: 4.62
+"               Bartek Jasicki <thindil@laeran.pl>
+"      Version: 5.0.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK improved search for begin of word.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -11,6 +13,8 @@
 "			      autoload
 "		05.11.2006 MK Bram suggested agaist using setlocal omnifunc
 "		05.11.2006 MK Bram suggested to save on spaces
+"		28.08.2022 MK Merge Ada 2012 changes from thindil
+"		01.09.2022 MK Use GitHub und dein to publish new versions
 "    Help Page: ft-ada-omni
 "------------------------------------------------------------------------------
 
@@ -41,26 +45,16 @@ function! adacomplete#Complete (findstart, base)
       " add symbols
       "
       for Tag_Item in l:Tag_List
-	 if l:Tag_Item['kind'] == ''
-	    "
-	    " Tag created by gnat xref
-	    "
-	    let l:Match_Item = {
-	       \ 'word':  l:Tag_Item['name'],
-	       \ 'menu':  l:Tag_Item['filename'],
-	       \ 'info':  "Symbol from file " . l:Tag_Item['filename'] . " line " . l:Tag_Item['cmd'],
-	       \ 'kind':  's',
-	       \ 'icase': 1}
-	 else
+	 if !has_key(l:Tag_Item, 'language') || l:Tag_Item['language'] == 'Ada'
 	    "
 	    " Tag created by ctags
 	    "
-	    let l:Info	= 'Symbol		 : ' . l:Tag_Item['name']  . "\n"
-	    let l:Info .= 'Of type		 : ' . g:ada#Ctags_Kinds[l:Tag_Item['kind']][1]  . "\n"
-	    let l:Info .= 'Defined in File	 : ' . l:Tag_Item['filename'] . "\n"
+	    let l:Info	= 'Symbol                : ' . l:Tag_Item['name']  . "\n"
+	    let l:Info .= 'Of type               : ' . g:ada#Ctags_Kinds[l:Tag_Item['kind']][1]  . "\n"
+	    let l:Info .= 'Defined in File       : ' . l:Tag_Item['filename'] . "\n"
 
 	    if has_key( l:Tag_Item, 'package')
-	       let l:Info .= 'Package		    : ' . l:Tag_Item['package'] . "\n"
+	       let l:Info .= 'Package               : ' . l:Tag_Item['package'] . "\n"
 	       let l:Menu  = l:Tag_Item['package']
 	    elseif has_key( l:Tag_Item, 'separate')
 	       let l:Info .= 'Separate from Package : ' . l:Tag_Item['separate'] . "\n"
@@ -69,14 +63,20 @@ function! adacomplete#Complete (findstart, base)
 	       let l:Info .= 'Package Specification : ' . l:Tag_Item['packspec'] . "\n"
 	       let l:Menu  = l:Tag_Item['packspec']
 	    elseif has_key( l:Tag_Item, 'type')
-	       let l:Info .= 'Datetype		    : ' . l:Tag_Item['type'] . "\n"
+	       let l:Info .= 'Datetype              : ' . l:Tag_Item['type'] . "\n"
 	       let l:Menu  = l:Tag_Item['type']
 	    else
 	       let l:Menu  = l:Tag_Item['filename']
 	    endif
 
+	    let l:Definition = trim(l:Tag_Item['cmd'], "/^")
+	    let l:Definition = trim(l:Definition, "$/;")
+	    let l:Definition = trim(l:Definition)
+	    let l:Info .= 'Definition            : ' . l:Definition . "\n"
+
 	    let l:Match_Item = {
 	       \ 'word':  l:Tag_Item['name'],
+	       \ 'abbr':  l:Definition,
 	       \ 'menu':  l:Menu,
 	       \ 'info':  l:Info,
 	       \ 'kind':  l:Tag_Item['kind'],
@@ -96,8 +96,6 @@ endfunction adacomplete#Complete
 finish " 1}}}
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006 … 2020 Martin Krischik
-"
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
 " vim: textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab

@@ -1,13 +1,14 @@
 "----------------------------------------------------------------------------
 "  Description: Vim Ada syntax file
 "     Language: Ada (2012)
-"    Copyright: Copyright (C) 2006 … 2020 Martin Krischik
+"    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer: Martin Krischik
 "               David A. Wheeler <dwheeler@dwheeler.com>
 "               Simon Bradley <simon.bradley@pitechnology.com>
+"               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Preben Randhol.
-"		Doug Kearns <dougkearns@gmail.com>
-"      Version: 4.6.2
+"               Doug Kearns <dougkearns@gmail.com>
+"      Version: 5.0.0
 "               http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -16,7 +17,9 @@
 "               15.10.2006 MK Bram's suggestion for runtime integration
 "               05.11.2006 MK Spell check for comments and strings only
 "               05.11.2006 MK Bram suggested to save on spaces
-"		08.10.2020 DK Add some keyword
+"               08.10.2020 DK Add some keyword
+"               28.08.2022 MK Merge Ada 2012 changes from thindil
+"      Version: 5.0.0
 "    Help Page: help ft-ada-syntax
 "------------------------------------------------------------------------------
 " The formal spec of Ada 2005 (ARM) is the "Ada 2005 Reference Manual".
@@ -31,6 +34,7 @@ if exists("b:current_syntax") || version < 700
 endif
 
 let b:current_syntax = "ada"
+
 
 " Section: Ada is entirely case-insensitive. {{{1
 "
@@ -53,6 +57,9 @@ for b:Item in g:ada#Keywords
    endif
    if b:Item['kind'] == "a"
       execute 'syntax match adaAttribute "\V' . b:Item['word'] . '"'
+   endif
+   if b:Item['kind'] == "p"
+      execute "syntax keyword adaPreProc " . b:Item['word']
    endif
    " We don't normally highlight types in package Standard
    " (Integer, Character, Float, etc.).  I don't think it looks good
@@ -89,15 +96,9 @@ syntax match    adaOperator "="
 "
 syntax keyword  adaSpecial          <>
 
-" Section: rainbow color {{{1
+" Section: parenthesis {{{1
 "
-if exists("g:ada_rainbow_color")
-    syntax match        adaSpecial       "[:;.,]"
-    call rainbow_parenthsis#LoadRound ()
-    call rainbow_parenthsis#Activate ()
-else
-    syntax match        adaSpecial       "[:;().,]"
-endif
+syntax match adaSpecial  "[:;().,]"
 
 " Section: := {{{1
 "
@@ -201,8 +202,8 @@ syntax keyword  adaConditional  elsif when
 
 " Section: other keywords {{{1
 syntax match    adaKeyword          "\<is\>" contains=adaRecord
-syntax keyword  adaKeyword          all do exception in new null out
-syntax keyword  adaKeyword          some separate until overriding
+syntax keyword  adaKeyword          all do exception in new null out some
+syntax keyword  adaKeyword          separate until overriding
 
 " Section: begin keywords {{{1
 "
