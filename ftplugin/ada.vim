@@ -6,7 +6,7 @@
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 4.6.2
+"      Version: 5.0.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -17,6 +17,7 @@
 "		05.11.2006 MK Bram suggested to save on spaces
 "		08.07.2007 TV fix default compiler problems.
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
+"		01.09.2022 MK Use GitHub und dein to publish new versions
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
 " Provides mapping overrides for tag jumping that figure out the current
