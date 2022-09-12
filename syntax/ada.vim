@@ -19,6 +19,9 @@
 "               05.11.2006 MK Bram suggested to save on spaces
 "               08.10.2020 DK Add some keyword
 "               28.08.2022 MK Merge Ada 2012 changes from thindil
+"               12.09.2022 MK Rainbow Parenthesis have been updated and
+"                             modernised so they are a vialble light weight
+"                             alternative to rainbow.
 "      Version: 5.0.0
 "    Help Page: help ft-ada-syntax
 "------------------------------------------------------------------------------
@@ -99,6 +102,16 @@ syntax keyword  adaSpecial          <>
 " Section: parenthesis {{{1
 "
 syntax match adaSpecial  "[:;().,]"
+
+" Section: rainbow color {{{1
+"
+if exists("g:ada_rainbow_color")
+    " syntax match      adaSpecial       "[:;.,]"
+    call rainbow-parenthesis#LoadRound ()
+    call rainbow_parenthesis#Activate ()
+else
+    " syntax match      adaSpecial       "[:;().,]"
+endif
 
 " Section: := {{{1
 "

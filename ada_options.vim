@@ -10,6 +10,9 @@
 "		15.10.2006 MK Bram's suggestion for runtime integration
 "		05.11.2006 MK Bram suggested to save on spaces
 "		01.09.2022 MK Use GitHub und dein to publish new versions
+"		12.09.2022 MK Rainbow Parenthesis have been updated and
+"			      modernised so they are a vialble light weight
+"			      alternative to rainbow.
 "	 Usage: copy content into your .vimrc and change options to your
 "		likeing.
 "    Help Page: ft-ada-options

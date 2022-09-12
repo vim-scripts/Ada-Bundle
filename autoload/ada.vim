@@ -24,6 +24,9 @@
 "		08.10.2020 DK Add some keyword
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub und dein to publish new versions
+"		12.09.2022 MK Rainbow Parenthesis have been updated and
+"			      modernised so they are a vialble light weight
+"			      alternative to rainbow.
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
 

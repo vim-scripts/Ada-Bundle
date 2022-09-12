@@ -1,6 +1,6 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
-"     Language: Ada (2012)
+"     Language: Ada (2022)
 "    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "		Taylor Venable <taylor@metasyntax.net>
@@ -18,6 +18,9 @@
 "		08.07.2007 TV fix default compiler problems.
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub und dein to publish new versions
+"		12.09.2022 MK Rainbow Parenthesis have been updated and
+"			      modernised so they are a vialble light weight
+"			      alternative to rainbow.
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
 " Provides mapping overrides for tag jumping that figure out the current
@@ -146,6 +149,10 @@ call ada#Map_Menu (
    \'call ada#Switch_Syntax_Option',
    \ '''line_errors''')
 call ada#Map_Menu (
+   \'Toggle Rainbow Color',
+   \ ':AdaRainbow',
+   \'call ada#Switch_Syntax_Option (''rainbow_color'')')
+call ada#Map_Menu (
    \'Toggle Standard Types',
    \ ':AdaTypes',
    \'call ada#Switch_Syntax_Option',
@@ -159,8 +166,6 @@ unlet s:cpoptions
 finish " 1}}}
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006 … 2020 Martin Krischik
-"
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
 " vim: textwidth=78 nowrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
