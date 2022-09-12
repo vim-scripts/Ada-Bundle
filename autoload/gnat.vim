@@ -105,7 +105,13 @@ function gnat#New ()						     " {{{1
       \ 'Pretty_Command'   : '"gnatpp " . expand("%:p")' ,
       \ 'Error_Format'     : '%f:%l:%c: %trror: %m,'   .
 			   \ '%f:%l:%c: %tarning: %m,' .
-			   \ '%f:%l:%c: (%ttyle) %m'}
+			   \ '%f:%l:%c: %tnfo: %m,'    .
+			   \ '%f:%l:%c: %tow: %m,'     .
+			   \ '%f:%l:%c: %tedium: %m,'  .
+			   \ '%f:%l:%c: %tigh: %m,'    .
+			   \ '%f:%l:%c: %theck: %m,'   .
+			   \ '%f:%l:%c: (%ttyle) %m,'   .
+			   \ '%f:%l:%c: %m'}
 
    return l:Retval
 endfunction gnat#New						  " }}}1
