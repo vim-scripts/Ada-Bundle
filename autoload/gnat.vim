@@ -15,7 +15,8 @@
 "		05.11.2006 MK Bram suggested to save on spaces
 "		19.09.2007 NO use project file only when there is a project
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
-"		01.09.2022 MK Use GitHub und dein to publish new versions
+"		01.09.2022 MK Use GitHub and dein to publish new versions
+"	 Usage: Use dein to install
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------
 
@@ -115,5 +116,6 @@ finish " 1}}}
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
-" vim: textwidth=0 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
-" vim: foldmethod=marker
+" vim: set textwidth=0 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab :
+" vim: set filetype=vim fileencoding=utf-8 fileformat=unix foldmethod=marker :
+" vim: set spell spelllang=en_gb :

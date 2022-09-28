@@ -20,9 +20,9 @@
 "               08.10.2020 DK Add some keyword
 "               28.08.2022 MK Merge Ada 2012 changes from thindil
 "               12.09.2022 MK Rainbow Parenthesis have been updated and
-"                             modernised so they are a vialble light weight
-"                             alternative to rainbow.
-"      Version: 5.0.0
+"                             modernised so they are a viable light weight
+"                             alternative to rainbow-improved.
+"	 Usage: Use dein to install
 "    Help Page: help ft-ada-syntax
 "------------------------------------------------------------------------------
 " The formal spec of Ada 2005 (ARM) is the "Ada 2005 Reference Manual".
@@ -370,5 +370,6 @@ finish " 1}}}
 "
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
-"vim: textwidth=78 nowrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
-"vim: foldmethod=marker
+" vim: set textwidth=78 nowrap tabstop=8 shiftwidth=4 softtabstop=4 expandtab :
+" vim: set filetype=vim fileencoding=utf-8 fileformat=unix foldmethod=marker :
+" vim: set spell spelllang=en_gb :
