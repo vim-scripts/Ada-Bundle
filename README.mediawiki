@@ -6,9 +6,7 @@ This is a maintained mirror of http://www.vim.org/scripts/script.php?script_id=1
 
 Contains all files for the new Ada mode. It also has a vim help file which you can call with
 
-{{code|lang=vim|
-:help ada.txt.
-}}
+    :help ada.txt.
 
 Included is:
 
@@ -23,10 +21,8 @@ For some functionality you need a ctags program.
 
 Don't forget to actually activate filetype and syntax support:
 
-{{code|lang=vim|
-:filetype plugin indent on
-:syntax enable
-}}
+    :filetype plugin indent on
+    :syntax enable
 
 The Ada mode can be be further extend with the following Scripts:
 
@@ -64,12 +60,10 @@ All propositions and problems about this version of vim-ada, please report here,
 
 Install from https://github.com/krischik/vim-ada using dein (https://github.com/Shougo/dein.vim) or similar:
 
-{{code|lang=vim|
-call dein#begin('$HOME/vimfiles/bundles')
-call dein#add('krischik/vim-ada')
-call dein#end()
-call dein#install()
-}}
+    call dein#begin('$HOME/vimfiles/bundles')
+    call dein#add('krischik/vim-ada')
+    call dein#end()
+    call dein#install()
 
 == References ==
 
