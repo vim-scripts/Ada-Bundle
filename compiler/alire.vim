@@ -20,11 +20,6 @@ if !exists("g:alire")
    let g:alire = alire#New ()
 
    call ada#Map_Menu (
-      \ 'Set Project file\.\.\.',
-      \ ':SetProject',
-      \ 'call alire.Set_Project_File',
-      \ '')
-   call ada#Map_Menu (
       \ 'Set Project options\.\.\.',
       \ ':SetOptions',
       \ 'call alire.Set_Options',

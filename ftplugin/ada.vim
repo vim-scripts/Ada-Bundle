@@ -97,7 +97,7 @@ endif
 " Section: Compiler {{{1
 "
 if ! exists("g:ada_default_compiler")
-   let g:ada_default_compiler = 'gnat'
+   let g:ada_default_compiler = 'alire'
 endif
 
 if ! exists("current_compiler")			||

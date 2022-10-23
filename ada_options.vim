@@ -21,7 +21,7 @@ finish " 1}}}
 " Section: Ada options {{{1
 
    let   g:ada_abbrev		       = 1
-   let   g:ada_default_compiler	       = 'gnat'
+   let   g:ada_default_compiler	       = 'alire'
    let   g:ada_extended_tagging	       = 'list'
    let   g:ada_folding		       = 'i'
 "  let   g:ada_folding		       = 'gibxp'
@@ -63,9 +63,9 @@ finish " 1}}}
 ada_options.vim
 autoload/ada.vim
 autoload/adacomplete.vim
-autoload/decada.vim
+autoload/alire.vim
 autoload/gnat.vim
-compiler/decada.vim
+compiler/alire.vim
 compiler/gnat.vim
 doc/ft_ada.txt
 ftdetect/ada.vim
@@ -81,9 +81,9 @@ tar --create --bzip2	      \
    --file="ada-4.6.2.tar.bz2" \
    autoload/ada.vim	      \
    autoload/adacomplete.vim   \
-   autoload/decada.vim	      \
+   autoload/alire.vim	      \
    autoload/gnat.vim	      \
-   compiler/decada.vim	      \
+   compiler/alire.vim	      \
    compiler/gnat.vim	      \
    doc/ft_ada.txt	      \
    ftdetect/ada.vim	      \
@@ -92,6 +92,20 @@ tar --create --bzip2	      \
    syntax/ada.vim	      ;
 
 " }}}1
+
+" Section: Quick Installation {{{1
+
+gcp --verbose --update autoload/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/autoload/
+gcp --verbose --update compiler/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/compiler/
+gcp --verbose --update doc/*.txt          ~/vimfiles/bundles/.cache/.vimrc/.dein/doc/
+gcp --verbose --update ftdetect/*.vim     ~/vimfiles/bundles/.cache/.vimrc/.dein/ftdetect/
+gcp --verbose --update ftplugin/*.vim     ~/vimfiles/bundles/.cache/.vimrc/.dein/ftplugin/
+gcp --verbose --update indent/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein/indent/
+gcp --verbose --update syntax/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein/syntax/
+gcp --verbose --update ada_options.vim    ~/vimfiles/bundles/.cache/.vimrc/.dein/
+
+" }}}1
+
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
