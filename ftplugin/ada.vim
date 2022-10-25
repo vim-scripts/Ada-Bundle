@@ -1,12 +1,12 @@
 "------------------------------------------------------------------------------
 "  Description: Perform Ada specific completion & tagging.
-"     Language: Ada (2012)
+"     Language: Ada (2022)
 "    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.1.0
+"      Version: 5.2.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -17,8 +17,12 @@
 "		05.11.2006 MK Bram suggested to save on spaces
 "		08.07.2007 TV fix default compiler problems.
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
-"		01.09.2022 MK Use GitHub und dein to publish new versions
+"		01.09.2022 MK Use GitHub and dein to publish new versions
+"		12.09.2022 MK Rainbow Parenthesis have been updated and
+"			      modernised so they are a viable light weight
+"			      alternative to rainbow-improved.
 "		25.10.2022 MK Add Alire compiler support
+"	 Usage: Use dein to install
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
 " Provides mapping overrides for tag jumping that figure out the current
@@ -157,6 +161,10 @@ call ada#Map_Menu (
    \ 'call ada#Switch_Syntax_Option',
    \ '''line_errors''')
 call ada#Map_Menu (
+   \'Toggle Rainbow Color',
+   \ ':AdaRainbow',
+   \'call ada#Switch_Syntax_Option (''rainbow_color'')')
+call ada#Map_Menu (
    \'Toggle Standard Types',
    \ 'at',
    \ 'AdaTypes',
@@ -171,9 +179,8 @@ unlet s:cpoptions
 finish " 1}}}
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006 … 2020 Martin Krischik
-"
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
-" vim: textwidth=78 nowrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
-" vim: foldmethod=marker
+" vim: set textwidth=78 nowrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab :
+" vim: set filetype=vim fileencoding=utf-8 fileformat=unix foldmethod=marker :
+" vim: set spell spelllang=en_gb :

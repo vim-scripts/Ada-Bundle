@@ -5,14 +5,15 @@
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
 "               Bartek Jasicki <thindil@laeran.pl>
 "		Ned Okie <nokie@radford.edu>
-"      Version: 5.1.0
+"      Version: 5.2.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "               15.10.2006 MK Bram's suggestion for runtime integration
 "		19.09.2007 NO use project file only when there is a project
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
-"		01.09.2022 MK Use GitHub und dein to publish new versions
+"		01.09.2022 MK Use GitHub and dein to publish new versions
 "		25.10.2022 MK Add Alire compiler support
+"	 Usage: Use dein to install
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------
 
@@ -26,7 +27,7 @@ let current_compiler = "gnat"
 
 if !exists("g:gnat")
    let g:gnat = gnat#New ()
-   
+
    " Map_Menu parameter:
    "  Text:	Menu text to display
    "  Keys:	Key shortcut to define (used only when g:mapleader is used)
@@ -71,5 +72,6 @@ finish " 1}}}
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
-" vim: textwidth=0 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
-" vim: foldmethod=marker
+" vim: set textwidth=0 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab :
+" vim: set filetype=vim fileencoding=utf-8 fileformat=unix foldmethod=marker :
+" vim: set spell spelllang=en_gb :

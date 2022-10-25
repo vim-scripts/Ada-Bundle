@@ -8,7 +8,7 @@
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.1.0
+"      Version: 5.2.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -23,9 +23,13 @@
 "		19.09.2007 NO still some mapleader problems
 "		08.10.2020 DK Add some keyword
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
-"		01.09.2022 MK Use GitHub und dein to publish new versions
+"		01.09.2022 MK Use GitHub and dein to publish new versions
+"		12.09.2022 MK Rainbow Parenthesis have been updated and
+"			      modernised so they are a viable light weight
+"			      alternative to rainbow-improved.
 "		25.10.2022 MK Add Alire compiler support
-"    Help Page: ft-ada
+"	 Usage: Use dein to install
+"    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
 
 if version < 700
@@ -463,7 +467,7 @@ function ada#Switch_Syntax_Option (option)
 endfunction ada#Switch_Syntax_Option
 
 " Section: ada#Map_Menu {{{2
-" 
+"
 " Text:	    Menu text to display
 " Keys:	    Key shortcut to define
 " Command:  Command shortcut to define
@@ -514,5 +518,6 @@ finish " 1}}}
 "
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
-" vim: textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
-" vim: foldmethod=marker
+" vim: set textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab :
+" vim: set filetype=vim fileencoding=utf-8 fileformat=unix foldmethod=marker :
+" vim: set spell spelllang=en_gb :
