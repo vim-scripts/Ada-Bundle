@@ -1,31 +1,24 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada/GNAT compiler file
-"     Language: Ada (GNAT)
-"    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
+"     Language: Ada (GNAT, Alire)
+"    Copyright: Copyright (C) 2022 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
-"               Bartek Jasicki <thindil@laeran.pl>
-"		Ned Okie <nokie@radford.edu>
 "      Version: 5.0.0
 "      History: 24.05.2006 MK Unified Headers
-"		16.07.2006 MK Ada-Mode as vim-ball
-"               15.10.2006 MK Bram's suggestion for runtime integration
-"		19.09.2007 NO use project file only when there is a project
-"		28.08.2022 MK Merge Ada 2012 changes from thindil
-"		01.09.2022 MK Use GitHub und dein to publish new versions
-"    Help Page: compiler-gnat
+"    Help Page: compiler-alire
 "------------------------------------------------------------------------------
 
 if (exists("current_compiler")	    &&
-   \ current_compiler == "gnat")    ||
+   \ current_compiler == "alire")    ||
    \ version < 700
    finish
 endif
 
-let current_compiler = "gnat"
+let current_compiler = "alire"
 
-if !exists("g:gnat")
-   let g:gnat = gnat#New ()
-   
+if !exists("g:alire")
+   let g:alire = alire#New ()
+
    " Map_Menu parameter:
    "  Text:	Menu text to display
    "  Keys:	Key shortcut to define (used only when g:mapleader is used)
@@ -34,25 +27,29 @@ if !exists("g:gnat")
    "  Args:	Additional parameter.
 
    call ada#Map_Menu (
-      \ 'Pretty Print',
-      \ 'ap'
-      \ ':GnatPretty',
-      \ 'call gnat.Pretty',
+      \ 'Run executable built',
+      \ 'ar',
+      \ 'AlireRun',
+      \ 'call alire.Run',
       \ '')
    call ada#Map_Menu (
-      \ 'Set Project file\.\.\.',
-      \ 'ap'
-      \ ':SetProject',
-      \ 'call gnat.Set_Project_File',
+      \ 'Clean project',
+      \ 'ac',
+      \ 'AlireClean',
+      \ 'call alire.Clean',
       \ '')
    call ada#Map_Menu (
       \ 'Set Project options\.\.\.',
-      \ 'ao'
-      \ ':SetOptions',
-      \ 'call gnat.Set_Options',
+      \ 'ao',
+      \ 'AlireSet',
+      \ 'call alire.Set_Options',
       \ '')
-
-   call g:gnat.Set_Session ()
+   call ada#Map_Menu (
+      \ 'Read session',
+      \ 'ar',
+      \ 'AlireRead',
+      \ 'ada#Switch_Session',
+      \ '"alire.vim"')
 endif
 
 if exists(":CompilerSet") != 2
@@ -62,8 +59,12 @@ if exists(":CompilerSet") != 2
    command -nargs=* CompilerSet setlocal <args>
 endif
 
-execute "CompilerSet makeprg="     . escape (g:gnat.Get_Command('Make'), ' ')
-execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
+execute "CompilerSet makeprg="     . escape (g:alire.Get_Command('Make'), ' ')
+execute "CompilerSet errorformat=" . escape (g:alire.Error_Format, ' ')
+
+if exists("g:ada_create_session")
+   call ada#Switch_Session('alire.vim')
+endif
 
 finish " 1}}}
 
