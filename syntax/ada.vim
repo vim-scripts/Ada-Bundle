@@ -8,7 +8,7 @@
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Preben Randhol.
 "               Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.0.0
+"      Version: 5.1.0
 "               http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -19,7 +19,7 @@
 "               05.11.2006 MK Bram suggested to save on spaces
 "               08.10.2020 DK Add some keyword
 "               28.08.2022 MK Merge Ada 2012 changes from thindil
-"      Version: 5.0.0
+"		25.10.2022 MK Add Alire compiler support
 "    Help Page: help ft-ada-syntax
 "------------------------------------------------------------------------------
 " The formal spec of Ada 2005 (ARM) is the "Ada 2005 Reference Manual".
@@ -34,7 +34,6 @@ if exists("b:current_syntax") || version < 700
 endif
 
 let b:current_syntax = "ada"
-
 
 " Section: Ada is entirely case-insensitive. {{{1
 "
@@ -353,8 +352,6 @@ syntax sync minlines=1 maxlines=1
 finish " 1}}}
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006 … 2020  Martin Krischik
-"
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
 "vim: textwidth=78 nowrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab

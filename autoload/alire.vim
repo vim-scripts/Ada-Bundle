@@ -3,8 +3,8 @@
 "     Language: Ada (alire, Alire)
 "    Copyright: Copyright (C) 2022 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
-"      Version: 5.0.0
-"      History: 24.05.2006 MK Unified Headers
+"      Version: 5.1.0
+"      History: 25.10.2022 MK Add Alire compiler support
 "    Help Page: compiler-alire
 "------------------------------------------------------------------------------
 
