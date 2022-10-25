@@ -25,19 +25,29 @@ let current_compiler = "gnat"
 
 if !exists("g:gnat")
    let g:gnat = gnat#New ()
+   
+   " Map_Menu parameter:
+   "  Text:	Menu text to display
+   "  Keys:	Key shortcut to define (used only when g:mapleader is used)
+   "  Command:  Command shortcut to define
+   "  Function: Function to call
+   "  Args:	Additional parameter.
 
    call ada#Map_Menu (
       \ 'Pretty Print',
+      \ 'ap'
       \ ':GnatPretty',
       \ 'call gnat.Pretty',
       \ '')
    call ada#Map_Menu (
       \ 'Set Project file\.\.\.',
+      \ 'ap'
       \ ':SetProject',
       \ 'call gnat.Set_Project_File',
       \ '')
    call ada#Map_Menu (
       \ 'Set Project options\.\.\.',
+      \ 'ao'
       \ ':SetOptions',
       \ 'call gnat.Set_Options',
       \ '')

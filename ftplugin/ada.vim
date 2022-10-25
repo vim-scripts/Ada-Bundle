@@ -135,21 +135,32 @@ endif
 " Section: Commands, Mapping, Menus {{{1
 "
 execute "50amenu &Ada.-sep- :"
+
+" Map_Menu parameter:
+"  Text:	Menu text to display
+"  Keys:	Key shortcut to define (used only when g:mapleader is used)
+"  Command:  Command shortcut to define
+"  Function: Function to call
+"  Args:	Additional parameter.
+
 call ada#Map_Menu (
-   \'Toggle Space Errors',
-   \ ':AdaSpaces',
-   \'call ada#Switch_Syntax_Option',
+   \ 'Toggle Space Errors',
+   \ 'as',
+   \ 'AdaSpaces',
+   \ 'call ada#Switch_Syntax_Option',
    \ '''space_errors''')
 call ada#Map_Menu (
    \'Toggle Lines Errors',
-   \ ':AdaLines',
-   \'call ada#Switch_Syntax_Option',
+   \ 'al',
+   \ 'AdaLines',
+   \ 'call ada#Switch_Syntax_Option',
    \ '''line_errors''')
 call ada#Map_Menu (
    \'Toggle Standard Types',
-   \ ':AdaTypes',
-   \'call ada#Switch_Syntax_Option',
-   \'''standard_types''')
+   \ 'at',
+   \ 'AdaTypes',
+   \ 'call ada#Switch_Syntax_Option',
+   \ '''standard_types''')
 
 " 1}}}
 " Reset cpoptions
