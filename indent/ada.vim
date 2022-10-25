@@ -11,8 +11,9 @@
 "		15.10.2006 MK Bram's suggestion for runtime integration
 "		05.11.2006 MK Bram suggested to save on spaces
 "		19.09.2007 NO g: missing before ada#Comment
-"		01.09.2022 MK Use GitHub und dein to publish new versions
+"		01.09.2022 MK Use GitHub and dein to publish new versions
 "		25.10.2022 MK Add Alire compiler support
+"	 Usage: Use dein to install
 "    Help Page: ft-ada-indent
 "------------------------------------------------------------------------------
 " ToDo:
@@ -296,5 +297,6 @@ finish " 1}}}
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
-" vim: textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
-" vim: foldmethod=marker
+" vim: set textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab :
+" vim: set filetype=vim fileencoding=utf-8 fileformat=unix foldmethod=marker :
+" vim: set spell spelllang=en_gb :

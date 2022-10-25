@@ -9,7 +9,10 @@
 "		02.10.2006 MK Folding for "gnat pretty"
 "		15.10.2006 MK Bram's suggestion for runtime integration
 "		05.11.2006 MK Bram suggested to save on spaces
-"		01.09.2022 MK Use GitHub und dein to publish new versions
+"		01.09.2022 MK Use GitHub and dein to publish new versions
+"		12.09.2022 MK Rainbow Parenthesis have been updated and
+"			      modernised so they are a viable light weight
+"			      alternative to rainbow.
 "		25.10.2022 MK Add Alire compiler support
 "	 Usage: copy content into your .vimrc and change options to your
 "		likeing.
@@ -110,5 +113,6 @@ gcp --verbose --update ada_options.vim    ~/vimfiles/bundles/.cache/.vimrc/.dein
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
-" vim: nowrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
-" vim: textwidth=0 foldmethod=marker foldmethod=marker
+" vim: set textwidth=0 nowrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab :
+" vim: set filetype=vim fileencoding=utf-8 fileformat=unix foldmethod=marker :
+" vim: set spell spelllang=en_gb :
