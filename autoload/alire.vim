@@ -3,7 +3,7 @@
 "     Language: Ada (alire, Alire)
 "    Copyright: Copyright (C) 2022 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
-"      Version: 5.1.0
+"      Version: 5.2.0
 "      History: 25.10.2022 MK Add Alire compiler support
 "    Help Page: compiler-alire
 "------------------------------------------------------------------------------
@@ -37,7 +37,6 @@ function alire#Get_Command (Command) dict			     " {{{1
    let l:Command = eval ('self.' . a:Command . '_Command')
    return eval (l:Command)
 endfunction alire#Get_Command					     " }}}1
-
 
 function alire#Set_Options (Options) dict			     " {{{1
    let self.Make_Options = a:Options
