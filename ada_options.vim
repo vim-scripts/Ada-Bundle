@@ -3,13 +3,14 @@
 "     Language: Ada (2012)
 "    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischik
-"      Version: 5.0.0
+"      Version: 5.1.0
 "      History:	24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		02.10.2006 MK Folding for "gnat pretty"
 "		15.10.2006 MK Bram's suggestion for runtime integration
 "		05.11.2006 MK Bram suggested to save on spaces
 "		01.09.2022 MK Use GitHub und dein to publish new versions
+"		25.10.2022 MK Add Alire compiler support
 "	 Usage: copy content into your .vimrc and change options to your
 "		likeing.
 "    Help Page: ft-ada-options
@@ -105,7 +106,6 @@ gcp --verbose --update syntax/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein
 gcp --verbose --update ada_options.vim    ~/vimfiles/bundles/.cache/.vimrc/.dein/
 
 " }}}1
-
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
