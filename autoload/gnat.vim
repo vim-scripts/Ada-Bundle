@@ -5,7 +5,7 @@
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.0.0
+"      Version: 5.1.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		05.08.2006 MK Add session support
@@ -16,6 +16,7 @@
 "		19.09.2007 NO use project file only when there is a project
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub und dein to publish new versions
+"		25.10.2022 MK Add Alire compiler support
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------
 

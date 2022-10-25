@@ -6,7 +6,7 @@
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.0.0
+"      Version: 5.1.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -18,6 +18,7 @@
 "		08.07.2007 TV fix default compiler problems.
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub und dein to publish new versions
+"		25.10.2022 MK Add Alire compiler support
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
 " Provides mapping overrides for tag jumping that figure out the current
@@ -97,7 +98,7 @@ endif
 " Section: Compiler {{{1
 "
 if ! exists("g:ada_default_compiler")
-   let g:ada_default_compiler = 'gnat'
+   let g:ada_default_compiler = 'alire'
 endif
 
 if ! exists("current_compiler")			||
@@ -135,21 +136,32 @@ endif
 " Section: Commands, Mapping, Menus {{{1
 "
 execute "50amenu &Ada.-sep- :"
+
+" Map_Menu parameter:
+"  Text:	Menu text to display
+"  Keys:	Key shortcut to define (used only when g:mapleader is used)
+"  Command:  Command shortcut to define
+"  Function: Function to call
+"  Args:	Additional parameter.
+
 call ada#Map_Menu (
-   \'Toggle Space Errors',
-   \ ':AdaSpaces',
-   \'call ada#Switch_Syntax_Option',
+   \ 'Toggle Space Errors',
+   \ 'as',
+   \ 'AdaSpaces',
+   \ 'call ada#Switch_Syntax_Option',
    \ '''space_errors''')
 call ada#Map_Menu (
    \'Toggle Lines Errors',
-   \ ':AdaLines',
-   \'call ada#Switch_Syntax_Option',
+   \ 'al',
+   \ 'AdaLines',
+   \ 'call ada#Switch_Syntax_Option',
    \ '''line_errors''')
 call ada#Map_Menu (
    \'Toggle Standard Types',
-   \ ':AdaTypes',
-   \'call ada#Switch_Syntax_Option',
-   \'''standard_types''')
+   \ 'at',
+   \ 'AdaTypes',
+   \ 'call ada#Switch_Syntax_Option',
+   \ '''standard_types''')
 
 " 1}}}
 " Reset cpoptions
