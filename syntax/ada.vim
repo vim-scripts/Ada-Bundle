@@ -8,7 +8,7 @@
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Preben Randhol.
 "               Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.0.0
+"      Version: 5.1.0
 "               http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -22,7 +22,8 @@
 "               12.09.2022 MK Rainbow Parenthesis have been updated and
 "                             modernised so they are a viable light weight
 "                             alternative to rainbow-improved.
-"	 Usage: Use dein to install
+"               25.10.2022 MK Add Alire compiler support
+"        Usage: Use dein to install
 "    Help Page: help ft-ada-syntax
 "------------------------------------------------------------------------------
 " The formal spec of Ada 2005 (ARM) is the "Ada 2005 Reference Manual".
@@ -37,7 +38,6 @@ if exists("b:current_syntax") || version < 700
 endif
 
 let b:current_syntax = "ada"
-
 
 " Section: Ada is entirely case-insensitive. {{{1
 "
@@ -366,8 +366,6 @@ syntax sync minlines=1 maxlines=1
 finish " 1}}}
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006 … 2020  Martin Krischik
-"
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
 " vim: set textwidth=78 nowrap tabstop=8 shiftwidth=4 softtabstop=4 expandtab :

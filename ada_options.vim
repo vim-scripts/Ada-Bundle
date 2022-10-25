@@ -3,7 +3,7 @@
 "     Language: Ada (2012)
 "    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischik
-"      Version: 5.0.0
+"      Version: 5.1.0
 "      History:	24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		02.10.2006 MK Folding for "gnat pretty"
@@ -13,7 +13,9 @@
 "		12.09.2022 MK Rainbow Parenthesis have been updated and
 "			      modernised so they are a viable light weight
 "			      alternative to rainbow.
-"	 Usage: Use dein to install
+"		25.10.2022 MK Add Alire compiler support
+"	 Usage: copy content into your .vimrc and change options to your
+"		likeing.
 "    Help Page: ft-ada-options
 "------------------------------------------------------------------------------
 
@@ -23,7 +25,7 @@ finish " 1}}}
 " Section: Ada options {{{1
 
    let   g:ada_abbrev		       = 1
-   let   g:ada_default_compiler	       = 'gnat'
+   let   g:ada_default_compiler	       = 'alire'
    let   g:ada_extended_tagging	       = 'list'
    let   g:ada_folding		       = 'i'
 "  let   g:ada_folding		       = 'gibxp'
@@ -65,9 +67,9 @@ finish " 1}}}
 ada_options.vim
 autoload/ada.vim
 autoload/adacomplete.vim
-autoload/decada.vim
+autoload/alire.vim
 autoload/gnat.vim
-compiler/decada.vim
+compiler/alire.vim
 compiler/gnat.vim
 doc/ft_ada.txt
 ftdetect/ada.vim
@@ -83,13 +85,28 @@ tar --create --bzip2	      \
    --file="ada-4.6.2.tar.bz2" \
    autoload/ada.vim	      \
    autoload/adacomplete.vim   \
+   autoload/alire.vim	      \
    autoload/gnat.vim	      \
+   compiler/alire.vim	      \
    compiler/gnat.vim	      \
    doc/ft_ada.txt	      \
    ftdetect/ada.vim	      \
    ftplugin/ada.vim	      \
    indent/ada.vim	      \
    syntax/ada.vim	      ;
+
+" }}}1
+
+" Section: Quick Installation {{{1
+
+gcp --verbose --update autoload/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/autoload/
+gcp --verbose --update compiler/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/compiler/
+gcp --verbose --update doc/*.txt          ~/vimfiles/bundles/.cache/.vimrc/.dein/doc/
+gcp --verbose --update ftdetect/*.vim     ~/vimfiles/bundles/.cache/.vimrc/.dein/ftdetect/
+gcp --verbose --update ftplugin/*.vim     ~/vimfiles/bundles/.cache/.vimrc/.dein/ftplugin/
+gcp --verbose --update indent/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein/indent/
+gcp --verbose --update syntax/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein/syntax/
+gcp --verbose --update ada_options.vim    ~/vimfiles/bundles/.cache/.vimrc/.dein/
 
 " }}}1
 

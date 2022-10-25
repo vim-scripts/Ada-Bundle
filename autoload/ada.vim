@@ -8,7 +8,7 @@
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.0.0
+"      Version: 5.1.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -27,6 +27,7 @@
 "		12.09.2022 MK Rainbow Parenthesis have been updated and
 "			      modernised so they are a viable light weight
 "			      alternative to rainbow-improved.
+"		25.10.2022 MK Add Alire compiler support
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
@@ -155,7 +156,7 @@ endfor
 " Section: add GNAT Pragmas {{{3
 "
 if exists ('g:ada_gnat_extensions')
-    for Item in ['Abort_Defer', 'Ada_83', 'Ada_95', 'Ada_05', 'Annotate', 'Ast_Entry', 'C_Pass_By_Copy', 'Comment', 'Common_Object', 'Compile_Time_Warning', 'Complex_Representation', 'Component_Alignment', 'Convention_Identifier', 'CPP_Class', 'CPP_Constructor', 'CPP_Virtual', 'CPP_Vtable', 'Debug', 'Elaboration_Checks', 'Eliminate', 'Export_Exception', 'Export_Function', 'Export_Object', 'Export_Procedure', 'Export_Value', 'Export_Valued_Procedure', 'Extend_System', 'External', 'External_Name_Casing', 'Finalize_Storage_Only', 'Float_Representation', 'Ident', 'Import_Exception', 'Import_Function', 'Import_Object', 'Import_Procedure', 'Import_Valued_Procedure', 'Initialize_Scalars', 'Inline_Always', 'Inline_Generic', 'Interface_Name', 'Interrupt_State', 'Keep_Names', 'License', 'Link_With', 'Linker_Alias', 'Linker_Section', 'Long_Float', 'Machine_Attribute', 'Main_Storage', 'Obsolescent', 'Passive', 'Polling', 'Profile_Warnings', 'Propagate_Exceptions', 'Psect_Object', 'Pure_Function', 'Restriction_Warnings', 'Source_File_Name', 'Source_File_Name_Project', 'Source_Reference', 'Stream_Convert', 'Style_Checks', 'Subtitle', 'Suppress_All', 'Suppress_Exception_Locations', 'Suppress_Initialization', 'Task_Info', 'Task_Name', 'Task_Storage', 'Thread_Body', 'Time_Slice', 'Title', 'Unimplemented_Unit', 'Universal_Data', 'Unreferenced', 'Unreserve_All_Interrupts', 'Use_VADS_Size', 'Validity_Checks', 'Warnings', 'Weak_External']
+    for Item in ['Abort_Defer', 'Ada_83', 'Ada_95', 'Ada_05', 'Ada_12', 'Annotate', 'Ast_Entry', 'C_Pass_By_Copy', 'Comment', 'Common_Object', 'Compile_Time_Warning', 'Complex_Representation', 'Component_Alignment', 'Convention_Identifier', 'CPP_Class', 'CPP_Constructor', 'CPP_Virtual', 'CPP_Vtable', 'Debug', 'Elaboration_Checks', 'Eliminate', 'Export_Exception', 'Export_Function', 'Export_Object', 'Export_Procedure', 'Export_Value', 'Export_Valued_Procedure', 'Extend_System', 'External', 'External_Name_Casing', 'Finalize_Storage_Only', 'Float_Representation', 'Ident', 'Import_Exception', 'Import_Function', 'Import_Object', 'Import_Procedure', 'Import_Valued_Procedure', 'Initialize_Scalars', 'Inline_Always', 'Inline_Generic', 'Interface_Name', 'Interrupt_State', 'Keep_Names', 'License', 'Link_With', 'Linker_Alias', 'Linker_Section', 'Long_Float', 'Machine_Attribute', 'Main_Storage', 'Obsolescent', 'Passive', 'Polling', 'Profile_Warnings', 'Propagate_Exceptions', 'Psect_Object', 'Pure_Function', 'Restriction_Warnings', 'Source_File_Name', 'Source_File_Name_Project', 'Source_Reference', 'Stream_Convert', 'Style_Checks', 'Subtitle', 'Suppress_All', 'Suppress_Exception_Locations', 'Suppress_Initialization', 'Task_Info', 'Task_Name', 'Task_Storage', 'Thread_Body', 'Time_Slice', 'Title', 'Unimplemented_Unit', 'Universal_Data', 'Unreferenced', 'Unreserve_All_Interrupts', 'Use_VADS_Size', 'Validity_Checks', 'Warnings', 'Weak_External']
 	let g:ada#Keywords += [{
 		\ 'word':  Item,
 		\ 'menu':  'pragma',
@@ -467,27 +468,38 @@ endfunction ada#Switch_Syntax_Option
 
 " Section: ada#Map_Menu {{{2
 "
-function ada#Map_Menu (Text, Keys, Command, Args)
+" Text:	    Menu text to display
+" Keys:	    Key shortcut to define
+" Command:  Command shortcut to define
+" Function: Function to call
+" Args:	    Additional parameter.
+"
+function ada#Map_Menu (Text, Keys, Command, Function, Args)
+   let l:mapping  = escape(g:mapleader . a:Keys , '\')
+   let l:menutext = escape(a:Text, ' ')
+
    if a:Args == ''
-      execute
-	\ "50amenu " .
-	\ "&Ada."     . escape(a:Text, ' ') .
-	\ "<Tab>"    . a:Keys .
-	\ " :"	     . a:Command . "()<CR>"
-      execute
-	\ "command! -nargs=* " .
-	\ a:Keys[1:] .
-	\" :" . a:Command . "(<f-args>)"
+      execute "command! -nargs=* " . a:Command . " :" . a:Function . "(<f-args>)"
+
+      if exists('g:mapleader')
+	 execute "nnoremap <unique>" . l:mapping .      " :" . a:Command . "<CR>"
+	 execute "inoremap <unique>" . l:mapping . " <C-O>:" . a:Command . "<CR>"
+
+	 execute "50amenu " . "&Ada." . l:menutext . "<Tab>"  . l:mapping . " :call " . a:Function . "()<CR>"
+      else
+	 execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . a:Command . " :call " . a:Function . "()<CR>"
+      endif
    else
-      execute
-	\ "50amenu " .
-	\ "&Ada."     . escape(a:Text, ' ') .
-	\ "<Tab>"    . a:Keys .
-	\ " :"	     . a:Command . "(" . a:Args . ")<CR>"
-      execute
-	\ "command! " .
-	\ a:Keys[1:] .
-	\" :" . a:Command . "(" . a:Args . ")"
+      execute "command! " . a:Command . " :" . a:Function . "(" . a:Args . ")"
+
+      if exists('g:mapleader')
+	 execute "nnoremap <unique>" . l:mapping .      " :call " . a:Command . "<CR>"
+	 execute "inoremap <unique>" . l:mapping . " <C-O>:call " . a:Command . "<CR>"
+
+	 execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . l:mapping . " :call " . a:Function . "(" . a:Args . ")<CR>"
+      else
+	 execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . a:Command . " :call " . a:Function . "(" . a:Args . ")<CR>"
+      endif
    endif
 endfunction
 

@@ -5,13 +5,14 @@
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
 "               Bartek Jasicki <thindil@laeran.pl>
 "		Ned Okie <nokie@radford.edu>
-"      Version: 5.0.0
+"      Version: 5.1.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "               15.10.2006 MK Bram's suggestion for runtime integration
 "		19.09.2007 NO use project file only when there is a project
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub and dein to publish new versions
+"		25.10.2022 MK Add Alire compiler support
 "	 Usage: Use dein to install
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------
@@ -27,18 +28,28 @@ let current_compiler = "gnat"
 if !exists("g:gnat")
    let g:gnat = gnat#New ()
 
+   " Map_Menu parameter:
+   "  Text:	Menu text to display
+   "  Keys:	Key shortcut to define (used only when g:mapleader is used)
+   "  Command:  Command shortcut to define
+   "  Function: Function to call
+   "  Args:	Additional parameter.
+
    call ada#Map_Menu (
       \ 'Pretty Print',
+      \ 'ap'
       \ ':GnatPretty',
       \ 'call gnat.Pretty',
       \ '')
    call ada#Map_Menu (
       \ 'Set Project file\.\.\.',
+      \ 'ap'
       \ ':SetProject',
       \ 'call gnat.Set_Project_File',
       \ '')
    call ada#Map_Menu (
       \ 'Set Project options\.\.\.',
+      \ 'ao'
       \ ':SetOptions',
       \ 'call gnat.Set_Options',
       \ '')
