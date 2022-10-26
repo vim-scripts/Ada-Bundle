@@ -8,7 +8,7 @@
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Preben Randhol.
 "               Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.2.0
+"      Version: 5.2.1
 "               http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -23,6 +23,7 @@
 "                             modernised so they are a viable light weight
 "                             alternative to rainbow-improved.
 "               25.10.2022 MK Add Alire compiler support
+"               26.10.2022 MK Typo in rainbow_parenthesis function call
 "        Usage: Use dein to install
 "    Help Page: help ft-ada-syntax
 "------------------------------------------------------------------------------
@@ -107,7 +108,7 @@ syntax match adaSpecial  "[:;().,]"
 "
 if exists("g:ada_rainbow_color")
     " syntax match      adaSpecial       "[:;.,]"
-    call rainbow-parenthesis#LoadRound ()
+    call rainbow_parenthesis#LoadRound ()
     call rainbow_parenthesis#Activate ()
 else
     " syntax match      adaSpecial       "[:;().,]"
