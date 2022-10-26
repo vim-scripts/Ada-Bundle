@@ -3,8 +3,9 @@
 "     Language: Ada (GNAT, Alire)
 "    Copyright: Copyright (C) 2022 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
-"      Version: 5.2.0
+"      Version: 5.2.1
 "      History: 25.10.2022 MK Add Alire compiler support
+"	        26.10.2022 MK Fix mapping conflict
 "    Help Page: compiler-alire
 "------------------------------------------------------------------------------
 
@@ -45,8 +46,8 @@ if !exists("g:alire")
       \ 'call alire.Set_Options',
       \ '')
    call ada#Map_Menu (
-      \ 'Read session',
-      \ 'ar',
+      \ 'Read Vim session',
+      \ 'av',
       \ 'AlireRead',
       \ 'ada#Switch_Session',
       \ '"alire.vim"')
