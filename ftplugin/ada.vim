@@ -6,7 +6,7 @@
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.2.0
+"      Version: 5.2.1
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -22,6 +22,7 @@
 "			      modernised so they are a viable light weight
 "			      alternative to rainbow-improved.
 "		25.10.2022 MK Add Alire compiler support
+"		25.10.2022 MK Toggle Rainbow Colour was missing parameters.
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
@@ -142,11 +143,11 @@ endif
 execute "50amenu &Ada.-sep- :"
 
 " Map_Menu parameter:
-"  Text:	Menu text to display
-"  Keys:	Key shortcut to define (used only when g:mapleader is used)
-"  Command:  Command shortcut to define
-"  Function: Function to call
-"  Args:	Additional parameter.
+"  Text:       Menu text to display
+"  Keys:       Key short cut to define (used only when g:mapleader is used)
+"  Command:    Command short cut to define
+"  Function:   Function to call
+"  Args:       Additional parameter.
 
 call ada#Map_Menu (
    \ 'Toggle Space Errors',
@@ -155,15 +156,17 @@ call ada#Map_Menu (
    \ 'call ada#Switch_Syntax_Option',
    \ '''space_errors''')
 call ada#Map_Menu (
-   \'Toggle Lines Errors',
+   \ 'Toggle Lines Errors',
    \ 'al',
    \ 'AdaLines',
    \ 'call ada#Switch_Syntax_Option',
    \ '''line_errors''')
 call ada#Map_Menu (
-   \'Toggle Rainbow Color',
-   \ ':AdaRainbow',
-   \'call ada#Switch_Syntax_Option (''rainbow_color'')')
+   \ 'Toggle Rainbow Colour',
+   \ 'rp',
+   \ 'AdaRainbow',
+   \ 'call ada#Switch_Syntax_Option',
+   \ '''rainbow_color''')
 call ada#Map_Menu (
    \'Toggle Standard Types',
    \ 'at',
