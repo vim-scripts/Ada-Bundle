@@ -4,7 +4,7 @@
 "    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.2.0
+"      Version: 5.3.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		15.10.2006 MK Bram's suggestion for runtime integration

@@ -5,7 +5,7 @@
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
 "               Bartek Jasicki <thindil@laeran.pl>
 "		Ned Okie <nokie@radford.edu>
-"      Version: 5.2.1
+"      Version: 5.3.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "               15.10.2006 MK Bram's suggestion for runtime integration
@@ -13,7 +13,7 @@
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub and dein to publish new versions
 "		25.10.2022 MK Add Alire compiler support
-"	        26.10.2022 MK Fix mapping conflict
+"		26.10.2022 MK Fix mapping conflict
 "	 Usage: Use dein to install
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------
