@@ -3,8 +3,8 @@
 "     Language: Ada (2012)
 "    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischik
-"      Version: 5.2.0
-"      History:	24.05.2006 MK Unified Headers
+"      Version: 5.3.0
+"      History:	24.05.3.06 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		02.10.2006 MK Folding for "gnat pretty"
 "		15.10.2006 MK Bram's suggestion for runtime integration
@@ -75,6 +75,7 @@ doc/ft_ada.txt
 ftdetect/ada.vim
 ftplugin/ada.vim
 indent/ada.vim
+plugin/ada.vim
 syntax/ada.vim
 
 " }}}1
@@ -83,6 +84,7 @@ syntax/ada.vim
 
 tar --create --bzip2	      \
    --file="ada-4.6.2.tar.bz2" \
+   ada_options.vim	      \
    autoload/ada.vim	      \
    autoload/adacomplete.vim   \
    autoload/alire.vim	      \
@@ -93,20 +95,22 @@ tar --create --bzip2	      \
    ftdetect/ada.vim	      \
    ftplugin/ada.vim	      \
    indent/ada.vim	      \
+   plugin/ada.vim	      \
    syntax/ada.vim	      ;
 
 " }}}1
 
 " Section: Quick Installation {{{1
 
+gcp --verbose --update ada_options.vim    ~/vimfiles/bundles/.cache/.vimrc/.dein/
 gcp --verbose --update autoload/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/autoload/
 gcp --verbose --update compiler/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/compiler/
 gcp --verbose --update doc/*.txt          ~/vimfiles/bundles/.cache/.vimrc/.dein/doc/
 gcp --verbose --update ftdetect/*.vim     ~/vimfiles/bundles/.cache/.vimrc/.dein/ftdetect/
 gcp --verbose --update ftplugin/*.vim     ~/vimfiles/bundles/.cache/.vimrc/.dein/ftplugin/
 gcp --verbose --update indent/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein/indent/
+gcp --verbose --update plugin/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/plugin/
 gcp --verbose --update syntax/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein/syntax/
-gcp --verbose --update ada_options.vim    ~/vimfiles/bundles/.cache/.vimrc/.dein/
 
 " }}}1
 
