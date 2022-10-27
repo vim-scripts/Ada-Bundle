@@ -3,7 +3,7 @@
 "     Language: Ada (alire, Alire)
 "    Copyright: Copyright (C) 2022 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
-"      Version: 5.2.0
+"      Version: 5.3.0
 "      History: 25.10.2022 MK Add Alire compiler support
 "    Help Page: compiler-alire
 "------------------------------------------------------------------------------
