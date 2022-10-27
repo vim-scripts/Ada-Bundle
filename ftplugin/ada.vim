@@ -149,6 +149,10 @@ execute "50amenu &Ada.-sep- :"
 "  Function:   Function to call
 "  Args:       Additional parameter.
 
+if !exists ("g:did_adamapping")
+
+let g:did_adamapping = 521
+
 call ada#Map_Menu (
    \ 'Toggle Space Errors',
    \ 'as',
@@ -174,7 +178,9 @@ call ada#Map_Menu (
    \ 'call ada#Switch_Syntax_Option',
    \ '''standard_types''')
 
+endif
 " 1}}}
+
 " Reset cpoptions
 let &cpoptions = s:cpoptions
 unlet s:cpoptions
