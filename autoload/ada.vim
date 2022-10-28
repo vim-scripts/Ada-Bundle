@@ -28,6 +28,7 @@
 "			      modernised so they are a viable light weight
 "			      alternative to rainbow-improved.
 "		25.10.2022 MK Add Alire compiler support
+"		28.10.2022 MK Issue #13 Fix key and menu mappings.
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
@@ -475,30 +476,33 @@ endfunction ada#Switch_Syntax_Option
 " Args:	    Additional parameter.
 "
 function ada#Map_Menu (Text, Keys, Command, Function, Args)
-   let l:mapping  = escape(g:mapleader . a:Keys , '\')
    let l:menutext = escape(a:Text, ' ')
 
-   if a:Args == ''
-      execute "command! -nargs=* " . a:Command . " :" . a:Function . "(<f-args>)"
-
-      if exists('g:mapleader')
-	 execute "nnoremap <unique>" . l:mapping .      " :" . a:Command . "<CR>"
-	 execute "inoremap <unique>" . l:mapping . " <C-O>:" . a:Command . "<CR>"
-
-	 execute "50amenu " . "&Ada." . l:menutext . "<Tab>"  . l:mapping . " :call " . a:Function . "()<CR>"
+   if exists('g:mapleader')
+      if g:mapleader->len() == 0
+	 echoerr "if g:mapleader is defined it must not be empty"
       else
-	 execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . a:Command . " :call " . a:Function . "()<CR>"
+	 let l:mapping  = escape(g:mapleader . a:Keys , '\')
+
+	 if a:Args == ''
+	    execute "command! -nargs=* " . a:Command  . " :" . a:Function . "(<f-args>)"
+	    execute "nnoremap <unique>"  . l:mapping  .                        " :" . a:Command . "<CR>"
+	    execute "inoremap <unique>"  . l:mapping  .                   " <C-O>:" . a:Command . "<CR>"
+	    execute "50amenu " . "&Ada." . l:menutext . "<Tab>"  . l:mapping . " :" . a:Command . "<CR>"
+	 else
+	    execute "command! " . a:Command . " :" . a:Function . "(" . a:Args . ")"
+	    execute "nnoremap <unique>"  . l:mapping  .                        " :" . a:Command . "<CR>"
+	    execute "inoremap <unique>"  . l:mapping  .                   " <C-O>:" . a:Command . "<CR>"
+	    execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . l:mapping . " :" . a:Command . "<CR>"
+	 endif
       endif
    else
-      execute "command! " . a:Command . " :" . a:Function . "(" . a:Args . ")"
-
-      if exists('g:mapleader')
-	 execute "nnoremap <unique>" . l:mapping .      " :call " . a:Command . "<CR>"
-	 execute "inoremap <unique>" . l:mapping . " <C-O>:call " . a:Command . "<CR>"
-
-	 execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . l:mapping . " :call " . a:Function . "(" . a:Args . ")<CR>"
+      if a:Args == ''
+	 execute "command! -nargs=* " . a:Command  . " :" . a:Function . "(<f-args>)"
+	 execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . a:Command . " :" . a:Command . "<CR>"
       else
-	 execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . a:Command . " :call " . a:Function . "(" . a:Args . ")<CR>"
+	 execute "command! " . a:Command . " :" . a:Function . "(" . a:Args . ")"
+	 execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . a:Command . " :" . a:Command . "<CR>"
       endif
    endif
 endfunction
