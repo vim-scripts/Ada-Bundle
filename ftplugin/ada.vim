@@ -23,6 +23,7 @@
 "			      alternative to rainbow-improved.
 "		25.10.2022 MK Add Alire compiler support
 "		25.10.2022 MK Toggle Rainbow Colour was missing parameters.
+"		28.10.2022 MK Issue #13 Fix key and menu mappings.
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------

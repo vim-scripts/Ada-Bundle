@@ -6,6 +6,7 @@
 "      Version: 5.3.0
 "      History: 25.10.2022 MK Add Alire compiler support
 "		26.10.2022 MK Fix mapping conflict
+"		28.10.2022 MK Issue #13 Fix key and menu mappings.
 "    Help Page: compiler-alire
 "------------------------------------------------------------------------------
 
@@ -28,19 +29,25 @@ if !exists("g:alire")
    "  Args:	Additional parameter.
 
    call ada#Map_Menu (
-      \ 'Run executable built',
-      \ 'ar',
-      \ 'AlireRun',
-      \ 'call alire.Run',
+      \ 'Build Project',
+      \ 'ab',
+      \ 'AlireBuild',
+      \ 'call alire.Build',
       \ '')
    call ada#Map_Menu (
-      \ 'Clean project',
+      \ 'Clean Project',
       \ 'ac',
       \ 'AlireClean',
       \ 'call alire.Clean',
       \ '')
    call ada#Map_Menu (
-      \ 'Set Project options\.\.\.',
+      \ 'Run Project Executable',
+      \ 'ar',
+      \ 'AlireRun',
+      \ 'call alire.Run',
+      \ '')
+   call ada#Map_Menu (
+      \ 'Set Project options…',
       \ 'ao',
       \ 'AlireSet',
       \ 'call alire.Set_Options',
@@ -50,7 +57,7 @@ if !exists("g:alire")
       \ 'av',
       \ 'AlireRead',
       \ 'ada#Switch_Session',
-      \ '"alire.vim"')
+      \ '''alire.vim''')
 endif
 
 if exists(":CompilerSet") != 2
@@ -60,7 +67,7 @@ if exists(":CompilerSet") != 2
    command -nargs=* CompilerSet setlocal <args>
 endif
 
-execute "CompilerSet makeprg="     . escape (g:alire.Get_Command('Make'), ' ')
+execute "CompilerSet makeprg="     . escape (g:alire.Get_Command('Build'), ' ')
 execute "CompilerSet errorformat=" . escape (g:alire.Error_Format, ' ')
 
 if exists("g:ada_create_session")

@@ -14,6 +14,7 @@
 "			      modernised so they are a viable light weight
 "			      alternative to rainbow.
 "		25.10.2022 MK Add Alire compiler support
+"		28.10.2022 MK Issue #13 Fix key and menu mappings.
 "	 Usage: copy content into your .vimrc and change options to your
 "		likeing.
 "    Help Page: ft-ada-options
@@ -102,15 +103,15 @@ tar --create --bzip2	      \
 
 " Section: Quick Installation {{{1
 
-gcp --verbose --update ada_options.vim    ~/vimfiles/bundles/.cache/.vimrc/.dein/
-gcp --verbose --update autoload/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/autoload/
-gcp --verbose --update compiler/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/compiler/
-gcp --verbose --update doc/*.txt          ~/vimfiles/bundles/.cache/.vimrc/.dein/doc/
-gcp --verbose --update ftdetect/*.vim     ~/vimfiles/bundles/.cache/.vimrc/.dein/ftdetect/
-gcp --verbose --update ftplugin/*.vim     ~/vimfiles/bundles/.cache/.vimrc/.dein/ftplugin/
-gcp --verbose --update indent/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein/indent/
-gcp --verbose --update plugin/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/plugin/
-gcp --verbose --update syntax/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein/syntax/
+gcp --verbose --archive --update ada_options.vim    ~/vimfiles/bundles/.cache/.vimrc/.dein/
+gcp --verbose --archive --update autoload/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/autoload/
+gcp --verbose --archive --update compiler/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/compiler/
+gcp --verbose --archive --update doc/*.txt          ~/vimfiles/bundles/.cache/.vimrc/.dein/doc/
+gcp --verbose --archive --update ftdetect/*.vim     ~/vimfiles/bundles/.cache/.vimrc/.dein/ftdetect/
+gcp --verbose --archive --update ftplugin/*.vim     ~/vimfiles/bundles/.cache/.vimrc/.dein/ftplugin/
+gcp --verbose --archive --update indent/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein/indent/
+gcp --verbose --archive --update plugin/*.vim	  ~/vimfiles/bundles/.cache/.vimrc/.dein/plugin/
+gcp --verbose --archive --update syntax/*.vim       ~/vimfiles/bundles/.cache/.vimrc/.dein/syntax/
 
 " }}}1
 
