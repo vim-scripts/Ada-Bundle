@@ -49,6 +49,8 @@ finish " 1}}}
    let   g:backup_purge		       = 10
 
    let   g:mapleader		       = "<F12>"
+"  let   g:no_plugin_maps	       = 1
+"  let   g:no_ada_maps		       = 1
 
    if &diff
        let   g:Tlist_Auto_Open	       = 0
