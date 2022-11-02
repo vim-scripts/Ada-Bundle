@@ -8,7 +8,7 @@
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.3.0
+"      Version: 5.3.2
 "      History: 24.05.3.06 MK Unified Headers
 "		26.05.3.06 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -29,6 +29,8 @@
 "			      alternative to rainbow-improved.
 "		25.10.2022 MK Add Alire compiler support
 "		28.10.2022 MK Issue #13 Fix key and menu mappings.
+"		02.11.2022 MK Enhancement #19 additional ways to disable key
+"			      mappings.
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
