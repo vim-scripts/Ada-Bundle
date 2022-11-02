@@ -136,13 +136,13 @@ or, by using command:
  >
  > SetOptions -XMode=release
 
-								*gnat_members*
+							      *gnat_members*
 GNAT OBJECT ~
 
 							       *g:gnat.Make()*
 g:gnat.Make()
 		Calls |g:gnat.Make_Command| and displays the result inside a
-               |quickfix| window.
+	        |quickfix| window.
 
 							     *g:gnat.Pretty()*
 g:gnat.Pretty()
@@ -156,10 +156,10 @@ g:gnat.Set_Project_File([{file}])
 		project file. If called with an empty string then the project
 		and associated session are closed.
 
-						   *g:gnat.Set_Options()*
+							*g:gnat.Set_Options()*
 g:gnat.Set_Options([{Options}])
 		Set additional compilation options for the project. For
-		example, can be used to set additonal flags for gnat or
+		example, can be used to set additional flags for gnat or
 		external references for the project file.
 
 							 *g:gnat.Project_File*
@@ -178,22 +178,28 @@ g:gnat.Pretty_Program	string
 g:gnat.Error_Format	string
 		Error format (|'errorformat'|)
 
+------------------------------------------------------------------------------
+4.1 Alire~
+							       *compiler-alire*
+
+TBD
+
 ==============================================================================
 5. References ~
-							       *ada-reference*
+								*ada-reference*
 
 ------------------------------------------------------------------------------
 5.1 Options ~
-							      *ft-ada-options*
+							       *ft-ada-options*
 
-							*g:ada_standard_types*
+							 *g:ada_standard_types*
 g:ada_standard_types	bool (true when exists)
 		Highlight types in package Standard (e.g., "Float")
 
-							  *g:ada_space_errors*
-						  *g:ada_no_trail_space_error*
-						    *g:ada_no_tab_space_error*
-							 *g:ada_all_tab_usage*
+							   *g:ada_space_errors*
+						   *g:ada_no_trail_space_error*
+						     *g:ada_no_tab_space_error*
+							  *g:ada_all_tab_usage*
 g:ada_space_errors	 bool (true when exists)
 		Highlight extraneous errors in spaces ...
 		g:ada_no_trail_space_error
@@ -211,18 +217,18 @@ g:ada_line_errors	  bool (true when exists)
 							 *g:ada_rainbow_color*
 g:ada_rainbow_color	  bool (true when exists)
 		Use rainbow colours for '(' and ')'. You need the
-		Rainbow-Parenthesis plugin for this to work
+		Rainbow-Parenthesis plug-in for this to work
 
 							       *g:ada_folding*
 g:ada_folding		  set ('sigpft')
 		Use folding for Ada sources.
 		    's':    activate syntax folding on load
-			'p':    fold packages
-			'f':    fold functions and procedures
-			't':    fold types
-			'c':    fold conditionals
+			'p':	fold packages
+			'f':	fold functions and procedures
+			't':	fold types
+			'c':	fold conditionals
 		    'g':    activate gnat pretty print folding on load
-			'i':    lone 'is' folded with line above
+			'i':	lone 'is' folded with line above
 			'b':	lone 'begin' folded with line above
 			'p':	lone 'private' folded with line above
 			'x':	lone 'exception' folded with line above
@@ -285,11 +291,31 @@ g:ada_with_gnat_project_files	 bool (true when exists)
 
 						      *g:ada_default_compiler*
 g:ada_default_compiler	  string
-		Set default compiler. Currently, supported is 'gnat'.
+		Set default compiler. Currently, supported is 'gnat' and
+'alire'.
 
 							*g:ada_create_session*
-g:ada_create_session    bool (true when exists)
-		Create and recover vim session on load GNAT project file.
+g:ada_create_session	bool (true when exists)
+		Create and recover Vim session on load GNAT project file.
+
+					       *g:ada_with_gnat_project_files*
+g:ada_with_gnat_project_files	 bool (true when exists)
+		 Add gnat project file keywords and Attributes.
+
+5.1.1 Additional options ~
+
+Additional cross plug-in options supported by the Ada plug-in bundle:
+
+								 *g:mapleader*
+g:mapleader		string
+		Prefix for all keyboard mappings. Must not be empty or a
+		key that is not used in insert mode. Suggested: "<F12>"
+
+							    *g:no_plugin_maps*
+							       *g:no_ada_maps*
+g:no_plugin_maps	bool (true when exists)
+g:no_ada_maps		bool (true when exists)
+		Disable all keyboard mappings.
 
 An "exists" type is a boolean is considered true when the variable is defined
 and false when the variable is undefined. The value which the variable is
@@ -316,7 +342,7 @@ set makes no difference.
 		Calls |g:gnat.Pretty()|
 :SetProject							  *:SetProject*
 		Sets the project file for gnatmake. Also set up the Ale
-		plugin if. Calls |g:gnat.Set_Project_File()|
+		plug-in if. Calls |g:gnat.Set_Project_File()|
 :SetOptions							  *:SetOptions*
 		Sets the additional options for the gnatmake. It removes any
 		previous sets additional options when called again.
@@ -333,10 +359,16 @@ g:gnat			    object
 		that |g:ada_default_compiler| is set to 'gnat'. See |gnat_members|
 		for details.
 
+								      *g:alire*
+g:alire			    object
+		Control object which manages Alire compiles.  The object
+		is created when the first Ada source code is loaded provided
+		that |g:ada_default_compiler| is set to 'aliere'. See
+		|alire_members|for details.
+
 ------------------------------------------------------------------------------
 5.4 Constants ~
 							    *ft-ada-constants*
-                                                             ft-ada-constants
 
 All constants are locked. See |:lockvar| for details.
 
@@ -359,8 +391,8 @@ g:ada#Keywords		list of dictionaries
 
 							   *g:ada#Ctags_Kinds*
 g:ada#Ctags_Kinds	dictionary of lists
-		Dictionary of the various kinds of items which the Ada support
-		for Ctags generates.
+		Dictionary of the various kinds of items which the Ada
+		support	for Ctags generates.
 
 ------------------------------------------------------------------------------
 5.2 Functions ~
@@ -382,26 +414,26 @@ gnat#New ()
 8. Extra Plugins ~
 							   *ada-extra-plugins*
 
-You can optionally install the following extra plug-in. They work well with Ada
-and enhance the ability of the Ada mode.:
+You can optionally install the following extra plug-in. They work well with
+Ada and enhance the ability of the Ada mode:
 
 backup.vim
-	http://www.vim.org/scripts/script.php?script_id=1537
+	https://github.com/krischik/vim-backup
 	Keeps as many backups as you like so you don't have to.
+
+rainbow_parenthsis.vim
+	https://github.com/krischik/vim-rainbow
+	Lightweight rainbow highlighter
+	More the sufficient for Ada since Ada uses only '(' and ')'.
 
 Rainbow Parentheses Improved
 	https://github.com/luochen1990/rainbow
 	Very flexible rainbow highlighter
-	Very helpful since Ada uses only '(' and ')'.
-
-rainbow_parenthsis.vim
-	https://github.com/krischik/Rainbow-Parenthesis-Bundle
-	Lightweight rainbow highlighter
-	Very helpful since Ada uses only '(' and ')'.
+	Helpful if you need a more powerful rainbow highlighter.
 
 nerd_comments.vim
 	http://www.vim.org/scripts/script.php?script_id=1218
-	Excellent commenting and uncommenting support for almost any
+	Excellent commenting and un–commenting support for almost any
 	programming language.
 
 matchit.vim
@@ -413,9 +445,7 @@ taglist.vim
 	http://www.vim.org/scripts/script.php?script_id=273
 	Source code explorer sidebar. There is a patch for Ada available.
 
-The GNU Ada Project distribution (http://gnuada.sourceforge.net) of Vim
-contains most of them.
-
 ==============================================================================
-vim: textwidth=78 nowrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab
-vim: filetype=help
+vim: set textwidth=78 nowrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab :
+vim: set filetype=help fileencoding=utf-8 fileformat=unix foldmethod=marker :
+vim: set spell spelllang=en_gb :

@@ -470,15 +470,15 @@ endfunction ada#Switch_Syntax_Option
 " Section: ada#Map_Menu {{{2
 "
 " Text:	    Menu text to display
-" Keys:	    Key shortcut to define
-" Command:  Command shortcut to define
+" Keys:	    Key short cut to define
+" Command:  Command short cut to define
 " Function: Function to call
 " Args:	    Additional parameter.
 "
 function ada#Map_Menu (Text, Keys, Command, Function, Args)
    let l:menutext = escape(a:Text, ' ')
 
-   if exists('g:mapleader')
+   if exists('g:mapleader') && !exists("no_plugin_maps") && !exists("no_ada_maps")
       if g:mapleader->len() == 0
 	 echoerr "if g:mapleader is defined it must not be empty"
       else
