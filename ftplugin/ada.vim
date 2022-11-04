@@ -96,7 +96,7 @@ if !exists ("b:match_words")  &&
       \ s:notend . '\<if\>:\<elsif\>:\<else\>:\<end\>\s\+\<if\>,' .
       \ s:notend . '\<case\>:\<when\>:\<end\>\s\+\<case\>,' .
       \ '\%(\<while\>.*\|\<for\>.*\|'.s:notend.'\)\<loop\>:\<end\>\s\+\<loop\>,' .
-      \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\>\s*\%($\|[;A-Z]\),' .
+      \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\%(\s*\%($\|;\)\|\s\+\%(\%(if\|case\|loop\|record\)\>\)\@!\a\)\@=,' .
       \ s:notend . '\<record\>:\<end\>\s\+\<record\>'
 endif
 
