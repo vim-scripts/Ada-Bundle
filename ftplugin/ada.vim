@@ -105,12 +105,13 @@ if !exists ("b:match_words")  &&
    "
    let s:notend      = '\%(\<end\s\+\)\@<!'
    let b:match_words =
-      \ s:notend . '\<if\>:\<elsif\>:\<else\>:\<end\>\s\+\<if\>,' .
-      \ s:notend . '\<case\>:\<when\>:\<end\>\s\+\<case\>,' .
-      \ '\%(\<while\>.*\|\<for\>.*\|'.s:notend.'\)\<loop\>:\<end\>\s\+\<loop\>,' .
-      \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\>\s*\%($\|[;A-Z]\),' .
-      \ s:notend . '\<record\>:\<end\>\s\+\<record\>'
+      \ s:notend . '\<if\>:\<elsif\>:\<\%(or\s\)\@3<!else\>:\<end\s\+if\>,' .
+      \ s:notend . '\<case\>:\<when\>:\<end\s\+case\>,' .
+      \ '\%(\<while\>.*\|\<for\>.*\|'.s:notend.'\)\<loop\>:\<end\s\+loop\>,' .
+      \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\%(\s*\%($\|;\)\|\s\+\%(\%(if\|case\|loop\|record\)\>\)\@!\a\)\@=,' .
+      \ s:notend . '\<record\>:\<end\s\+record\>'
    let b:undo_ftplugin .= " | unlet! b:match_words"
+   let b:match_skip = 's:Comment\|String\|Operator'
 endif
 
 
@@ -150,7 +151,7 @@ endif
 " Section: Abbrev {{{1
 "
 if exists("g:ada_abbrev")
-   iabbrev <buffer> ret return
+   iabbrev <buffer> ret  return
    iabbrev <buffer> proc procedure
    iabbrev <buffer> pack package
    iabbrev <buffer> func function
