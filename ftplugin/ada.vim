@@ -133,10 +133,10 @@ endif
 " Section: Abbrev {{{1
 "
 if exists("g:ada_abbrev")
-   iabbrev ret	return
-   iabbrev proc procedure
-   iabbrev pack package
-   iabbrev func function
+   iabbrev <buffer> ret  return
+   iabbrev <buffer> proc procedure
+   iabbrev <buffer> pack package
+   iabbrev <buffer> func function
 endif
 
 " Section: Commands, Mapping, Menus {{{1
