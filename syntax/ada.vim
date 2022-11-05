@@ -124,8 +124,8 @@ syntax match adaAssignment              ":="
 
 " Section: Numbers, including floating point, exponents, and alternate bases. {{{1
 "
-syntax match   adaNumber                "\<\d[0-9_]*\(\.\d[0-9_]*\)\=\([Ee][+-]\=\d[0-9_]*\)\=\>"
-syntax match   adaNumber                "\<\d\d\=#\x[0-9A-Fa-f_]*\(\.\x[0-9A-Fa-f_]*\)\=#\([Ee][+-]\=\d[0-9_]*\)\="
+syntax match   adaNumber                "\<\d[0-9_]*\%(\.\d[0-9_]*\)\=\%([Ee][+-]\=\d[0-9_]*\)\=\>"
+syntax match   adaNumber                "\<\d\d\=#\x[0-9A-Fa-f_]*\%(\.\x[0-9A-Fa-f_]*\)\=#\%([Ee][+-]\=\d[0-9_]*\)\="
 
 " Section: Identify leading numeric signs {{{1
 "
@@ -247,16 +247,16 @@ else
    " capabilities so that we won't match leading spaces.
    syntax match adaKeyword      "\<with\>"
    syntax match adaKeyword      "\<use\>"
-   syntax match adaBeginWith    "^\s*\zs\(\(with\(\s\+type\)\=\)\|\(use\)\)\>" contains=adaInc
-   syntax match adaSemiWith     ";\s*\zs\(\(with\(\s\+type\)\=\)\|\(use\)\)\>" contains=adaInc
+   syntax match adaBeginWith    "^\s*\zs\%(\%(with\%(\s\+type\)\=\)\|\%(use\)\)\>" contains=adaInc
+   syntax match adaSemiWith     ";\s*\zs\%(\%(with\%(\s\+type\)\=\)\|\%(use\)\)\>" contains=adaInc
    syntax match adaInc          "\<with\>" contained contains=NONE
    syntax match adaInc          "\<with\s\+type\>" contained contains=NONE
    syntax match adaInc          "\<use\>" contained contains=NONE
    " Recognize "with null record" as a keyword (even the "record").
    syntax match adaKeyword      "\<with\s\+null\s\+record\>"
    " Consider generic formal parameters of subprograms and packages as keywords.
-   syntax match adaKeyword      ";\s*\zswith\s\+\(function\|procedure\|package\)\>"
-   syntax match adaKeyword      "^\s*\zswith\s\+\(function\|procedure\|package\)\>"
+   syntax match adaKeyword      ";\s*\zswith\s\+\%(function\|procedure\|package\)\>"
+   syntax match adaKeyword      "^\s*\zswith\s\+\%(function\|procedure\|package\)\>"
 endif
 
 " Section: String and character constants. {{{1
@@ -281,7 +281,7 @@ syntax region  adaComment
 " Note: Line errors have become quite slow with Vim 7.0
 "
 if exists("g:ada_line_errors")
-    syntax match adaLineError "\(^.\{79}\)\@<=."  contains=ALL containedin=ALL
+    syntax match adaLineError "\%(^.\{79}\)\@<=."  contains=ALL containedin=ALL
 endif
 
 " Section: syntax folding {{{1
@@ -292,7 +292,7 @@ endif
 if exists("g:ada_folding") && g:ada_folding[0] == 's'
    if stridx (g:ada_folding, 'p') >= 0
       syntax region adaPackage
-         \ start="\(\<package\s\+body\>\|\<package\>\)\s*\z(\k*\)"
+         \ start="\%(\<package\s\+body\>\|\<package\>\)\s*\z(\k*\)"
          \ end="end\s\+\z1\s*;"
          \ keepend extend transparent fold contains=ALL
    endif
