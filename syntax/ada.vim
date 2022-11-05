@@ -24,6 +24,7 @@
 "                             alternative to rainbow-improved.
 "               25.10.2022 MK Add Alire compiler support
 "               26.10.2022 MK Typo in rainbow_parenthesis function call
+"               05.11.2022 DK Use non capturing regex groups in syntax patterns
 "        Usage: Use dein to install
 "    Help Page: help ft-ada-syntax
 "------------------------------------------------------------------------------

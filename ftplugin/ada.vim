@@ -6,6 +6,7 @@
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
 "               Bartek Jasicki <thindil@laeran.pl>
+" Contributors: Doug Kearns <dougkearns@gmail.com>
 "      Version: 5.3.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
@@ -24,6 +25,8 @@
 "		25.10.2022 MK Add Alire compiler support
 "		25.10.2022 MK Toggle Rainbow Colour was missing parameters.
 "		28.10.2022 MK Issue #13 Fix key and menu mappings.
+"		04.11.2022 DK Improve matchit config
+"		04.11.2022 DK Define iabbrevs as buffer-local
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
