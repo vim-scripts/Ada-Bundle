@@ -55,19 +55,27 @@ setlocal comments=O:--,:--\ \
 setlocal commentstring=--\ \ %s
 setlocal complete=.,w,b,u,t,i
 
+let b:undo_ftplugin = "setlocal comments< commentstring< complete<"
+
 " Section: case	     {{{1
 "
 setlocal nosmartcase
 setlocal ignorecase
 
+let b:undo_ftplugin .= " | setlocal smartcase< ignorecase<"
+
 " Section: formatoptions {{{1
 "
 setlocal formatoptions+=ron
+
+let b:undo_ftplugin .= " | setlocal formatoptions<"
 
 " Section: Completion {{{1
 "
 setlocal completefunc=ada#User_Complete
 setlocal omnifunc=adacomplete#Complete
+
+let b:undo_ftplugin .= " | setlocal completefunc< omnifunc<"
 
 if exists ("g:ada_extended_completion")
    if mapcheck ('<C-N>','i') == ''
@@ -82,6 +90,10 @@ if exists ("g:ada_extended_completion")
    if mapcheck ('<bs>','i') == ''
       inoremap <silent> <unique> <buffer> <bs> <C-R>=ada#Insert_Backspace ()<cr>
    endif
+   let b:undo_ftplugin .= " | silent! execute 'iunmap <buffer> <C-N>'" .
+	    \             " | silent! execute 'iunmap <buffer> <C-P>'" .
+	    \             " | silent! execute 'iunmap <buffer> <C-X><C-]>'" .
+	    \             " | silent! execute 'iunmap <buffer> <bs>'"
 endif
 
 " Section: Matchit {{{1
@@ -101,6 +113,7 @@ if !exists ("b:match_words")  &&
       \ '\%(\<while\>.*\|\<for\>.*\|'.s:notend.'\)\<loop\>:\<end\s\+loop\>,' .
       \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\%(\s*\%($\|;\)\|\s\+\%(\%(if\|case\|loop\|record\)\>\)\@!\a\)\@=,' .
       \ s:notend . '\<record\>:\<end\s\+record\>'
+   let b:undo_ftplugin .= " | unlet! b:match_words"
    let b:match_skip = 's:Comment\|String\|Operator'
 endif
 
@@ -123,15 +136,19 @@ if exists("g:ada_folding")
       setlocal foldmethod=indent
       setlocal foldignore=--
       setlocal foldnestmax=5
+      let b:undo_ftplugin .= " | setlocal foldmethod< foldignore< foldnestmax<"
    elseif g:ada_folding[0] == 'g'
       setlocal foldmethod=expr
       setlocal foldexpr=ada#Pretty_Print_Folding(v:lnum)
+      let b:undo_ftplugin .= " | setlocal foldmethod< foldexpr<"
    elseif g:ada_folding[0] == 's'
       setlocal foldmethod=syntax
+      let b:undo_ftplugin .= " | setlocal foldmethod<"
    endif
    setlocal tabstop=8
    setlocal softtabstop=3
    setlocal shiftwidth=3
+   let b:undo_ftplugin .= " | setlocal tabstop< softtabstop< shiftwidth<"
 endif
 
 " Section: Abbrev {{{1
@@ -141,6 +158,10 @@ if exists("g:ada_abbrev")
    iabbrev <buffer> proc procedure
    iabbrev <buffer> pack package
    iabbrev <buffer> func function
+   let b:undo_ftplugin .= " | iunabbrev <buffer> ret" .
+	    \		  " | iunabbrev <buffer> proc" .
+	    \		  " | iunabbrev <buffer> pack" .
+	    \		  " | iunabbrev <buffer> func"
 endif
 
 " Section: Commands, Mapping, Menus {{{1
