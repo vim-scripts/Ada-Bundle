@@ -1,22 +1,20 @@
 "------------------------------------------------------------------------------
 "  Description: Vim Ada indent file
-"     Language: Ada (2005)
-"	   $Id: ada.vim 887 2008-07-08 14:29:01Z krischik $
-"    Copyright: Copyright (C) 2006 Martin Krischik
+"     Language: Ada (2012)
+"    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
 "		Neil Bird <neil@fnxweb.com>
 "		Ned Okie <nokie@radford.edu>
-"      $Author: krischik $
-"	 $Date: 2008-07-08 16:29:01 +0200 (Di, 08 Jul 2008) $
-"      Version: 4.6
-"    $Revision: 887 $
-"     $HeadURL: https://gnuada.svn.sourceforge.net/svnroot/gnuada/trunk/tools/vim/indent/ada.vim $
+"      Version: 5.3.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		15.10.2006 MK Bram's suggestion for runtime integration
 "		05.11.2006 MK Bram suggested to save on spaces
 "		19.09.2007 NO g: missing before ada#Comment
-"    Help Page: ft-vim-indent
+"		01.09.2022 MK Use GitHub and dein to publish new versions
+"		25.10.2022 MK Add Alire compiler support
+"	 Usage: Use dein to install
+"    Help Page: ft-ada-indent
 "------------------------------------------------------------------------------
 " ToDo:
 "  Verify handling of multi-line exprs. and recovery upon the final ';'.
@@ -34,6 +32,8 @@ let b:did_indent = 45
 setlocal indentexpr=GetAdaIndent()
 setlocal indentkeys-=0{,0}
 setlocal indentkeys+=0=~then,0=~end,0=~elsif,0=~when,0=~exception,0=~begin,0=~is,0=~record
+
+let b:undo_indent = "setl inde< indk<"
 
 " Only define the functions once.
 if exists("*GetAdaIndent")
@@ -146,7 +146,7 @@ function s:StatementIndent( current_indent, prev_lnum )
       " Get previous non-blank/non-comment-only line
       while 1
 	 let line = substitute( getline(lnum), g:ada#Comment, '', '' )
-	 
+
 	 if line !~ '^\s*$' && line !~ '^\s*#'
 	    break
 	 endif
@@ -295,9 +295,8 @@ endfunction GetAdaIndent
 finish " 1}}}
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006	Martin Krischik
-"
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
-" vim: textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab
-" vim: foldmethod=marker
+" vim: set textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab :
+" vim: set filetype=vim fileencoding=utf-8 fileformat=unix foldmethod=marker :
+" vim: set spell spelllang=en_gb :
