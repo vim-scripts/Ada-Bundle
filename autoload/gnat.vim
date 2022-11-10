@@ -41,7 +41,7 @@ function gnat#Set_Project_File (...) dict			     " {{{1
       let self.Project_File = a:1
 
       if ! filereadable (self.Project_File)
-	      let self.Project_File = findfile (
+	 let self.Project_File = findfile (
 	    \ fnamemodify (self.Project_File, ':r'),
 	    \ $ADA_PROJECT_PATH,
 	    \ 1)
@@ -112,7 +112,7 @@ function gnat#New ()						     " {{{1
 			   \ '%f:%l:%c: %tedium: %m,'  .
 			   \ '%f:%l:%c: %tigh: %m,'    .
 			   \ '%f:%l:%c: %theck: %m,'   .
-			   \ '%f:%l:%c: (%ttyle) %m,'   .
+			   \ '%f:%l:%c: (%ttyle) %m,'  .
 			   \ '%f:%l:%c: %m'}
 
    return l:Retval
