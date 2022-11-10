@@ -66,7 +66,7 @@ for b:Item in g:ada#Keywords
       execute 'syntax match adaAttribute "\V' . b:Item['word'] . '"'
    endif
    if b:Item['kind'] == "p"
-      execute "syntax keyword adaPreProc " . b:Item['word']
+      execute "syntax keyword adaPreProc " . b:Item['word'] . " contained"
    endif
    " We don't normally highlight types in package Standard
    " (Integer, Character, Float, etc.).  I don't think it looks good
@@ -175,7 +175,7 @@ endif
 " begin, package, task etc. Assiging it to adaEnd.
 syntax match    adaEnd  /\<end\>/
 
-syntax keyword  adaPreproc               pragma
+syntax keyword  adaPreproc   pragma nextgroup=adaPreProc skipwhite skipempty
 
 syntax keyword  adaRepeat        exit for loop reverse while
 syntax match    adaRepeat                  "\<end\s\+loop\>"
