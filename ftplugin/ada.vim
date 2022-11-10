@@ -51,7 +51,7 @@ set cpoptions-=C
 
 " Section: Comments  {{{1
 "
-setlocal comments=O:--,:--\ \
+setlocal comments=O::--\ \ ,--
 setlocal commentstring=--\ \ %s
 setlocal complete=.,w,b,u,t,i
 
@@ -205,6 +205,7 @@ call ada#Map_Menu (
    \ '''standard_types''')
 
 endif
+
 " 1}}}
 
 " Reset cpoptions
