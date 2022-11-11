@@ -497,6 +497,9 @@ function ada#Map_Menu (Text, Keys, Command, Function, Args)
 	    execute "inoremap <unique>"  . l:mapping  .                   " <C-O>:" . a:Command . "<CR>"
 	    execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . l:mapping . " :" . a:Command . "<CR>"
 	 endif
+	 " TODO: consider removing buffer-specific commands
+	 let b:undo_ftplugin .= " | silent! execute 'nunmap "  . l:mapping . "'" .
+		  \             " | silent! execute 'iunmap "  . l:mapping . "'"
       endif
    else
       if a:Args == ''
