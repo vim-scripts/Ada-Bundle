@@ -183,6 +183,7 @@ function GetAdaIndent()
    " Find a non-blank line above the current line.
    let lnum = prevnonblank(v:lnum - 1)
    let ind = indent(lnum)
+   let sw = shiftwidth()
    let package_line = 0
 
    " Get previous non-blank/non-comment-only/non-cpp line
@@ -214,15 +215,15 @@ function GetAdaIndent()
       endif
       " Move indent in
       if ! false_match
-	 let ind = ind + shiftwidth()
+	 let ind = ind + sw
       endif
    elseif line =~ '^\s*\(case\|exception\)\>'
       " Move indent in twice (next 'when' will move back)
-      let ind = ind + 2 * shiftwidth()
+      let ind = ind + 2 * sw
    elseif line =~ '^\s*end\s*record\>'
       " Move indent back to tallying 'type' preceding the 'record'.
       " Allow indent to be equal to 'end record's.
-      let ind = s:MainBlockIndent( ind+shiftwidth(), lnum, 'type\>', '' )
+      let ind = s:MainBlockIndent( ind+sw, lnum, 'type\>', '' )
    elseif line =~ '\(^\s*new\>.*\)\@<!)\s*[;,]\s*$'
       " Revert to indent of line that started this parenthesis pair
       exe lnum
@@ -236,10 +237,10 @@ function GetAdaIndent()
       exe v:lnum
    elseif line =~ '[.=(]\s*$'
       " A statement continuation - move in one
-      let ind = ind + shiftwidth()
+      let ind = ind + sw
    elseif line =~ '^\s*new\>'
       " Multiple line generic instantiation ('package blah is\nnew thingy')
-      let ind = s:StatementIndent( ind - shiftwidth(), lnum )
+      let ind = s:StatementIndent( ind - sw, lnum )
    elseif line =~ ';\s*$'
       " Statement end (but not 'end' ) - try to find current statement-start indent
       let ind = s:StatementIndent( ind, lnum )
@@ -257,17 +258,17 @@ function GetAdaIndent()
    elseif continuation && line =~ '^\s*('
       " Don't do this if we've already indented due to the previous line
       if ind == initind
-	 let ind = ind + shiftwidth()
+	 let ind = ind + sw
       endif
    elseif line =~ '^\s*\(begin\|is\)\>'
       let ind = s:MainBlockIndent( ind, lnum, '\(procedure\|function\|declare\|package\|task\)\>', 'begin\>' )
    elseif line =~ '^\s*record\>'
-      let ind = s:MainBlockIndent( ind, lnum, 'type\>\|for\>.*\<use\>', '' ) + shiftwidth()
+      let ind = s:MainBlockIndent( ind, lnum, 'type\>\|for\>.*\<use\>', '' ) + sw
    elseif line =~ '^\s*\(else\|elsif\)\>'
       let ind = s:MainBlockIndent( ind, lnum, 'if\>', '' )
    elseif line =~ '^\s*when\>'
       " Align 'when' one /in/ from matching block start
-      let ind = s:MainBlockIndent( ind, lnum, '\(case\|exception\)\>', '' ) + shiftwidth()
+      let ind = s:MainBlockIndent( ind, lnum, '\(case\|exception\)\>', '' ) + sw
    elseif line =~ '^\s*end\>\s*\<if\>'
       " End of if statements
       let ind = s:EndBlockIndent( ind, lnum, 'if\>', 'end\>\s*\<if\>' )
