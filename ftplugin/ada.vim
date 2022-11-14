@@ -113,7 +113,7 @@ if !exists ("b:match_words")  &&
       \ '\%(\<while\>.*\|\<for\>.*\|'.s:notend.'\)\<loop\>:\<end\s\+loop\>,' .
       \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\%(\s*\%($\|;\)\|\s\+\%(\%(if\|case\|loop\|record\)\>\)\@!\a\)\@=,' .
       \ s:notend . '\<record\>:\<end\s\+record\>'
-   let b:undo_ftplugin .= " | unlet! b:match_words"
+   let b:undo_ftplugin .= " | unlet! b:match_skip b:match_words"
    let b:match_skip = 's:Comment\|String\|Operator'
 endif
 
