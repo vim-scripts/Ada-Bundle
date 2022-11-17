@@ -73,7 +73,7 @@ execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

@@ -24,7 +24,7 @@ let s:loaded_ftdetect_ada=45
 
 autocmd BufNewFile,BufRead *.gpr setfiletype ada
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
