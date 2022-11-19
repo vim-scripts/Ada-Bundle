@@ -21,7 +21,7 @@
 "------------------------------------------------------------------------------
 
 echoerr 'It is suggested to copy the content of ada_options into .vimrc!'
-finish " 1}}}
+finish
 
 " Section: Ada options {{{1
 

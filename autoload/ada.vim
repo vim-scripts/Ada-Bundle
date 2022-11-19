@@ -170,7 +170,7 @@ if exists ('g:ada_gnat_extensions')
 		\ 'icase': 1}]
     endfor
 endif
-" 1}}}
+" }}}1
 
 " Section: g:ada#Ctags_Kinds {{{1
 "
@@ -525,7 +525,7 @@ lockvar! g:ada#Ctags_Kinds
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

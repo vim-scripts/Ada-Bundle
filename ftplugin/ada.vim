@@ -206,13 +206,13 @@ call ada#Map_Menu (
 
 endif
 
-" 1}}}
+" }}}1
 
 " Reset cpoptions
 let &cpoptions = s:cpoptions
 unlet s:cpoptions
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

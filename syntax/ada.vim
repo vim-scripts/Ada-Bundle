@@ -370,7 +370,7 @@ syntax sync minlines=1 maxlines=1
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
