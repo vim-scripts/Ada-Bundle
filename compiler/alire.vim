@@ -74,7 +74,7 @@ if exists("g:ada_create_session")
    call ada#Switch_Session('alire.vim')
 endif
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

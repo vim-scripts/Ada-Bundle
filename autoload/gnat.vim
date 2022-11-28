@@ -118,7 +118,7 @@ function gnat#New ()						     " {{{1
    return l:Retval
 endfunction gnat#New						  " }}}1
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
