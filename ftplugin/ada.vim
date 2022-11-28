@@ -7,7 +7,7 @@
 "		Neil Bird <neil@fnxweb.com>
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.3.0
+"      Version: 5.3.3
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -27,6 +27,7 @@
 "		28.10.2022 MK Issue #13 Fix key and menu mappings.
 "		04.11.2022 DK Improve matchit config
 "		04.11.2022 DK Define iabbrevs as buffer-local
+"		19.11.2022 MK Hotfix for comment setting. Messed up the ':'
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
@@ -51,7 +52,10 @@ set cpoptions-=C
 
 " Section: Comments  {{{1
 "
-setlocal comments=O::--\ \ ,--
+" GNAT prefers comments with two spaces after the double dash. First space is
+" defined with `\ ` the second with the b: option.
+"
+setlocal comments=b:--\ ,O:--
 setlocal commentstring=--\ \ %s
 setlocal complete=.,w,b,u,t,i
 
@@ -113,7 +117,7 @@ if !exists ("b:match_words")  &&
       \ '\%(\<while\>.*\|\<for\>.*\|'.s:notend.'\)\<loop\>:\<end\s\+loop\>,' .
       \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\%(\s*\%($\|;\)\|\s\+\%(\%(if\|case\|loop\|record\)\>\)\@!\a\)\@=,' .
       \ s:notend . '\<record\>:\<end\s\+record\>'
-   let b:undo_ftplugin .= " | unlet! b:match_words"
+   let b:undo_ftplugin .= " | unlet! b:match_skip b:match_words"
    let b:match_skip = 's:Comment\|String\|Operator'
 endif
 
