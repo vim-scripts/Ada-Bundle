@@ -50,6 +50,15 @@ let b:did_ftplugin = 45
 let s:cpoptions = &cpoptions
 set cpoptions-=C
 
+" Section: Keyword characters {{{1
+"
+" Valid character for keywords and identifiers. '_' is not a keyword character
+" but is included otherwise the syntax highlighter will detect keywords inside
+" identifier.
+"
+setlocal iskeyword=@,48-57,_
+setlocal isident=@,48-57,_
+
 " Section: Comments  {{{1
 "
 " GNAT prefers comments with two spaces after the double dash. First space is
