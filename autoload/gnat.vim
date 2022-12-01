@@ -5,7 +5,7 @@
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.3.0
+"      Version: 5.4.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		05.08.2006 MK Add session support

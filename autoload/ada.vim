@@ -8,7 +8,7 @@
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.3.2
+"      Version: 5.4.0
 "      History: 24.05.3.06 MK Unified Headers
 "		26.05.3.06 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
