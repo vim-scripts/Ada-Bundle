@@ -14,6 +14,8 @@
 "		01.09.2022 MK Use GitHub and dein to publish new versions
 "		25.10.2022 MK Add Alire compiler support
 "		26.10.2022 MK Fix mapping conflict
+"		28.10.2022 MK Bug #43 Duplicated mappings in Gnat compiler
+"			      plug in
 "	 Usage: Use dein to install
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------
@@ -40,20 +42,20 @@ if !exists("g:gnat")
 
    call ada#Map_Menu (
       \ 'Pretty Print',
-      \ 'gp'
-      \ ':GnatPretty',
+      \ 'gp',
+      \ 'GnatPretty',
       \ 'call gnat.Pretty',
       \ '')
    call ada#Map_Menu (
       \ 'Set Project file\.\.\.',
-      \ 'gp'
-      \ ':SetProject',
+      \ 'gP',
+      \ 'SetProject',
       \ 'call gnat.Set_Project_File',
       \ '')
    call ada#Map_Menu (
       \ 'Set Project options\.\.\.',
-      \ 'go'
-      \ ':SetOptions',
+      \ 'go',
+      \ 'SetOptions',
       \ 'call gnat.Set_Options',
       \ '')
 
