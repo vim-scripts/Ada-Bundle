@@ -4,7 +4,7 @@
 "    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischik
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.3.0
+"      Version: 5.4.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK improved search for begin of word.
 "		16.07.2006 MK Ada-Mode as vim-ball

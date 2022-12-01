@@ -3,7 +3,7 @@
 "     Language: Ada (2012)
 "    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischik
-"      Version: 5.3.0
+"      Version: 5.4.0
 "      History:	24.05.3.06 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		02.10.2006 MK Folding for "gnat pretty"
