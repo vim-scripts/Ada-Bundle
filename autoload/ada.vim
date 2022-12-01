@@ -8,7 +8,7 @@
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.3.2
+"      Version: 5.4.0
 "      History: 24.05.3.06 MK Unified Headers
 "		26.05.3.06 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -32,6 +32,8 @@
 "		28.10.2022 MK Issue #13 Fix key and menu mappings.
 "		02.11.2022 MK Enhancement #19 additional ways to disable key
 "			      mappings.
+"		28.10.2022 MK Bug #43 Duplicated mappings in Gnat compiler
+"			      plug in
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
@@ -170,7 +172,7 @@ if exists ('g:ada_gnat_extensions')
 		\ 'icase': 1}]
     endfor
 endif
-" 1}}}
+" }}}1
 
 " Section: g:ada#Ctags_Kinds {{{1
 "
@@ -491,17 +493,14 @@ function ada#Map_Menu (Text, Keys, Command, Function, Args)
 	 if a:Args == ''
 	    execute "command! -nargs=* " . a:Command  . " :" . a:Function . "(<f-args>)"
 	    execute "nnoremap <unique>"  . l:mapping  .                        " :" . a:Command . "<CR>"
-	    execute "inoremap <unique>"  . l:mapping  .                   " <C-O>:" . a:Command . "<CR>"
 	    execute "50amenu " . "&Ada." . l:menutext . "<Tab>"  . l:mapping . " :" . a:Command . "<CR>"
 	 else
 	    execute "command! " . a:Command . " :" . a:Function . "(" . a:Args . ")"
 	    execute "nnoremap <unique>"  . l:mapping  .                        " :" . a:Command . "<CR>"
-	    execute "inoremap <unique>"  . l:mapping  .                   " <C-O>:" . a:Command . "<CR>"
 	    execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . l:mapping . " :" . a:Command . "<CR>"
 	 endif
 	 " TODO: consider removing buffer-specific commands
-	 let b:undo_ftplugin .= " | silent! execute 'nunmap "  . l:mapping . "'" .
-		  \             " | silent! execute 'iunmap "  . l:mapping . "'"
+	 let b:undo_ftplugin .= " | silent! execute 'nunmap "  . l:mapping . "'"
       endif
    else
       if a:Args == ''
@@ -525,7 +524,7 @@ lockvar! g:ada#Ctags_Kinds
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

@@ -3,7 +3,7 @@
 "     Language: Ada (GNAT, Alire)
 "    Copyright: Copyright (C) 2022 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
-"      Version: 5.3.0
+"      Version: 5.4.0
 "      History: 25.10.2022 MK Add Alire compiler support
 "		26.10.2022 MK Fix mapping conflict
 "		28.10.2022 MK Issue #13 Fix key and menu mappings.
@@ -74,7 +74,7 @@ if exists("g:ada_create_session")
    call ada#Switch_Session('alire.vim')
 endif
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

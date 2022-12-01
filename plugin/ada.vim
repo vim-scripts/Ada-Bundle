@@ -3,7 +3,7 @@
 "     Language: Ada (2022)
 "    Copyright: Copyright (C) 2022 … 2022 Martin Krischik
 "   Maintainer: Martin Krischik <krischik@users.sourceforge.net>
-"      Version: 5.3.0
+"      Version: 5.4.0
 "      History: 27.10.2022 MK Taglist support
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-plugin
