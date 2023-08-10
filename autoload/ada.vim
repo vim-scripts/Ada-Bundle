@@ -367,7 +367,7 @@ endfunction ada#Completion_End
 "
 function ada#Switch_Session (New_Session)
    "
-   " you should not save to much date into the seession since they will
+   " you should not save to much date into the session since they will
    " be sourced
    "
    let l:sessionoptions=&sessionoptions
