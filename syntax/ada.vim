@@ -63,7 +63,7 @@ for b:Item in g:ada#Keywords
       execute "syntax keyword adaException " . b:Item['word']
    endif
    if b:Item['kind'] == "a"
-      execute 'syntax match adaAttribute "\V' . b:Item['word'] . '"'
+      execute 'syntax match adaAttribute /\V' . b:Item['word'] . '/'
    endif
    if b:Item['kind'] == "p"
       execute "syntax keyword adaPreProc " . b:Item['word'] . " contained"
@@ -83,38 +83,45 @@ endfor
 "
 syntax keyword  adaLabel        others
 
-" Section: Operatoren {{{1
+" Section: Operators {{{1
 "
 syntax keyword  adaOperator abs mod not rem xor
-syntax match    adaOperator "\<and\>"
-syntax match    adaOperator "\<and\s\+then\>"
-syntax match    adaOperator "\<or\>"
-syntax match    adaOperator "\<or\s\+else\>"
-syntax match    adaOperator "[-+*/<>&]"
-syntax keyword  adaOperator **
-syntax match    adaOperator "[/<>]="
-syntax keyword  adaOperator =>
-syntax match    adaOperator "\.\."
-syntax match    adaOperator "="
+syntax match    adaOperator /\<and\>/
+syntax match    adaOperator /\<and\s\+then\>/
+syntax match    adaOperator /\<or\>/
+syntax match    adaOperator /\<or\s\+else\>/
+syntax match    adaOperator /[-+*/<>&]/
+syntax match    adaOperator /\*\*/
+syntax match    adaOperator /[/<>]=/
+syntax match    adaOperator /=>/
+syntax match    adaOperator /\.\./
+syntax match    adaOperator /=/
 
 " Section: <> {{{1
 "
 " Handle the box, <>, specially:
 "
-syntax keyword  adaSpecial          <>
+syntax match    adaSpecial          /<>/
+
+" Section: <> {{{1
+"
+" Handle the target name @ specially:
+"
+syntax match    adaSpecial          /@/
 
 " Section: parenthesis {{{1
 "
-syntax match adaSpecial  "[:;().,]"
+syntax match    adaSpecial /[][:;().,]/
 
-" Section: rainbow color {{{1
+" Section: rainbow colour {{{1
 "
 if exists("g:ada_rainbow_color")
-    " syntax match      adaSpecial       "[:;.,]"
+    " syntax match      adaSpecial       /[:;.,]/
     call rainbow_parenthesis#LoadRound ()
+    call rainbow_parenthesis#LoadSquare ()
     call rainbow_parenthesis#Activate ()
 else
-    " syntax match      adaSpecial       "[:;().,]"
+    " syntax match      adaSpecial       /[][:;().,]/
 endif
 
 " Section: := {{{1
@@ -123,12 +130,12 @@ endif
 " something or the "=" inside it will be mislabelled as an operator.
 " Note that in Ada, assignment (:=) is not considered an operator.
 "
-syntax match adaAssignment              ":="
+syntax match adaAssignment              /:=/
 
 " Section: Numbers, including floating point, exponents, and alternate bases. {{{1
 "
-syntax match   adaNumber                "\<\d[0-9_]*\%(\.\d[0-9_]*\)\=\%([Ee][+-]\=\d[0-9_]*\)\=\>"
-syntax match   adaNumber                "\<\d\d\=#\x[0-9A-Fa-f_]*\%(\.\x[0-9A-Fa-f_]*\)\=#\%([Ee][+-]\=\d[0-9_]*\)\="
+syntax match   adaNumber                /\<\d[0-9_]*\%(\.\d[0-9_]*\)\=\%([Ee][+-]\=\d[0-9_]*\)\=\>/
+syntax match   adaNumber                /\<\d\d\=#\x[0-9A-Fa-f_]*\%(\.\x[0-9A-Fa-f_]*\)\=#\%([Ee][+-]\=\d[0-9_]*\)\=/
 
 " Section: Identify leading numeric signs {{{1
 "
@@ -137,7 +144,7 @@ syntax match   adaNumber                "\<\d\d\=#\x[0-9A-Fa-f_]*\%(\.\x[0-9A-Fa
 " don't put a space after +/- when it's used " as an operator, you won't
 " put a space before it either -- which is true " in code I've seen.
 "
-syntax match adaSign "[[:space:]<>=(,|:;&*/+-][+-]\d"lc=1,hs=s+1,he=e-1,me=e-1
+syntax match adaSign /[[:space:]<>=(,|:;&*/+-][+-]\d/lc=1,hs=s+1,he=e-1,me=e-1
 
 " Section: Labels for the goto statement. {{{1
 "
@@ -153,20 +160,20 @@ syntax keyword adaBoolean       true false
 "
 syntax match adaError "//"
 syntax match adaError "/\*"
-syntax match adaError "=="
-
+syntax match adaError /==/
+syntax match adaError /!=/
 
 " Section: Space Errors {{{1
 "
 if exists("g:ada_space_errors")
    if !exists("g:ada_no_trail_space_error")
-       syntax match   adaSpaceError      excludenl "\s\+$"
+       syntax match   adaSpaceError      excludenl /\s\+$/
    endif
    if !exists("g:ada_no_tab_space_error")
-      syntax match   adaSpaceError       " \+\t"me=e-1
+      syntax match   adaSpaceError       / \+\t/me=e-1
    endif
    if !exists("g:ada_all_tab_usage")
-      syntax match   adaSpecial  "\t"
+      syntax match   adaSpecial  /\t/
    endif
 endif
 
@@ -178,11 +185,11 @@ syntax match    adaEnd  /\<end\>/
 syntax keyword  adaPreproc   pragma nextgroup=adaPreProc skipwhite skipempty
 
 syntax keyword  adaRepeat        exit for loop reverse while
-syntax match    adaRepeat                  "\<end\s\+loop\>"
+syntax match    adaRepeat                  /\<end\s\+loop\>/
 
 syntax keyword  adaStatement accept delay goto raise requeue return
 syntax keyword  adaStatement terminate
-syntax match    adaStatement  "\<abort\>"
+syntax match    adaStatement  /\<abort\>/
 
 " Section: Handle Ada's record keywords. {{{1
 "
@@ -193,9 +200,9 @@ syntax match    adaStatement  "\<abort\>"
 " We see the "end" in "end record" before the word record, so we match that
 " pattern as adaStructure (and it won't match the "record;" pattern).
 "
-syntax match adaStructure   "\<record\>"        contains=adaRecord
-syntax match adaStructure   "\<end\s\+record\>" contains=adaRecord
-syntax match adaKeyword     "\<record;"me=e-1
+syntax match adaStructure   /\<record\>/        contains=adaRecord
+syntax match adaStructure   /\<end\s\+record\>/ contains=adaRecord
+syntax match adaKeyword     /\<record;/me=e-1
 
 " Section: type classes {{{1
 "
@@ -208,17 +215,17 @@ syntax keyword adaTypedef       subtype type
 "
 " "abort" after "then" is a conditional of its own.
 "
-syntax match    adaConditional  "\<then\>"
-syntax match    adaConditional  "\<then\s\+abort\>"
-syntax match    adaConditional  "\<else\>"
-syntax match    adaConditional  "\<end\s\+if\>"
-syntax match    adaConditional  "\<end\s\+case\>"
-syntax match    adaConditional  "\<end\s\+select\>"
+syntax match    adaConditional  /\<then\>/
+syntax match    adaConditional  /\<then\s\+abort\>/
+syntax match    adaConditional  /\<else\>/
+syntax match    adaConditional  /\<end\s\+if\>/
+syntax match    adaConditional  /\<end\s\+case\>/
+syntax match    adaConditional  /\<end\s\+select\>/
 syntax keyword  adaConditional  if case select
 syntax keyword  adaConditional  elsif when
 
 " Section: other keywords {{{1
-syntax match    adaKeyword          "\<is\>" contains=adaRecord
+syntax match    adaKeyword          /\<is\>/ contains=adaRecord
 syntax keyword  adaKeyword          all do exception in new null out some
 syntax keyword  adaKeyword          separate until overriding
 
@@ -230,9 +237,9 @@ syntax keyword  adaKeyword          separate until overriding
 syntax keyword  adaBegin        begin body declare entry generic
 syntax keyword  adaBegin        protected renames task
 
-syntax match    adaBegin        "\<function\>" contains=adaFunction
-syntax match    adaBegin        "\<procedure\>" contains=adaProcedure
-syntax match    adaBegin        "\<package\>" contains=adaPackage
+syntax match    adaBegin        /\<function\>/  contains=adaFunction
+syntax match    adaBegin        /\<procedure\>/ contains=adaProcedure
+syntax match    adaBegin        /\<package\>/   contains=adaPackage
 
 if exists("ada_with_gnat_project_files")
    syntax keyword adaBegin      project
@@ -248,24 +255,25 @@ else
    " to reference other compilation units; otherwise they're ordinary keywords.
    " If we have vim 6.0 or later, we'll use its advanced pattern-matching
    " capabilities so that we won't match leading spaces.
-   syntax match adaKeyword      "\<with\>"
-   syntax match adaKeyword      "\<use\>"
-   syntax match adaBeginWith    "^\s*\zs\%(\%(with\%(\s\+type\)\=\)\|\%(use\)\)\>" contains=adaInc
-   syntax match adaSemiWith     ";\s*\zs\%(\%(with\%(\s\+type\)\=\)\|\%(use\)\)\>" contains=adaInc
-   syntax match adaInc          "\<with\>" contained contains=NONE
-   syntax match adaInc          "\<with\s\+type\>" contained contains=NONE
-   syntax match adaInc          "\<use\>" contained contains=NONE
-   " Recognize "with null record" as a keyword (even the "record").
-   syntax match adaKeyword      "\<with\s\+null\s\+record\>"
+   syntax match adaKeyword      /\<with\>/
+   syntax match adaKeyword      /\<use\>/
+   syntax match adaBeginWith    /^\s*\zs\%(\%(with\%(\s\+type\)\=\)\|\%(use\)\)\>/ contains=adaInc
+   syntax match adaSemiWith     /;\s*\zs\%(\%(with\%(\s\+type\)\=\)\|\%(use\)\)\>/ contains=adaInc
+   syntax match adaInc          /\<with\>/ contained contains=NONE
+   syntax match adaInc          /\<with\s\+type\>/ contained contains=NONE
+   syntax match adaInc          /\<use\>/ contained contains=NONE
+   " Recognize "with null record" and with delta as a keyword (even the "record").
+   syntax match adaKeyword      /\<with\s\+delta\>/
+   syntax match adaKeyword      /\<with\s\+null\s\+record\>/
    " Consider generic formal parameters of subprograms and packages as keywords.
-   syntax match adaKeyword      ";\s*\zswith\s\+\%(function\|procedure\|package\)\>"
-   syntax match adaKeyword      "^\s*\zswith\s\+\%(function\|procedure\|package\)\>"
+   syntax match adaKeyword      /;\s*\zswith\s\+\%(function\|procedure\|package\)\>/
+   syntax match adaKeyword      /^\s*\zswith\s\+\%(function\|procedure\|package\)\>/
 endif
 
 " Section: String and character constants. {{{1
 "
 syntax region  adaString        contains=@Spell start=+"+ skip=+""+ end=+"+
-syntax match   adaCharacter "'.'"
+syntax match   adaCharacter     /'.'/
 
 " Section: Todo (only highlighted in comments) {{{1
 "
@@ -284,7 +292,7 @@ syntax region  adaComment
 " Note: Line errors have become quite slow with Vim 7.0
 "
 if exists("g:ada_line_errors")
-    syntax match adaLineError "\%(^.\{79}\)\@<=."  contains=ALL containedin=ALL
+    syntax match adaLineError /\%(^.\{79}\)\@<=./  contains=ALL containedin=ALL
 endif
 
 " Section: syntax folding {{{1
